@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>レッスン料金 - Music Porch</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+/* Cormorant Garamond のリガチャ（1→Ⅰ化）を無効化 */
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-feature-settings: "liga" 0, "clig" 0;
+}
+* { font-feature-settings: "liga" 0, "clig" 0; }
+:root {
+  --teal: #2a9d8a;
+  --teal-dk: #1c7a6a;
+  --teal-pl: #e8f7f5;
+  --dark: #1c3530;
+  --dark2: #264440;
+  --white: #fff;
+  --off: #f6faf9;
+  --text: #1c3530;
+  --mid: #4a6b65;
+  --lt: #8aada8;
+  --bd: rgba(28,53,48,0.1);
+  --bdt: rgba(42,157,138,0.2);
+}
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  color: var(--text);
+  background: var(--white);
+  font-weight: 300;
+  line-height: 1.8;
+  overflow-x: hidden;
+  font-size: 15px;
+}
+
+/* nav */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display:flex; align-items:center; justify-content:space-between; height:54px; background:rgba(255,255,255,0.97); backdrop-filter:blur(10px); border-bottom:1px solid var(--bd); }
+.nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.1rem; letter-spacing:.15em; color:var(--text); text-decoration:none; }
+.nav-logo em { font-style:italic; color:var(--teal); }
+.nav-line-btn {
+  background: #06C755;
+  color: var(--white);
+  font-size:.72rem;
+  font-weight:700;
+  letter-spacing:.04em;
+  padding: 7px 14px;
+  text-decoration:none;
+  white-space:nowrap;
+  transition:background .2s;
+}
+.nav-line-btn:hover { background:#05a849; }
+.nav-back { font-size:.72rem; color:var(--mid); text-decoration:none; display:flex; align-items:center; gap:5px; letter-spacing:.04em; transition:color .2s; }
+.nav-back:hover { color:var(--teal); }
+
+/* page header */
+.page-hero {
+  padding: 100px 6% 52px;
+  background: var(--white);
+  border-bottom: 1px solid var(--bd);
+}
+.ph-inner { max-width: 640px; margin: 0 auto; }
+.ph-lb { font-size:.6rem; letter-spacing:.4em; color:var(--teal); text-transform:uppercase; display:block; margin-bottom:10px; }
+.ph-tt {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 6vw, 2.8rem);
+  font-weight: 300;
+  line-height: 1.3;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.ph-tt em { font-style:italic; color:var(--teal-dk); }
+.ph-sub { font-size:.8rem; color:var(--mid); }
+
+/* section */
+.sec { padding: 60px 6%; }
+.sec-w { background: var(--white); }
+.sec-g { background: var(--off); }
+.sec-d { background: var(--dark); }
+
+.sh { margin-bottom: 36px; }
+.sh-lb { font-size:.6rem; letter-spacing:.4em; color:var(--teal); text-transform:uppercase; display:block; margin-bottom:8px; }
+.sh-tt { font-family:'Cormorant Garamond',serif; font-size:clamp(1.3rem,4vw,1.9rem); font-weight:300; line-height:1.4; color:var(--text); }
+.sh-tt em { font-style:italic; color:var(--teal-dk); }
+.sh-tt-w { color:var(--white); }
+.sh-tt-w em { color:var(--teal); }
+
+.sec-in { max-width: 640px; margin: 0 auto; }
+
+/* normal price chip */
+.normal-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  border: 1px solid var(--bd);
+  padding: 8px 18px;
+  background: var(--off);
+  margin-bottom: 32px;
+}
+.nc-label { font-size:.68rem; color:var(--lt); letter-spacing:.06em; }
+.nc-price { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; color:var(--lt); text-decoration:line-through; }
+.nc-unit { font-size:.68rem; color:var(--lt); }
+
+/* annual block */
+.annual-block {
+  background: var(--off);
+  border: 1px solid var(--bdt);
+  border-left: 3px solid var(--teal);
+  padding: 28px 26px 24px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.ab-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--teal);
+  color: var(--white);
+  font-size:.6rem;
+  font-weight:700;
+  letter-spacing:.1em;
+  padding: 4px 12px;
+  margin-bottom: 16px;
+}
+.ab-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;
+  font-weight:300;
+  color:var(--text);
+  margin-bottom: 20px;
+  letter-spacing:.04em;
+}
+.ab-title .num { font-family:'Noto Sans JP',sans-serif; font-size:1rem; font-weight:300; }
+
+/* plan cards row */
+.plan-row-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-bottom: 2px;
+}
+@media(max-width:560px){ .plan-row-3 { grid-template-columns:1fr; } }
+
+.plan-card {
+  background: var(--white);
+  border: 1px solid var(--bd);
+  padding: 22px 18px;
+  text-align: center;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.plan-card:hover {
+  background: var(--teal-pl);
+  border-color: var(--teal);
+}
+.pc-label { font-size:.6rem; letter-spacing:.1em; color:var(--lt); margin-bottom:6px; }
+.pc-freq { font-size:.74rem; font-weight:500; color:var(--mid); margin-bottom:10px; }
+.pc-price {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.1rem;
+  font-weight:300;
+  color:var(--teal-dk);
+  line-height:1;
+  margin-bottom:6px;
+}
+.pc-price sup { font-size:.9rem; vertical-align:super; }
+.pc-price span { font-size:.75rem; color:var(--lt); font-family:'Noto Sans JP',sans-serif; font-weight:300; }
+.pc-total { font-size:.65rem; color:var(--lt); }
+.pc-click-hint { font-size:.58rem; color:var(--teal); opacity:.7; margin-top:8px; letter-spacing:.06em; }
+
+/* annual benefits */
+.ab-benefits {
+  border-top: 1px solid var(--bd);
+  padding-top: 16px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.benefit-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--white);
+  border: 1px solid var(--bd);
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.benefit-row:hover {
+  background: var(--teal-pl);
+  border-color: var(--teal);
+}
+.br-icon { font-size:1rem; flex-shrink:0; margin-top:1px; }
+.br-text { flex: 1; }
+.br-main { font-size:.78rem; font-weight:500; color:var(--text); line-height:1.5; }
+.br-sub { font-size:.68rem; color:var(--mid); }
+.br-arrow { font-size:.7rem; color:var(--teal); flex-shrink:0; margin-top:4px; }
+
+/* bottom 2col grid */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+@media(max-width:600px){ .bottom-grid { grid-template-columns:1fr; } }
+
+/* monthly block */
+.monthly-block {
+  background: var(--off);
+  border: 1px solid var(--bd);
+  padding: 24px 22px;
+  margin-bottom: 20px;
+}
+.mb-title {
+  font-size:.62rem;
+  letter-spacing:.16em;
+  color:var(--mid);
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.mb-title::after { content:''; flex:1; height:1px; background:var(--bd); }
+
+.price-table { width:100%; border-collapse:collapse; }
+.price-table th {
+  font-size:.6rem;
+  letter-spacing:.07em;
+  color:var(--lt);
+  font-weight:400;
+  padding:8px 10px;
+  border-bottom:1px solid var(--bd);
+  text-align:left;
+}
+.price-table th:not(:first-child) { text-align:right; }
+.price-table td {
+  padding:11px 10px;
+  border-bottom:1px solid var(--bd);
+  font-size:.8rem;
+  cursor:pointer;
+}
+.price-table tr:hover td { background:var(--teal-pl); }
+.price-table td:first-child { font-weight:500; }
+.price-table td:not(:first-child) {
+  text-align:right;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.08rem;
+  color:var(--dark);
+}
+.price-table tr:last-child td { border-bottom:none; }
+.mb-benefits { margin-top:12px; display:flex; flex-direction:column; gap:4px; }
+.mb-benefit {
+  display:flex; align-items:flex-start; gap:10px;
+  padding:8px 10px;
+  background:var(--white);
+  border:1px solid var(--bd);
+  cursor:pointer;
+  transition:border-color .2s;
+}
+.mb-benefit:hover { border-color:var(--teal); }
+.mbb-icon { font-size:.9rem; flex-shrink:0; }
+.mbb-main { font-size:.75rem; font-weight:500; color:var(--text); }
+.mbb-sub { font-size:.65rem; color:var(--mid); }
+
+/* guide */
+.guide-block {
+  border:1px solid var(--bd);
+  padding:22px 22px;
+  background:var(--white);
+}
+.guide-sec-title {
+  font-size:.58rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--lt);
+  margin-bottom:10px;
+}
+.guide-item {
+  display:flex;
+  gap:12px;
+  padding:9px 0;
+  border-bottom:1px solid var(--bd);
+}
+.guide-item:last-child { border-bottom:none; }
+.gi-line { width:1px; background:var(--bdt); flex-shrink:0; margin:3px 0; }
+.gi-text { font-size:.8rem; color:var(--text); line-height:1.7; }
+.gi-text strong { font-weight:500; color:var(--teal-dk); }
+.gi-note { font-size:.68rem; color:var(--mid); }
+.guide-divider { height:1px; background:var(--bd); margin:14px 0; }
+
+/* LINE CTA */
+.line-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 28px;
+  padding: 22px 24px;
+  background: var(--off);
+  border: 1px solid var(--bd);
+  border-left: 3px solid #06C755;
+}
+.lc-title { font-size:.86rem; font-weight:500; color:var(--text); margin-bottom:3px; }
+.lc-sub { font-size:.72rem; color:var(--mid); }
+.lc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #06C755;
+  color: var(--white);
+  font-size:.8rem;
+  font-weight:700;
+  letter-spacing:.04em;
+  padding: 12px 22px;
+  text-decoration:none;
+  white-space:nowrap;
+  transition: background .2s;
+}
+.lc-btn:hover { background:#05a849; }
+
+/* note caption */
+.note-cap { font-size:.66rem; color:var(--lt); line-height:2; margin-top:16px; text-align:center; }
+
+/* ── Modals ── */
+.modal-overlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(28,53,48,0.45);
+  z-index:200;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.modal-overlay.open { display:flex; }
+.modal-box {
+  background:var(--white);
+  max-width:360px;
+  width:100%;
+  max-height:85vh;
+  overflow-y:auto;
+  box-shadow:0 20px 60px rgba(28,53,48,0.2);
+  position:relative;
+  animation:modalIn .22s ease;
+}
+@keyframes modalIn {
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.modal-head {
+  padding:22px 22px 0;
+  border-bottom:1px solid var(--bd);
+  padding-bottom:16px;
+  margin-bottom:16px;
+}
+.modal-badge {
+  display:inline-block;
+  background:var(--teal);
+  color:var(--white);
+  font-size:.58rem;
+  font-weight:700;
+  letter-spacing:.1em;
+  padding:3px 9px;
+  margin-bottom:8px;
+}
+.modal-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;
+  font-weight:300;
+  color:var(--text);
+}
+.modal-sub {
+  font-size:.74rem;
+  color:var(--mid);
+  margin-top:4px;
+  line-height:1.6;
+}
+.modal-body { padding:0 22px 22px; }
+.modal-close {
+  position:absolute;
+  top:14px; right:16px;
+  background:none;
+  border:none;
+  font-size:16px;
+  color:var(--lt);
+  cursor:pointer;
+  line-height:1;
+  padding:4px;
+}
+.modal-close:hover { color:var(--text); }
+
+/* modal rows */
+.mrow {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:11px 0;
+  border-bottom:1px solid var(--bd);
+}
+.mrow:last-of-type { border-bottom:none; }
+.mrow-label { font-size:.8rem; font-weight:500; color:var(--text); }
+.mrow-price {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.35rem;
+  color:var(--dark);
+}
+.mrow-price span { font-family:'Noto Sans JP',sans-serif; font-size:.7rem; color:var(--lt); }
+.modal-note { font-size:.68rem; color:var(--mid); line-height:1.9; margin-top:14px; padding-top:14px; border-top:1px solid var(--bd); }
+
+/* LINE modal */
+.line-note { font-size:.75rem; color:var(--mid); line-height:1.9; margin-bottom:16px; }
+.chat-wrap { display:flex; flex-direction:column; gap:8px; padding:14px; background:var(--off); border:1px solid var(--bd); margin-bottom:16px; }
+.chat-bubble { max-width:88%; width:fit-content; padding:10px 13px; font-size:.75rem; line-height:1.7; color:var(--text); }
+.chat-left { background:#f0f0f0; border-radius:2px 14px 14px 14px; align-self:flex-start; }
+.chat-right { background:var(--teal); color:var(--white); border-radius:14px 2px 14px 14px; align-self:flex-end; }
+.line-btn {
+  display:block;
+  width:100%;
+  background:#06C755;
+  color:var(--white);
+  font-size:.82rem;
+  font-weight:700;
+  text-align:center;
+  padding:13px;
+  text-decoration:none;
+  letter-spacing:.06em;
+  transition:background .2s;
+}
+.line-btn:hover { background:#05a849; }
+
+/* schedule modal */
+.cal-box { background:var(--off); border:1px solid var(--bd); padding:14px; margin-bottom:16px; }
+.cal-title { font-size:.68rem; font-weight:700; color:var(--teal-dk); text-align:center; margin-bottom:10px; letter-spacing:.06em; }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; text-align:center; }
+.cg-head { font-size:.6rem; font-weight:700; padding:3px 0; }
+.cg-head.sun { color:#e57373; }
+.cg-head.sat { color:#5b8dd9; }
+.cg-cell { font-size:.72rem; padding:4px 2px; }
+.cg-cell.hl { background:var(--teal); color:var(--white); font-weight:700; }
+.cg-cell.sun { color:#e57373; }
+.cg-cell.sat { color:#5b8dd9; }
+.cal-legend { display:flex; align-items:center; gap:6px; margin-top:10px; font-size:.65rem; color:var(--mid); }
+.cal-dot { width:12px; height:12px; background:var(--teal); flex-shrink:0; }
+.schedule-feats { display:flex; flex-direction:column; gap:10px; }
+.sf { display:flex; gap:10px; align-items:flex-start; }
+.sf-icon { flex-shrink:0; font-size:1rem; line-height:1.3; }
+.sf-text { font-size:.78rem; color:var(--text); line-height:1.7; }
+.sf-text strong { font-weight:500; }
+
+/* note modal */
+.note-articles { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+.na {
+  display:block;
+  text-decoration:none;
+  border:1px solid var(--bd);
+  padding:12px 14px;
+  background:var(--off);
+  transition:border-color .2s, background .2s;
+}
+.na:hover { border-color:var(--teal); background:var(--teal-pl); }
+.na-cat { font-size:.6rem; font-weight:700; color:var(--teal); letter-spacing:.08em; margin-bottom:4px; }
+.na-title { font-size:.82rem; font-weight:500; color:var(--text); line-height:1.5; margin-bottom:4px; }
+.na-desc { font-size:.7rem; color:var(--mid); line-height:1.6; }
+.note-link-btn {
+  display:block;
+  width:100%;
+  background:var(--dark);
+  color:var(--white);
+  font-size:.8rem;
+  font-weight:700;
+  text-align:center;
+  padding:13px;
+  text-decoration:none;
+  letter-spacing:.06em;
+  transition:background .2s;
+}
+.note-link-btn:hover { background:var(--dark2); }
+
+/* voice modal */
+.price-display {
+  background:var(--off);
+  border:1px solid var(--bd);
+  padding:14px 16px;
+  margin-bottom:18px;
+}
+.pd-price {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;
+  font-weight:300;
+  color:var(--dark);
+  line-height:1;
+  margin-bottom:4px;
+}
+.pd-total { font-size:.68rem; color:var(--mid); }
+.voice-sec-title {
+  font-size:.6rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--lt);
+  margin-bottom:10px;
+}
+.tags-wrap { display:flex; flex-direction:column; gap:4px; margin-bottom:18px; }
+.tag-item {
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  font-size:.75rem;
+  color:var(--mid);
+  line-height:1.6;
+  padding:6px 0;
+  border-bottom:1px solid var(--bd);
+}
+.tag-item:last-child { border-bottom:none; }
+.tag-item::before { content:'—'; color:var(--teal); flex-shrink:0; }
+.voice-cards { display:flex; flex-direction:column; gap:10px; }
+.vc {
+  background:var(--off);
+  border:1px solid var(--bd);
+  padding:14px 14px;
+  position:relative;
+}
+.vc::before {
+  content:'\201C';
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.4rem;
+  color:var(--teal-pl);
+  position:absolute;
+  top:2px; left:10px;
+  line-height:1;
+}
+.vc-text { font-size:.76rem; color:var(--text); line-height:1.9; padding-top:14px; margin-bottom:8px; }
+.vc-attr { font-size:.65rem; color:var(--lt); border-top:1px solid var(--bd); padding-top:7px; }
+
+/* benefits modal */
+.bm-intro { font-size:.78rem; color:var(--teal-dk); font-weight:500; margin-bottom:14px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><em>Music</em> Porch</a>
+  <a href="https://lin.ee/MTYL1B2" target="_blank" class="nav-line-btn">💬 LINEで相談</a>
+</nav>
+
+<!-- page header -->
+<div class="page-hero">
+  <div class="ph-inner">
+    <span class="ph-lb">Lesson Pricing</span>
+    <h1 class="ph-tt">レッスン<em>料金</em></h1>
+    <p class="ph-sub">レッスン時間：60分（準備・片付け含む）／ すべて税込</p>
+  </div>
+</div>
+
+<!-- main pricing section -->
+<section class="sec sec-w">
+  <div class="sec-in">
+
+    <div class="normal-chip">
+      <span class="nc-label">通常価格</span>
+      <span class="nc-price">11,000</span>
+      <span class="nc-unit">円 / 回</span>
+    </div>
+
+    <!-- annual -->
+    <div class="annual-block">
+      <div class="ab-badge">✦ おすすめ</div>
+      <div class="ab-title">年間プラン（<span class="num">1</span>年契約・一括払い）</div>
+
+      <div class="plan-row-3">
+        <div class="plan-card" onclick="openModal('voiceA1')">
+          <div class="pc-label">無理なく継続</div>
+          <div class="pc-freq">月1回</div>
+          <div class="pc-price"><sup>¥</sup>9,900<span> / 回</span></div>
+          <div class="pc-total">年間総額 118,800円</div>
+          <div class="pc-click-hint">詳細を見る ↗</div>
+        </div>
+        <div class="plan-card" onclick="openModal('voiceA2')">
+          <div class="pc-label">いちばん人気</div>
+          <div class="pc-freq">月2回</div>
+          <div class="pc-price"><sup>¥</sup>9,350<span> / 回</span></div>
+          <div class="pc-total">年間総額 224,400円</div>
+          <div class="pc-click-hint">詳細を見る ↗</div>
+        </div>
+        <div class="plan-card" onclick="openModal('voiceA3')">
+          <div class="pc-label">1回あたり最安</div>
+          <div class="pc-freq">月3回</div>
+          <div class="pc-price"><sup>¥</sup>8,800<span> / 回</span></div>
+          <div class="pc-total">年間総額 316,800円</div>
+          <div class="pc-click-hint">詳細を見る ↗</div>
+        </div>
+      </div>
+
+      <div class="ab-benefits">
+        <div class="benefit-row" onclick="openModal('extraAnnualModal')">
+          <span class="br-icon">➕</span>
+          <span class="br-text">
+            <span class="br-main">追加レッスンは1回分の料金で</span>
+            <span class="br-sub">申し込み回数に制限なし！</span>
+          </span>
+          <span class="br-arrow">›</span>
+        </div>
+        <div class="benefit-row" onclick="openModal('lineModal')">
+          <span class="br-icon">💬</span>
+          <span class="br-text">
+            <span class="br-main">公式LINEで相談OK</span>
+            <span class="br-sub">最優先でご対応いたします</span>
+          </span>
+          <span class="br-arrow">›</span>
+        </div>
+        <div class="benefit-row" onclick="openModal('scheduleModal')">
+          <span class="br-icon">📅</span>
+          <span class="br-text">
+            <span class="br-main">全日程を事前に仮押さえ可能</span>
+            <span class="br-sub">（変更OK）</span>
+          </span>
+          <span class="br-arrow">›</span>
+        </div>
+        <div class="benefit-row" onclick="openModal('noteModal')">
+          <span class="br-icon">📝</span>
+          <span class="br-text">
+            <span class="br-main">有料Noteが半額＆初月無料</span>
+            <span class="br-sub">（任意になります）</span>
+          </span>
+          <span class="br-arrow">›</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- monthly + guide 2col -->
+    <div class="bottom-grid">
+
+      <!-- monthly -->
+      <div class="monthly-block">
+        <div class="mb-title">月額プラン</div>
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th>回数</th>
+              <th>月額</th>
+              <th>1回あたり</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="openModal('voiceM1')" style="cursor:pointer;">
+              <td>月1回</td><td>10,450円</td><td>10,450円</td>
+            </tr>
+            <tr onclick="openModal('voiceM2')" style="cursor:pointer;">
+              <td>月2回</td><td>19,800円</td><td>9,900円</td>
+            </tr>
+            <tr onclick="openModal('voiceM3')" style="cursor:pointer;">
+              <td>月3回</td><td>28,050円</td><td>9,350円</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="mb-benefits">
+          <div class="mb-benefit" onclick="openModal('extraMonthlyModal')">
+            <span class="mbb-icon">➕</span>
+            <span><div class="mbb-main">追加レッスンは1回分の料金で</div><div class="mbb-sub">申し込み回数に制限なし！</div></span>
+          </div>
+          <div class="mb-benefit" onclick="openModal('lineModal')">
+            <span class="mbb-icon">💬</span>
+            <span><div class="mbb-main">公式LINEで相談OK</div><div class="mbb-sub">最優先でご対応いたします</div></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- guide -->
+      <div class="guide-block">
+        <div class="guide-sec-title">おすすめの選び方</div>
+        <div class="guide-sec-title" style="margin-top:4px;">— 回数 —</div>
+        <div class="guide-item">
+          <div class="gi-line"></div>
+          <div class="gi-text">無理なく<strong>継続したい</strong> → 月1回</div>
+        </div>
+        <div class="guide-item">
+          <div class="gi-line"></div>
+          <div class="gi-text"><strong>上達を加速</strong>したい → 月2回</div>
+        </div>
+        <div class="guide-item">
+          <div class="gi-line"></div>
+          <div class="gi-text"><strong>本番が多い時期</strong>は月3回 <span class="gi-note">（短期的に増やすのも可）</span></div>
+        </div>
+        <div class="guide-divider"></div>
+        <div class="guide-sec-title">— プランの種類 —</div>
+        <div class="guide-item">
+          <div class="gi-line"></div>
+          <div class="gi-text"><strong>まず試してみたい</strong> → 単発・月額</div>
+        </div>
+        <div class="guide-item">
+          <div class="gi-line"></div>
+          <div class="gi-text"><strong>継続が決まったら</strong> → 年間 <span class="gi-note">予約枠を確保しやすく、費用もお得</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="note-cap">※ 本契約後の会場費は生徒様のご負担になります。<br>入会を強制することは一切ありません。</p>
+
+    <!-- LINE CTA -->
+    <div class="line-cta">
+      <div class="lc-text">
+        <div class="lc-title">お申込み・ご相談は公式LINEまで</div>
+        <div class="lc-sub">レッスンのこと、なんでもお気軽にどうぞ</div>
+      </div>
+      <a href="https://lin.ee/MTYL1B2" target="_blank" class="lc-btn">💬 LINEで相談する →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Modals ── -->
+
+<!-- 年間追加 -->
+<div class="modal-overlay" id="extraAnnualModal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('extraAnnualModal')">✕</button>
+    <div class="modal-head">
+      <div class="modal-badge">年間プラン特典</div>
+      <div class="modal-title">追加レッスン</div>
+      <div class="modal-sub">契約プランの1回料金で、何回でも受講OK</div>
+    </div>
+    <div class="modal-body">
+      <div class="mrow"><span class="mrow-label">月1回プラン</span><span class="mrow-price">9,900<span>円</span></span></div>
+      <div class="mrow"><span class="mrow-label">月2回プラン</span><span class="mrow-price">9,350<span>円</span></span></div>
+      <div class="mrow"><span class="mrow-label">月3回プラン</span><span class="mrow-price">8,800<span>円</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 月額追加 -->
+<div class="modal-overlay" id="extraMonthlyModal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('extraMonthlyModal')">✕</button>
+    <div class="modal-head">
+      <div class="modal-badge">月額プラン特典</div>
+      <div class="modal-title">追加レッスン</div>
+      <div class="modal-sub">契約プランの1回料金で、何回でも受講OK</div>
+    </div>
+    <div class="modal-body">
+      <div class="mrow"><span class="mrow-label">月1回プラン</span><span class="mrow-price">10,450<span>円</span></span></div>
+      <div class="mrow"><span class="mrow-label">月2回プラン</span><span class="mrow-price">9,900<span>円</span></span></div>
+      <div class="mrow"><span class="mrow-label">月3回プラン</span><span class="mrow-price">9,350<span>円</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- LINE -->
+<div class="modal-overlay" id="lineModal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('lineModal')">✕</button>
+    <div class="modal-head">
+      <div class="modal-badge">公式LINE</div>
+      <div class="modal-title">LINEで気軽に相談</div>
+    </div>
+    <div class="modal-body">
+      <p class="line-note">レッスンのことを、気軽に相談できます。在籍中の生徒さんは最優先でご対応しています。</p>
+      <div class="chat-wrap">
+        <div class="chat-bubble chat-left">テナーバスからバストロに持ち替えたんですけど、Ges管ロータリーは積極的に使った方がいいですか？</div>
+        <div class="chat-bubble chat-right">解放感がある良い音を目指すなら、ロータリーを使わない方が良い音が鳴ると思います！</div>
+        <div class="chat-bubble chat-right">ただ、操作性の観点から「使いたいときに使える状態」に…</div>
+      </div>
+      <a href="https://lin.ee/MTYL1B2" target="_blank" class="line-btn">＋ LINEを追加する</a>
+    </div>
+  </div>
+</div>
+
+<!-- schedule -->
+<div class="modal-overlay" id="scheduleModal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('scheduleModal')">✕</button>
+    <div class="modal-head">
+      <div class="modal-badge">年間プラン特典</div>
+      <div class="modal-title">全日程仮押さえ</div>
+      <div class="modal-sub">レッスン枠が、ずっと自分のもの</div>
+    </div>
+    <div class="modal-body">
+      <div class="cal-box">
+        <div class="cal-title">3月</div>
+        <div class="cal-grid">
+          <div class="cg-head sun">日</div><div class="cg-head">月</div><div class="cg-head">火</div><div class="cg-head">水</div><div class="cg-head">木</div><div class="cg-head">金</div><div class="cg-head sat">土</div>
+          <div class="cg-cell"></div><div class="cg-cell"></div><div class="cg-cell"></div><div class="cg-cell"></div><div class="cg-cell">6</div><div class="cg-cell">7</div>
+          <div class="cg-cell hl">8</div>
+          <div class="cg-cell sun">9</div><div class="cg-cell">10</div><div class="cg-cell">11</div><div class="cg-cell">12</div><div class="cg-cell">13</div><div class="cg-cell">14</div><div class="cg-cell sat">15</div>
+          <div class="cg-cell sun">16</div><div class="cg-cell">17</div><div class="cg-cell">18</div><div class="cg-cell">19</div><div class="cg-cell">20</div><div class="cg-cell">21</div>
+          <div class="cg-cell hl">22</div>
+          <div class="cg-cell sun">23</div><div class="cg-cell">24</div><div class="cg-cell">25</div><div class="cg-cell">26</div><div class="cg-cell">27</div><div class="cg-cell">28</div><div class="cg-cell sat">29</div>
+          <div class="cg-cell sun">30</div><div class="cg-cell">31</div>
+        </div>
+        <div class="cal-legend"><div class="cal-dot"></div>第2・4土曜日 19:00〜20:00 を仮押さえ中</div>
+      </div>
+      <div class="schedule-feats">
+        <div class="sf"><span class="sf-icon">✅</span><div class="sf-text"><strong>枠を持っている安心感</strong><br>本番前や忙しい時期も、スケジュールを心配せず練習に集中できます。</div></div>
+        <div class="sf"><span class="sf-icon">🔄</span><div class="sf-text"><strong>柔軟に振り替えOK</strong><br>事前にご連絡いただければ別日に変更できます。</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- note -->
+<div class="modal-overlay" id="noteModal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('noteModal')">✕</button>
+    <div class="modal-head">
+      <div class="modal-badge">年間プラン特典</div>
+      <div class="modal-title">有料Note 半額＆初月無料</div>
+      <div class="modal-sub">練習・上達・レッスンの考え方を経験をもとに書いています</div>
+    </div>
+    <div class="modal-body">
+      <div class="note-articles">
+        <a href="https://note.com/minori_kosaka/n/ne02a1aa80927" target="_blank" class="na">
+          <div class="na-cat">上達・考え方</div>
+          <div class="na-title">演奏が上手になる考え方</div>
+          <div class="na-desc">伸び悩みを感じたとき、どう考えると前に進めるか。</div>
+        </a>
+        <a href="https://note.com/minori_kosaka/n/nf62968938656" target="_blank" class="na">
+          <div class="na-cat">練習ツール</div>
+          <div class="na-title">トロンボーンのポジション表を作ってみた</div>
+          <div class="na-desc">自作のポジション表を無料配布。</div>
+        </a>
+        <a href="https://note.com/minori_kosaka/n/n289af2b8b463" target="_blank" class="na">
+          <div class="na-cat">レッスン・費用</div>
+          <div class="na-title">レッスン代の裏話</div>
+          <div class="na-desc">レッスン料に含まれているものを、先生目線で正直に書きました。</div>
+        </a>
+      </div>
+      <a href="https://note.com/minori_kosaka" target="_blank" class="note-link-btn">📝 Noteをもっと見る</a>
+    </div>
+  </div>
+</div>
+
+<!-- voice modals (generated by JS) -->
+<div id="voice-modals"></div>
+
+<script>
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+const voiceData = [
+  {
+    id:'voiceA1', badge:'年間プラン', title:'月1回', sub:'無理なく長く続けたい方に',
+    price:'¥9,900 / 回', total:'年間総額 118,800円',
+    tags:['お仕事や学校と折り合いをつけて無理なく続けたい方','まとまった練習時間が取れない方','コツコツ上達したい方','普段は個人練習、月1回は人と演奏したい方'],
+    voices:[
+      {text:'仕事が忙しくて毎週は無理だけど、月1回なら続けられました。枠が確保されてるから、来月も絶対行くぞって思える。', attr:'20代・社会人'},
+      {text:'子育てしながらで練習時間もあまりとれないけど、レッスンの日は自分のための時間って感じで充実してます。', attr:'30代・主婦'},
+      {text:'年間で契約したことで、やめどきを考えなくてよくなったのが意外と大きかった。惰性じゃなく続けられてる。', attr:'40代・会社員'},
+    ]
+  },
+  {
+    id:'voiceA2', badge:'年間プラン', title:'月2回', sub:'No.1人気！隔週のリズムが続けやすいと好評',
+    price:'¥9,350 / 回', total:'年間総額 224,400円',
+    tags:['練習の進捗を確認しながら着実に進めたい方','自習の方向性を固めたい方','隔週でペースを作りたい方','時期によって回数を調整したい方'],
+    voices:[
+      {text:'隔週ペースがちょうどよくて、前のレッスンで言われたことを試してまた報告できる感じが好き。成長してる実感がある。', attr:'10代・高校生'},
+      {text:'月2回にしてから、練習の質が変わった気がします。次のレッスンまでに何をするか逆算できるようになった。', attr:'20代・大学生'},
+      {text:'吹奏楽の本番前は追加レッスンを入れて週1ペースにしました。同じ料金で増やせるのは年間プランならではだと思う。', attr:'30代・アマチュア奏者'},
+    ]
+  },
+  {
+    id:'voiceA3', badge:'年間プラン', title:'月3回', sub:'1回あたり最安！手厚いサポートが安心と選ばれています',
+    price:'¥8,800 / 回', total:'年間総額 316,800円',
+    tags:['本番・コンクールに向けて集中的に仕上げたい方','コスパ重視でしっかり上達したい方','週1は多いが月2では少ないと感じる方','短期間で大きく変化したい方'],
+    voices:[
+      {text:'コンクール前の時期、週1近くで見てもらえるのが心強かった。技術的なことだけじゃなくて気持ちの面も整理できた。', attr:'10代・中学生'},
+      {text:'月3回プランで入って、本番前はさらに追加レッスンを入れました。同じ8,800円で増やせるので、直前期も費用を気にせず動けた。', attr:'20代・音大受験生'},
+      {text:'週1は多すぎるけど月2では少ない、というちょうど間のペースが自分には合ってました。', attr:'30代・趣味プレイヤー'},
+    ]
+  },
+  {
+    id:'voiceM1', badge:'月額プラン', title:'月1回', sub:'気軽に始めて、気づいたら続いていました',
+    price:'¥10,450 / 回', total:'月額 10,450円',
+    tags:['まずは気軽に試してみたい方','月1回がちょうどいいペースの方','続けられるか不安な方','他の習い事と並行したい方'],
+    voices:[
+      {text:'まず体験してみたくて。1回ごとじゃないから毎月継続しやすいし、年間契約するほど踏み切れない自分にはちょうどよかった。', attr:'20代・初心者'},
+      {text:'他の習い事もあって月1がMAX。それでも毎回すごく具体的なフィードバックをもらえるので、一人練習の方向性が定まる。', attr:'30代・社会人'},
+      {text:'気軽に始められて、気づいたら半年経ってた。続けられてるのはレッスン自体が楽しいからだと思う。', attr:'40代・再開組'},
+    ]
+  },
+  {
+    id:'voiceM2', badge:'月額プラン', title:'月2回', sub:'自分のペースで、着実に通えています',
+    price:'¥9,900 / 回', total:'月額 19,800円',
+    tags:['まだ年間契約に踏み切れない方','隔週でリズムを作りたい方','適度なプレッシャーが欲しい方','月によって予定が変わりやすい方'],
+    voices:[
+      {text:'年間契約はまだ迷ってるけど、月2回ならちゃんと通えてる。自分のペースに合ってる気がする。', attr:'10代・高校生'},
+      {text:'隔週でレッスンがあると練習もサボれない（笑）。いい意味でのプレッシャーが続けるモチベになってます。', attr:'20代・社会人'},
+      {text:'月によって予定が変わるので、月額の方が調整しやすくて助かってます。振り替えも対応してもらえるので。', attr:'30代・パート'},
+    ]
+  },
+  {
+    id:'voiceM3', badge:'月額プラン', title:'月3回', sub:'短期集中で、想像以上の変化がありました',
+    price:'¥9,350 / 回', total:'月額 28,050円（9,350円×3回）',
+    tags:['発表会・本番に向けて短期集中したい方','本番前の数ヶ月だけ回数を増やしたい方','特定の課題を集中的に直したい方','週1ペースで取り組みたい方'],
+    voices:[
+      {text:'発表会に向けて短期集中で申し込みました。週1ペースで見てもらえて、想像以上に仕上がった。', attr:'10代・中学生'},
+      {text:'社会人バンドの演奏会前に3ヶ月だけ月3回にして、終わったら月1に戻す、という使い方をしています。', attr:'30代・アマチュア'},
+      {text:'吹き方の癖を直したくて、集中的に通うことにしました。短期間でも変化を実感できて、続けるか検討中。', attr:'20代・転向組'},
+    ]
+  },
+];
+
+const container = document.getElementById('voice-modals');
+voiceData.forEach(d => {
+  const tagsHtml = d.tags.map(t=>`<div class="tag-item">${t}</div>`).join('');
+  const voicesHtml = d.voices.map(v=>`
+    <div class="vc">
+      <div class="vc-text">「${v.text}」</div>
+      <div class="vc-attr">― ${v.attr}</div>
+    </div>`).join('');
+  container.insertAdjacentHTML('beforeend', `
+    <div class="modal-overlay" id="${d.id}" onclick="if(event.target===this)closeModal('${d.id}')">
+      <div class="modal-box">
+        <button class="modal-close" onclick="closeModal('${d.id}')">✕</button>
+        <div class="modal-head">
+          <div class="modal-badge">${d.badge} · ${d.title}</div>
+          <div class="modal-title">${d.sub}</div>
+        </div>
+        <div class="modal-body">
+          <div class="price-display">
+            <div class="pd-price">${d.price}</div>
+            <div class="pd-total">${d.total}</div>
+          </div>
+          <div class="voice-sec-title">こんな方におすすめ</div>
+          <div class="tags-wrap">${tagsHtml}</div>
+          <div class="voice-sec-title">生徒さんの声</div>
+          <div class="voice-cards">${voicesHtml}</div>
+        </div>
+      </div>
+    </div>`);
+});
+</script>
+
+</body>
+</html>
