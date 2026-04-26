@@ -168,31 +168,40 @@
 
     /* Just intonation note */
     #just-note {
-      display: none; margin-top: 20px; padding: 16px; border-radius: 12px;
-      background: #0a1f1c; border: 1px solid #1e4a42;
-      font-size: 11px; color: #6b9e96; line-height: 1.8;
+      display: none; margin-top: 20px; padding: 18px 20px; border-radius: 14px;
+      background: linear-gradient(135deg, #0d2822, #0a1f1c);
+      border: 1px solid #2a9d8a55; border-left: 4px solid #2a9d8a;
+      font-size: 12px; color: #8abab4; line-height: 1.9;
+      box-shadow: 0 2px 12px #00000030;
     }
-    #just-note strong { color: #2a9d8a; }
+    #just-note-title {
+      display: block; font-size: 13px; font-weight: 700;
+      color: #ffffff; margin-bottom: 8px; letter-spacing: 0.5px;
+    }
+    #just-note-title .paren {
+      font-size: 10px; font-weight: 400; color: #8abab4;
+    }
+    #just-note-body { display: block; }
 
     /* Ad Banner */
     #ad-section { max-width: 520px; margin: 32px auto 0; padding: 0 16px; display: none; }
 
     #ad-banner {
       padding: 16px 20px; border-radius: 12px;
-      background: linear-gradient(135deg, #101f1d, #0d2822);
+      background: #f5f0e8;
       transition: all 0.3s ease; animation: fadeUp 0.4s ease both;
-      display: block; border: 1px solid #1e4a42;
-      box-shadow: 0 2px 12px #00000040;
+      display: block; border: 1px solid #8a7040; border-left: 3px solid #c0a040;
+      box-shadow: 0 2px 8px #00000030;
     }
     #ad-banner:hover { filter: brightness(1.08); }
     #ad-inner-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     #ad-pr-badge {
       font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px;
-      color: #fff; letter-spacing: 1px; flex-shrink: 0;
+      background: #c0922a !important; color: #fff; letter-spacing: 1px; flex-shrink: 0;
     }
     #ad-label { font-size: 10px; letter-spacing: 2px; }
-    #ad-heading { font-size: 13px; font-weight: 700; color: #e0f0ed; font-family: 'Cormorant Garamond', serif; margin-bottom: 4px; line-height: 1.5; }
-    #ad-body { font-size: 11px; color: #6b9e96; line-height: 1.6; margin-bottom: 10px; }
+    #ad-heading { font-size: 13px; font-weight: 700; color: #2a1a00; font-family: 'Cormorant Garamond', serif; margin-bottom: 4px; line-height: 1.5; }
+    #ad-body { font-size: 11px; color: #5a4a30; line-height: 1.6; margin-bottom: 10px; }
     #ad-cta { display: inline-block; font-size: 11px; font-weight: 700; padding-bottom: 1px; }
     /* Review card */
     #review-card {
@@ -800,7 +809,9 @@ function analyze() {
       title: "📐 純正律について",
       body: "上記のcent値は12平均律を基準（0cent）とした純正律の差です。アンサンブルでは各音の役割に応じて調整することで、倍音が揃い「鳴る和音」になります。"
     };
-    document.getElementById('just-note-title').textContent = desc.title;
+    // カッコ内を小さく表示
+    const titleHtml = desc.title.replace(/（([^）]+)）/g, '<span class="paren">（$1）</span>');
+    document.getElementById('just-note-title').innerHTML = titleHtml;
     document.getElementById('just-note-body').textContent  = desc.body;
     document.getElementById('results-label').textContent = `判定結果 — ${results.length}件`;
     results.forEach((r, i) => list.appendChild(buildChordCard(r, i === 0)));
@@ -821,16 +832,15 @@ function analyze() {
     const ad = AD_BANNERS[adBannerIndex % AD_BANNERS.length];
     adBannerIndex++;
     bannerEl.href = ad.url;
-    bannerEl.style.border = `1px solid ${ad.accent}44`;
-    bannerEl.style.borderLeft = `3px solid ${ad.accent}`;
-    document.getElementById('ad-pr-badge').style.background = ad.accent;
+    bannerEl.style.border = '1px solid #8a7040';
+    bannerEl.style.borderLeft = '3px solid #c0a040';
     document.getElementById('ad-label').textContent = ad.label;
-    document.getElementById('ad-label').style.color = ad.accent;
+    document.getElementById('ad-label').style.color = '#8a6a20';
     document.getElementById('ad-heading').textContent = ad.heading;
     document.getElementById('ad-body').textContent = ad.body;
     document.getElementById('ad-cta').textContent = ad.cta + ' →';
-    document.getElementById('ad-cta').style.color = ad.accent;
-    document.getElementById('ad-cta').style.borderBottom = `1px solid ${ad.accent}66`;
+    document.getElementById('ad-cta').style.color = '#c07800';
+    document.getElementById('ad-cta').style.borderBottom = '1px solid #c0780066';
     bannerEl.style.display = 'block';
   }
   adSection.style.display = 'block';
