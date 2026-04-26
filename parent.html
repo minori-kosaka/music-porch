@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お子さんのトロンボーンレッスン｜Music Porch・厚木市</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --white:#ffffff;
+  --cream:#faf7f2;
+  --cream2:#f3ede3;
+  --warm:#ede5d6;
+  --bark:#7a5c3a;
+  --bark2:#5c4228;
+  --sage:#3d6b5e;
+  --sage2:#2a5246;
+  --sage3:#d4ebe5;
+  --sage4:#eaf4f1;
+  --sage5:#f0f8f5;
+  --gold:#b8894a;
+  --gold2:#e8c98a;
+  --gold3:#fdf3e0;
+  --ink:#2c2218;
+  --mid:#6b5740;
+  --lt:#a8937a;
+  --bd:rgba(122,92,58,0.12);
+  --bds:rgba(122,92,58,0.07);
+}
+body{font-family:'Zen Kaku Gothic New',sans-serif;color:var(--ink);background:var(--cream);line-height:1.8;overflow-x:hidden;font-size:16px;font-weight:300}
+@media(min-width:900px){body{font-size:17px;}}
+
+/* ===== TEXTURE OVERLAY ===== */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:0 6%;height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(250,247,242,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--bd);
+}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;letter-spacing:.18em;color:var(--bark2);font-style:italic;}
+.nav-btn{
+  background:var(--sage);color:var(--white);
+  padding:8px 18px;font-size:.72rem;font-weight:700;letter-spacing:.06em;
+  text-decoration:none;border-radius:2px;
+  transition:background .2s;
+}
+.nav-btn:hover{background:var(--sage2);}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100svh;
+  background:var(--cream);
+  position:relative;
+  display:flex;align-items:center;
+  padding:80px 6% 60px;
+  overflow:hidden;
+}
+/* 背景装飾：大きな円弧 */
+.hero-arc{
+  position:absolute;
+  top:-20%;right:-25%;
+  width:70vw;height:70vw;
+  max-width:640px;max-height:640px;
+  border-radius:50%;
+  background:radial-gradient(circle,var(--sage4) 0%,var(--sage5) 50%,transparent 75%);
+  pointer-events:none;
+}
+.hero-arc2{
+  position:absolute;
+  bottom:-15%;left:-15%;
+  width:50vw;height:50vw;
+  max-width:440px;max-height:440px;
+  border-radius:50%;
+  background:radial-gradient(circle,var(--gold3) 0%,transparent 70%);
+  pointer-events:none;
+}
+/* 葉っぱ風装飾ライン */
+.hero-deco{
+  position:absolute;
+  top:12%;right:8%;
+  opacity:.18;
+  pointer-events:none;
+}
+.hero-inner{position:relative;z-index:1;max-width:600px;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:.62rem;letter-spacing:.32em;color:var(--sage);
+  margin-bottom:24px;
+  opacity:0;animation:fadeup .7s .1s ease forwards;
+}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--sage);}
+.hero-h1{
+  font-family:'Shippori Mincho',serif;
+  font-size:clamp(2rem,4.5vw,3.8rem);
+  font-weight:600;
+  color:var(--ink);
+  line-height:1.45;
+  letter-spacing:.02em;
+  margin-bottom:8px;
+  opacity:0;animation:fadeup .7s .22s ease forwards;
+}
+.hero-h1 em{font-style:normal;color:var(--sage);display:inline;}
+.hero-lead{
+  font-size:clamp(.9rem,1.8vw,1.05rem);
+  color:var(--mid);
+  line-height:2.2;
+  margin:22px 0 36px;
+  max-width:440px;
+  opacity:0;animation:fadeup .7s .38s ease forwards;
+}
+.hero-lead strong{color:var(--ink);font-weight:500;}
+.hero-cta{
+  display:flex;flex-direction:column;align-items:flex-start;gap:12px;
+  opacity:0;animation:fadeup .7s .52s ease forwards;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--sage);color:var(--white);
+  padding:15px 34px;
+  font-size:.88rem;font-weight:700;letter-spacing:.07em;
+  text-decoration:none;border-radius:2px;
+  box-shadow:0 4px 18px rgba(61,107,94,.2);
+  transition:all .25s;
+}
+.btn-primary:hover{background:var(--sage2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(61,107,94,.28);}
+.hero-note{font-size:.64rem;color:var(--lt);letter-spacing:.04em;}
+.hero-illust{
+  position:absolute;right:5%;bottom:8%;
+  z-index:1;
+  opacity:0;animation:fadeup .9s .7s ease forwards;
+}
+@keyframes fadeup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* ===== STAT ===== */
+.stat{
+  background:var(--sage);
+  padding:0 5%;
+}
+.stat-inner{
+  display:flex;justify-content:center;flex-wrap:wrap;
+  max-width:680px;margin:0 auto;
+}
+.st{
+  flex:1 1 120px;max-width:220px;min-width:0;
+  padding:22px 12px;text-align:center;
+  border-right:1px solid rgba(255,255,255,.15);
+}
+.st:last-child{border-right:none;}
+@media(max-width:700px) and (min-width:480px){
+  .st{flex:1 1 33%;max-width:33%;}
+  .st-n{font-size:1.6rem !important;}
+}
+@media(max-width:479px){
+  .st{flex:0 0 50%;max-width:50%;border-right:none;border-bottom:1px solid rgba(255,255,255,.12);}
+  .st:nth-child(odd){border-right:1px solid rgba(255,255,255,.12);}
+  .st:last-child:nth-child(odd){flex:0 0 100%;max-width:100%;border-right:none;}
+  .st:last-child{border-bottom:none;}
+}
+.st-n{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--white);line-height:1;display:block;margin-bottom:5px;}
+.st-l{font-size:.56rem;color:rgba(255,255,255,.55);letter-spacing:.08em;}
+
+/* ===== SECTIONS ===== */
+.sec{padding:80px 6%;position:relative;}
+.sec-cream{background:var(--cream);}
+.sec-white{background:var(--white);}
+.sec-warm{background:var(--warm);}
+.sec-sage{background:var(--sage4);}
+.sec-green{background:var(--sage);}
+
+.center{text-align:center;}
+.sh{margin-bottom:48px;}
+.sh-en{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.7rem;letter-spacing:.4em;color:var(--sage);
+  display:block;margin-bottom:9px;font-style:italic;
+}
+.sh-ja{
+  font-family:'Shippori Mincho',serif;
+  font-size:clamp(1.45rem,4vw,2.1rem);font-weight:600;
+  color:var(--ink);line-height:1.5;
+}
+.sh-ja em{font-style:normal;color:var(--sage);}
+.sh-ja-w{color:var(--white);}
+.sh-ja-w em{color:var(--gold2);}
+.sh-ds{font-size:.83rem;color:var(--mid);line-height:2.1;margin-top:11px;}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .65s ease,transform .65s ease;}
+.rv.on{opacity:1;transform:none;}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+/* ===== STORY ===== */
+.story-w{max-width:580px;margin:0 auto;}
+.story-intro{
+  font-family:'Shippori Mincho',serif;
+  font-size:clamp(1.05rem,3vw,1.4rem);font-weight:500;
+  color:var(--ink);line-height:1.95;
+  margin-bottom:26px;
+}
+.story-intro em{font-style:normal;color:var(--sage);border-bottom:2px solid var(--sage3);}
+.story-card{
+  background:var(--white);
+  border-radius:4px;
+  border:1px solid var(--bds);
+  border-left:4px solid var(--sage3);
+  padding:24px 22px;
+  margin-bottom:22px;
+  box-shadow:0 2px 12px rgba(122,92,58,.05);
+}
+.story-card p{font-size:.84rem;color:var(--mid);line-height:2.2;}
+.story-card p strong{color:var(--ink);font-weight:500;}
+.story-ans{
+  font-size:.88rem;color:var(--ink);line-height:2.1;
+  padding:18px 20px;
+  background:var(--sage5);
+  border-radius:4px;
+}
+.story-ans em{font-style:normal;color:var(--sage2);font-weight:600;}
+
+/* ===== PAIN ===== */
+.pain-w{max-width:580px;margin:0 auto;}
+.pain-hd{
+  font-family:'Shippori Mincho',serif;
+  font-size:clamp(1rem,3vw,1.35rem);font-weight:500;
+  color:var(--ink);line-height:1.85;
+  text-align:center;margin-bottom:28px;
+}
+.pain-hd em{font-style:normal;color:var(--sage);}
+.pain-list{display:flex;flex-direction:column;gap:3px;}
+.pain-it{
+  background:var(--white);
+  padding:16px 18px;
+  display:flex;align-items:flex-start;gap:12px;
+  border-radius:3px;
+  border:1px solid var(--bds);
+}
+.pain-ic{font-size:1.05rem;flex-shrink:0;margin-top:3px;}
+.pain-tx{font-size:.82rem;color:var(--mid);line-height:1.9;}
+.pain-tx strong{color:var(--ink);font-weight:500;}
+
+/* ===== CONCEPT ===== */
+.concept-band{
+  background:var(--sage2);
+  padding:64px 6%;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.concept-band::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(255,255,255,.04) 0%,transparent 70%);
+}
+.concept-inner{position:relative;z-index:1;max-width:560px;margin:0 auto;}
+.concept-leaf{
+  width:1px;height:48px;
+  background:linear-gradient(to bottom,transparent,rgba(255,255,255,.3));
+  margin:0 auto 20px;display:block;
+}
+.concept-kv{
+  font-family:'Shippori Mincho',serif;
+  font-size:clamp(1.3rem,4.2vw,2.1rem);font-weight:600;
+  color:var(--white);line-height:1.6;
+  margin-bottom:22px;
+}
+.concept-kv em{font-style:normal;color:var(--gold2);}
+.concept-tx{font-size:.84rem;color:rgba(255,255,255,.65);line-height:2.2;}
+.concept-tx strong{color:rgba(255,255,255,.9);font-weight:500;}
+
+/* ===== RESULT ===== */
+.res-g{display:grid;grid-template-columns:1fr;gap:3px;max-width:620px;margin:0 auto;}
+@media(min-width:560px){.res-g{grid-template-columns:1fr 1fr;}}
+.rc{
+  background:var(--white);
+  padding:26px 20px;
+  border:1px solid var(--bds);
+  border-radius:3px;
+  position:relative;overflow:hidden;
+}
+.rc::after{
+  content:'';
+  position:absolute;top:0;left:0;width:4px;height:100%;
+  background:linear-gradient(to bottom,var(--sage3),var(--gold3));
+}
+.rc-n{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.6rem;font-weight:300;
+  color:var(--sage3);
+  position:absolute;top:10px;right:14px;line-height:1;
+}
+.rc-tg{
+  font-size:.55rem;letter-spacing:.1em;
+  background:var(--sage4);color:var(--sage2);
+  padding:2px 7px;border-radius:1px;
+  display:inline-block;margin-bottom:8px;
+}
+.rc-tt{
+  font-family:'Shippori Mincho',serif;
+  font-size:.98rem;font-weight:600;
+  color:var(--ink);margin-bottom:6px;line-height:1.5;
+}
+.rc-tx{font-size:.77rem;color:var(--mid);line-height:1.9;}
+
+/* ===== VOICE ===== */
+.voc-g{display:grid;grid-template-columns:1fr;gap:14px;max-width:620px;margin:0 auto;}
+@media(min-width:560px){.voc-g{grid-template-columns:1fr 1fr;}}
+.voc{
+  background:var(--white);
+  border:1px solid var(--bds);
+  border-radius:4px;
+  padding:26px 20px 18px;
+  position:relative;
+  box-shadow:0 2px 12px rgba(122,92,58,.05);
+}
+.voc::before{
+  content:'"';
+  font-family:'Cormorant Garamond',serif;
+  font-size:5rem;font-style:italic;
+  color:var(--sage3);
+  position:absolute;top:-8px;left:12px;line-height:1;
+}
+.voc-tx{font-size:.81rem;color:var(--ink);line-height:2.1;padding-top:20px;margin-bottom:12px;}
+.voc-tx em{font-style:normal;color:var(--sage2);font-weight:500;}
+.voc-attr{font-size:.63rem;color:var(--lt);border-top:1px solid var(--bds);padding-top:8px;}
+
+/* ===== CTA STRIP ===== */
+.cta-strip{
+  background:var(--sage5);
+  border-top:1px solid var(--sage3);
+  border-bottom:1px solid var(--sage3);
+  padding:44px 6%;text-align:center;
+}
+.cta-strip p{font-size:.9rem;color:var(--ink);margin-bottom:18px;line-height:2;}
+.cta-strip p strong{color:var(--sage2);font-weight:700;}
+.btn-sage{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--sage);color:var(--white);
+  padding:13px 32px;font-size:.86rem;font-weight:700;
+  text-decoration:none;border-radius:2px;
+  transition:all .2s;box-shadow:0 4px 16px rgba(61,107,94,.18);
+}
+.btn-sage:hover{background:var(--sage2);transform:translateY(-1px);}
+
+/* ===== INSTRUCTOR ===== */
+.inst-w{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:28px;}
+@media(min-width:560px){.inst-w{flex-direction:row;gap:40px;align-items:flex-start;}}
+.inst-img-wrap{position:relative;flex-shrink:0;}
+.inst-img{
+  width:130px;min-width:130px;
+  aspect-ratio:3/4;overflow:hidden;
+  border-radius:4px;
+  border:1px solid var(--bds);
+}
+.inst-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.inst-img-deco{
+  position:absolute;bottom:-8px;right:-8px;
+  width:100%;height:100%;
+  border:2px solid var(--sage3);
+  border-radius:4px;
+  z-index:-1;
+}
+.inst-nm{
+  font-family:'Shippori Mincho',serif;
+  font-size:1.7rem;font-weight:600;color:var(--ink);margin-bottom:2px;
+}
+.inst-en{font-size:.68rem;letter-spacing:.24em;color:var(--lt);margin-bottom:13px;}
+.inst-tx{font-size:.88rem;line-height:2.1;color:var(--mid);margin-bottom:9px;}
+.inst-tgs{display:flex;flex-wrap:wrap;gap:5px;margin-top:11px;}
+.inst-tg{
+  border:1px solid var(--sage3);
+  background:var(--sage5);
+  color:var(--sage2);
+  font-size:.65rem;padding:3px 9px;letter-spacing:.04em;border-radius:1px;
+}
+
+/* ===== PRICE ===== */
+.price-featured{
+  background:var(--white);
+  border:1px solid var(--bds);
+  border-radius:4px;
+  padding:28px 24px;
+  max-width:480px;margin:0 auto 20px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;
+  position:relative;overflow:hidden;
+  box-shadow:0 4px 20px rgba(122,92,58,.08);
+}
+.price-featured::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--sage),var(--gold2));
+}
+.price-bdg{
+  display:inline-block;
+  background:var(--gold3);color:var(--bark);
+  font-size:.57rem;font-weight:700;letter-spacing:.09em;
+  padding:3px 9px;border-radius:1px;margin-bottom:7px;
+  border:1px solid var(--gold2);
+}
+.price-name{
+  font-family:'Shippori Mincho',serif;
+  font-size:1.2rem;font-weight:600;color:var(--ink);margin-bottom:3px;
+}
+.price-list{list-style:none;margin-top:8px;display:flex;flex-direction:column;gap:4px;}
+.price-list li{font-size:.71rem;color:var(--mid);display:flex;align-items:center;gap:6px;}
+.price-list li::before{content:'✓';color:var(--sage);font-weight:700;}
+.price-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.9rem;font-weight:300;color:var(--sage);line-height:1;text-align:right;
+}
+.price-num sup{font-size:.95rem;vertical-align:super;}
+.price-cap{font-size:.6rem;color:var(--lt);margin-top:3px;text-align:right;}
+
+.plan-wrap{max-width:480px;margin:0 auto;}
+.plan-hd{font-size:.59rem;letter-spacing:.13em;color:var(--lt);text-align:center;margin-bottom:10px;}
+.plan-box{
+  background:var(--white);
+  border:1px solid var(--bds);
+  border-radius:3px;
+  margin-bottom:8px;
+  overflow:hidden;
+  box-shadow:0 2px 8px rgba(122,92,58,.04);
+}
+.plan-lb{
+  background:var(--sage4);color:var(--sage2);
+  font-size:.58rem;font-weight:700;letter-spacing:.09em;padding:7px 12px;
+  border-bottom:1px solid var(--sage3);
+}
+.plan-lb.sub{background:var(--cream2);color:var(--mid);}
+.ptb{width:100%;border-collapse:collapse;}
+.ptb th{font-size:.6rem;letter-spacing:.05em;color:var(--lt);font-weight:400;padding:8px 11px;border-bottom:1px solid var(--bds);text-align:left;}
+.ptb th:not(:first-child){text-align:right;}
+.ptb td{padding:12px 11px;border-bottom:1px solid var(--bds);font-size:.85rem;color:var(--ink);}
+.ptb td:first-child{font-weight:500;}
+/* 年間総額列：控えめ */
+.ptb td:nth-child(2){text-align:right;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--lt);}
+/* 1回あたり列：大きく目立つ */
+.ptb td:last-child{text-align:right;font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--sage2);font-weight:400;}
+/* 月額プランは2列なので月額列も目立つ */
+.ptb.two-col td:nth-child(2){font-size:1.1rem;color:var(--lt);}
+.ptb.two-col td:last-child{font-size:1.45rem;color:var(--sage2);}
+.ptb tr:last-child td{border-bottom:none;}
+.ptb .hi td:last-child{color:var(--sage);}
+.price-notes{max-width:480px;margin:12px auto 0;}
+.price-note{font-size:.62rem;color:var(--lt);line-height:2;text-align:center;display:block;}
+
+/* ===== FLOW ===== */
+.flow-w{max-width:500px;margin:0 auto;}
+.fl{
+  display:grid;grid-template-columns:50px 1fr;gap:12px;
+  padding:20px 0;border-bottom:1px solid var(--bds);position:relative;
+}
+.fl:last-child{border-bottom:none;}
+.fl::after{
+  content:'';position:absolute;left:24px;top:50px;bottom:0;
+  width:1px;background:linear-gradient(to bottom,var(--sage3),transparent);
+}
+.fl:last-child::after{display:none;}
+.fl-n{
+  width:36px;height:36px;
+  background:var(--sage5);
+  border:1px solid var(--sage3);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:.92rem;color:var(--sage);
+  position:relative;z-index:1;flex-shrink:0;
+}
+.fl-tg{font-size:.54rem;letter-spacing:.06em;background:var(--sage4);color:var(--sage2);padding:2px 6px;border-radius:1px;display:inline-block;margin-bottom:3px;}
+.fl h3{font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:2px;}
+.fl p{font-size:.76rem;color:var(--mid);line-height:1.85;}
+
+/* ===== FAQ ===== */
+.fq-w{max-width:500px;margin:0 auto;}
+.fq{border-bottom:1px solid var(--bds);}
+.fq-q{display:flex;justify-content:space-between;align-items:flex-start;gap:11px;padding:16px 0;cursor:pointer;}
+.fq-qt{font-size:.83rem;font-weight:500;display:flex;gap:8px;line-height:1.6;color:var(--ink);}
+.fq-qt::before{content:'Q';color:var(--sage);font-weight:700;flex-shrink:0;}
+.fq-ic{font-size:.93rem;color:var(--lt);transition:transform .25s;flex-shrink:0;margin-top:3px;}
+.fq.open .fq-ic{transform:rotate(45deg);color:var(--sage);}
+.fq-a{display:none;padding:0 0 16px 22px;font-size:.77rem;color:var(--mid);line-height:2;}
+.fq.open .fq-a{display:block;}
+
+/* ===== FINAL CTA ===== */
+.final{
+  background:var(--sage2);
+  padding:88px 6%;text-align:center;
+  position:relative;overflow:hidden;
+}
+.final::before{
+  content:'';position:absolute;
+  top:-40%;left:50%;transform:translateX(-50%);
+  width:120%;height:80%;
+  background:radial-gradient(ellipse,rgba(255,255,255,.05) 0%,transparent 65%);
+  pointer-events:none;
+}
+.final-in{position:relative;z-index:1;}
+.final-leaf{width:1px;height:40px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.3));margin:0 auto 18px;display:block;}
+.final-tt{
+  font-family:'Shippori Mincho',serif;
+  font-size:clamp(1.4rem,4.5vw,2.5rem);font-weight:600;
+  color:var(--white);line-height:1.55;margin-bottom:9px;
+}
+.final-tt em{font-style:normal;color:var(--gold2);display:block;}
+.final-sub{font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:32px;line-height:2;}
+.final-ck{display:flex;justify-content:center;flex-wrap:wrap;gap:16px;margin-bottom:36px;}
+.ck{font-size:.71rem;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:5px;}
+.ck::before{content:'✓';color:var(--gold2);font-weight:700;}
+.btn-final{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--white);color:var(--sage2);
+  padding:16px 48px;
+  font-size:.9rem;font-weight:700;letter-spacing:.07em;
+  text-decoration:none;border-radius:2px;
+  box-shadow:0 4px 20px rgba(0,0,0,.12);
+  transition:all .25s;
+}
+.btn-final:hover{background:var(--cream);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.16);}
+.final-cp{font-size:.61rem;color:rgba(255,255,255,.25);margin-top:12px;}
+
+/* ===== STICKY ===== */
+.sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:90;background:var(--sage);padding:13px 6%;text-align:center;border-top:1px solid rgba(255,255,255,.15);}
+.sticky-cta a{color:var(--white);font-weight:700;font-size:.83rem;text-decoration:none;letter-spacing:.04em;}
+@media(max-width:599px){.sticky-cta{display:block;}.hero{padding-bottom:100px;}}
+
+/* ===== FOOTER ===== */
+footer{
+  background:var(--bark2);
+  padding:20px 6%;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+}
+.f-lo{font-family:'Cormorant Garamond',serif;font-size:.93rem;font-style:italic;color:rgba(255,255,255,.3);letter-spacing:.14em;}
+footer small{font-size:.57rem;color:rgba(255,255,255,.2);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Music Porch</div>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeNSEcqjhuDGloSh3wt7T4PEPI0ZX4FYqSSkZMBB30nIC9a0w/viewform?usp=dialog" class="nav-btn" target="_blank" rel="noopener">体験を申し込む</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-arc"></div>
+  <div class="hero-arc2"></div>
+  <!-- 葉っぱ風SVG装飾 -->
+  <svg class="hero-deco" width="120" height="200" viewBox="0 0 120 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M60 180 C60 180 10 120 10 80 C10 40 35 10 60 10 C85 10 110 40 110 80 C110 120 60 180 60 180Z" stroke="#3d6b5e" stroke-width="1.5" fill="none"/>
+    <line x1="60" y1="10" x2="60" y2="180" stroke="#3d6b5e" stroke-width="1" stroke-dasharray="4 4"/>
+    <path d="M60 60 C60 60 35 75 25 95" stroke="#3d6b5e" stroke-width="1" stroke-dasharray="3 4"/>
+    <path d="M60 60 C60 60 85 75 95 95" stroke="#3d6b5e" stroke-width="1" stroke-dasharray="3 4"/>
+    <path d="M60 100 C60 100 38 112 30 128" stroke="#3d6b5e" stroke-width="1" stroke-dasharray="3 4"/>
+    <path d="M60 100 C60 100 82 112 90 128" stroke="#3d6b5e" stroke-width="1" stroke-dasharray="3 4"/>
+  </svg>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Trombone Lesson · Atsugi · 中学生歓迎</p>
+    <h1 class="hero-h1">
+      頑張っているお子さんに、<em>「なぜ」を教えてくれる先生がいます。</em>
+    </h1>
+    <p class="hero-lead">
+      始めたばかりで不安なお子さんも、<br>
+      コンクールに向けて本気で取り組むお子さんも。<br>
+      <strong>やる気を、正しい方向へ導きます。</strong>
+    </p>
+    <div class="hero-cta">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeNSEcqjhuDGloSh3wt7T4PEPI0ZX4FYqSSkZMBB30nIC9a0w/viewform?usp=dialog" class="btn-primary" target="_blank" rel="noopener">体験レッスンを申し込む →</a>
+      <p class="hero-note">体験レッスン ¥5,500（税込）・入会を強制しません</p>
+    </div>
+  </div>
+</section>
+
+<!-- STAT -->
+<div class="stat">
+  <div class="stat-inner">
+    <div class="st rv"><span class="st-n">30<small style="font-size:.95rem">+</small></span><div class="st-l">在籍生徒数</div></div>
+    <div class="st rv d1"><span class="st-n" style="font-size:1.65rem;">9:00~22:00</span><div class="st-l">受講可能時間帯</div></div>
+    <div class="st rv d2"><span class="st-n">60<small style="font-size:.95rem">min</small></span><div class="st-l">1回のレッスン時間</div></div>
+  </div>
+</div>
+
+<!-- 共感ストーリー -->
+<section class="sec sec-cream">
+  <div class="story-w rv">
+    <p class="story-intro">
+      「頑張っているのに、なかなか変わらない」<br>
+      「感覚で言われても、子どもがわかっていない様子」<br><br>
+      <em>そう感じたことは、ありませんか？</em>
+    </p>
+    <div class="story-card">
+      <p>「もっと豊かに吹いて」と顧問に言われても、何をすればいいかわからない。コンクールまで時間がないのに、毎回同じ練習を繰り返している。始めたばかりなのに、変な癖がついてきた気がする。<br><br>
+      <strong>原因の多くは、「なぜそうなるか」を教えてもらえていないことです。</strong></p>
+    </div>
+    <div class="story-ans">
+      Music Porchのレッスンは、<em>「なぜ」から始まります。</em><br>
+      理由がわかると、お子さんは自分で考えて練習できるようになる。それが、一番の変化です。
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="sec sec-white">
+  <div class="pain-w">
+    <p class="pain-hd rv">こんなお悩み、<em>ありませんか？</em></p>
+    <div class="pain-list">
+      <div class="pain-it rv d1"><span class="pain-ic">🌱</span><div class="pain-tx">入部して間もないのに、<strong>変な癖がついてきた気がする</strong></div></div>
+      <div class="pain-it rv d2"><span class="pain-ic">💭</span><div class="pain-tx"><strong>「感覚で言われてもわからない」</strong>と子どもが言っている</div></div>
+      <div class="pain-it rv d3"><span class="pain-ic">🔄</span><div class="pain-tx">やる気はあるのに、<strong>練習が毎回同じで変化が出ていない</strong></div></div>
+      <div class="pain-it rv d1"><span class="pain-ic">🏆</span><div class="pain-tx">コンクール前なのに、<strong>何をどう仕上げればいいかわからない</strong></div></div>
+      <div class="pain-it rv d2"><span class="pain-ic">🎵</span><div class="pain-tx"><strong>「もっと豊かに」「もっと音楽的に」</strong>と言われるが、具体的に何をすればいいかわからない</div></div>
+      <div class="pain-it rv d3"><span class="pain-ic">😮‍💨</span><div class="pain-tx">頑張っているのに、<strong>本番でうまくいかないことが続いている</strong></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<div class="concept-band rv">
+  <div class="concept-inner">
+    <span class="concept-leaf"></span>
+    <p class="concept-kv">「なぜ」がわかると、<em>吹くのがもっと楽しくなる。</em></p>
+    <p class="concept-tx">Music Porchのレッスンでは、<strong>「なぜそうなるか」を言葉にして伝えること</strong>を大切にしています。感覚だけで伝えるのではなく、理由まで説明する。だからお子さんは<strong>「自分で考えて練習する力」</strong>が身につきます。それは音楽だけでなく、壁にぶつかったときに自分で原因を探せる力にもなります。</p>
+  </div>
+</div>
+
+<!-- RESULT -->
+<section class="sec sec-sage">
+  <div class="sh center rv">
+    <span class="sh-en">What Changes</span>
+    <h2 class="sh-ja">レッスン後、<em>こう変わります</em></h2>
+  </div>
+  <div class="res-g">
+    <div class="rc rv d1"><span class="rc-n">01</span><span class="rc-tg">BEFORE → AFTER</span><h3 class="rc-tt">「なんとなく練習」が「意図的な練習」に</h3><p class="rc-tx">今日何をすればいいか、迷わなくなります。練習の中身が変わります。</p></div>
+    <div class="rc rv d2"><span class="rc-n">02</span><span class="rc-tg">BEFORE → AFTER</span><h3 class="rc-tt">言葉で理解して、自分で再現できる</h3><p class="rc-tx">感覚ではなく言葉で学ぶから、次のレッスンまでに自分でできます。</p></div>
+    <div class="rc rv d1"><span class="rc-n">03</span><span class="rc-tg">BEFORE → AFTER</span><h3 class="rc-tt">本番に向けた逆算ができるようになる</h3><p class="rc-tx">コンクールに向け、何をいつまでに仕上げるかを一緒に組み立てます。</p></div>
+    <div class="rc rv d2"><span class="rc-n">04</span><span class="rc-tg">BEFORE → AFTER</span><h3 class="rc-tt">声をかけなくても練習するようになる</h3><p class="rc-tx">上達の理由がわかると、楽器を自分で手にするようになります。</p></div>
+  </div>
+</section>
+
+<!-- VOICES -->
+<section class="sec sec-white">
+  <div class="sh center rv">
+    <span class="sh-en">Voices from Parents</span>
+    <h2 class="sh-ja">保護者の方から<em>いただいた声</em></h2>
+  </div>
+  <div class="voc-g">
+    <div class="voc rv d1">
+      <p class="voc-tx">入部して1ヶ月で受講しました。部活だけでは追いつかなかった基礎を<em>「なぜそうするか」まで教えてもらえた</em>ことで、子どもが自分で考えて練習するようになりました。</p>
+      <p class="voc-attr">中1・女子の保護者</p>
+    </div>
+    <div class="voc rv d2">
+      <p class="voc-tx">顧問に「もっと豊かに」と言われ続けていたのに、1回のレッスンで<em>何をどう変えるかが明確になった</em>と子どもが言っていました。本番での手応えも全然違いました。</p>
+      <p class="voc-attr">中3・男子の保護者</p>
+    </div>
+    <div class="voc rv d1">
+      <p class="voc-tx">「自分から練習するようになった」が一番の変化です。<em>なぜそう練習するかがわかった</em>ことで、声をかけなくても楽器を手にするようになりました。</p>
+      <p class="voc-attr">中2・男子の保護者</p>
+    </div>
+    <div class="voc rv d2">
+      <p class="voc-tx">本番2週間前に駆け込みで体験しました。残り時間でできることを整理してもらい、<em>子どもが落ち着いて本番に臨めた</em>のが本当によかったです。</p>
+      <p class="voc-attr">中2・女子の保護者</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<div class="cta-strip rv">
+  <p>まずは<strong>60分</strong>、一緒に吹いてみませんか。</p>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeNSEcqjhuDGloSh3wt7T4PEPI0ZX4FYqSSkZMBB30nIC9a0w/viewform?usp=dialog" class="btn-sage" target="_blank" rel="noopener">体験レッスンを申し込む →</a>
+</div>
+
+<!-- INSTRUCTOR -->
+<section class="sec sec-cream">
+  <div class="sh center rv">
+    <span class="sh-en">Instructor</span>
+    <h2 class="sh-ja">お子さんを<em>預ける先生について</em></h2>
+  </div>
+  <div class="inst-w">
+    <div class="rv">
+      <div class="inst-img-wrap">
+        <div class="inst-img"><img src="photo.jpg" alt="こさか みのり"></div>
+        <div class="inst-img-deco"></div>
+      </div>
+    </div>
+    <div class="rv d1">
+      <p class="inst-nm">こさか みのり</p>
+      <p class="inst-en">Minori Kosaka</p>
+      <p class="inst-tx">神奈川県立弥栄高等学校音楽科を経て、武蔵野音楽大学卒業（バストロンボーン専攻）。中学校・高等学校音楽教員免許取得。</p>
+      <p class="inst-tx">厚木市を拠点に、中学生から社会人まで30名以上に継続レッスンを展開。「なぜそうなるか」を言葉にして伝えることで、自分で練習できる力を育てることを大切にしています。</p>
+      <div class="inst-tgs">
+        <span class="inst-tg">武蔵野音楽大学卒</span>
+        <span class="inst-tg">中高音楽教員免許</span>
+        <span class="inst-tg">バストロンボーン専攻</span>
+        <span class="inst-tg">弥栄高校音楽科</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec sec-white" id="pricing">
+  <div class="sh center rv">
+    <span class="sh-en">Pricing</span>
+    <h2 class="sh-ja">レッスン<em>料金</em></h2>
+  </div>
+  <div class="price-featured rv">
+    <div>
+      <span class="price-bdg">まずはここから</span>
+      <p class="price-name">体験レッスン</p>
+      <ul class="price-list">
+        <li>60分・初回限定</li>
+        <li>会場は講師が手配（準備不要）</li>
+        <li>入会を強制しません</li>
+      </ul>
+    </div>
+    <div>
+      <div class="price-num"><sup>¥</sup>5,500</div>
+      <p class="price-cap">税込 / 会場費込み</p>
+    </div>
+  </div>
+  <div class="plan-wrap rv">
+    <p class="plan-hd">— 継続プラン（通常価格 ¥11,000 / 回）—</p>
+    <div class="plan-box">
+      <div class="plan-lb">✦ 年間プラン（1年契約・一括払い）</div>
+      <table class="ptb">
+        <thead><tr><th>回数</th><th>年間総額</th><th>1回あたり</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td>月1回</td><td>118,800円</td><td>9,900円</td></tr>
+          <tr class="hi"><td>月2回</td><td>224,400円</td><td>9,350円</td></tr>
+          <tr class="hi"><td>月3回</td><td>316,800円</td><td>8,800円</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="plan-box">
+      <div class="plan-lb sub">月額プラン</div>
+      <table class="ptb two-col">
+        <thead><tr><th>回数</th><th>月額</th><th>1回あたり</th></tr></thead>
+        <tbody>
+          <tr><td>月1回</td><td>10,450円</td><td>10,450円</td></tr>
+          <tr><td>月2回</td><td>19,800円</td><td>9,900円</td></tr>
+          <tr><td>月3回</td><td>28,050円</td><td>9,350円</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="price-notes">
+      <span class="price-note">※ すべて税込。本契約後の会場費は生徒様のご負担になります。</span>
+      <span class="price-note">※ 本契約後のレッスンは1回60〜90分となります。（生徒様の集中力などを考慮し決定いたしますが、費用に変動はございません。）</span>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section class="sec sec-sage" id="flow">
+  <div class="sh center rv">
+    <span class="sh-en">Flow</span>
+    <h2 class="sh-ja">申し込みから<em>レッスンまで</em></h2>
+  </div>
+  <div class="flow-w">
+    <div class="fl rv"><div><div class="fl-n">01</div></div><div><span class="fl-tg">約3分</span><h3>フォームを送信</h3><p>お名前・ご希望日時・現在の状況をご記入ください。</p></div></div>
+    <div class="fl rv"><div><div class="fl-n">02</div></div><div><span class="fl-tg">2営業日以内</span><h3>日程・会場の確定</h3><p>講師よりご連絡します。体験の会場は講師が予約するので、準備は不要です。</p></div></div>
+    <div class="fl rv"><div><div class="fl-n">03</div></div><div><span class="fl-tg">当日・60分</span><h3>体験レッスン</h3><p>ヒアリング→現状確認→課題整理の順で進みます。楽器をお持ちください。</p></div></div>
+    <div class="fl rv"><div><div class="fl-n">04</div></div><div><span class="fl-tg">ご入会後</span><h3>定期レッスンスタート</h3><p>プラン・頻度・目標を相談して決めます。入会後の会場は生徒様にご予約いただきます。</p></div></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec sec-white">
+  <div class="sh center rv">
+    <span class="sh-en">FAQ</span>
+    <h2 class="sh-ja">保護者の方から<em>よくある質問</em></h2>
+  </div>
+  <div class="fq-w">
+    <div class="fq rv">
+      <div class="fq-q" onclick="this.parentElement.classList.toggle('open')"><span class="fq-qt">始めて間もないですが、個人レッスンは早すぎますか？</span><span class="fq-ic">＋</span></div>
+      <div class="fq-a">むしろ早い方がおすすめです。変な癖がつく前に正しい基礎を身につけられるからです。「入部して間もないから」は全く問題ありません。</div>
+    </div>
+    <div class="fq rv">
+      <div class="fq-q" onclick="this.parentElement.classList.toggle('open')"><span class="fq-qt">コンクール直前でも間に合いますか？</span><span class="fq-ic">＋</span></div>
+      <div class="fq-a">はい。残り時間でできることを整理して、優先順位を明確にします。「あと2週間しかない」という状況でも、何をすべきかが明確になるだけで本番への臨み方が変わります。</div>
+    </div>
+    <div class="fq rv">
+      <div class="fq-q" onclick="this.parentElement.classList.toggle('open')"><span class="fq-qt">子どもを任せて安心できますか？</span><span class="fq-ic">＋</span></div>
+      <div class="fq-a">音楽を専門に学んだ講師が、お子さん一人ひとりのペースに寄り添いながら指導します。「自分から練習するようになった」「楽しそうに通っている」という保護者の方のお声を多くいただいています。</div>
+    </div>
+    <div class="fq rv">
+      <div class="fq-q" onclick="this.parentElement.classList.toggle('open')"><span class="fq-qt">体験後に入会を強く勧められますか？</span><span class="fq-ic">＋</span></div>
+      <div class="fq-a">一切ありません。体験レッスンのみで終わっていただいても、まったく問題ありません。</div>
+    </div>
+    <div class="fq rv">
+      <div class="fq-q" onclick="this.parentElement.classList.toggle('open')"><span class="fq-qt">部活と両立できますか？</span><span class="fq-ic">＋</span></div>
+      <div class="fq-a">はい。月1回から始められますし、9:00〜22:00の間で柔軟に時間を設定できます。本番前に回数を増やすなど、部活のスケジュールに合わせて調整できます。</div>
+    </div>
+    <div class="fq rv">
+      <div class="fq-q" onclick="this.parentElement.classList.toggle('open')"><span class="fq-qt">厚木市外でも通えますか？</span><span class="fq-ic">＋</span></div>
+      <div class="fq-a">ご相談いただけます。市外の場合は出張交通費が発生する場合がありますが、なるべく費用を抑えられるよう調整しますのでお気軽にご連絡ください。</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="final-in rv">
+    <span class="final-leaf"></span>
+    <h2 class="final-tt">お子さんのやる気を、<em>ちゃんと結果に変えてあげましょう。</em></h2>
+    <p class="final-sub">体験レッスン ¥5,500（税込）・会場は講師が手配します</p>
+    <div class="final-ck">
+      <span class="ck">入会を強制しません</span>
+      <span class="ck">始めたばかりOK</span>
+      <span class="ck">コンクール前でも対応</span>
+      <span class="ck">月1回から</span>
+    </div>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeNSEcqjhuDGloSh3wt7T4PEPI0ZX4FYqSSkZMBB30nIC9a0w/viewform?usp=dialog" class="btn-final" target="_blank" rel="noopener">体験レッスンを申し込む →</a>
+    <p class="final-cp">Googleフォームに移動します ／ 所要時間：約3分</p>
+  </div>
+</section>
+
+<!-- STICKY -->
+<div class="sticky-cta">
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeNSEcqjhuDGloSh3wt7T4PEPI0ZX4FYqSSkZMBB30nIC9a0w/viewform?usp=dialog" target="_blank" rel="noopener">体験レッスンを申し込む →</a>
+</div>
+
+<footer>
+  <div class="f-lo">Music Porch</div>
+  <small>© 2025 Music Porch. All rights reserved.</small>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);} });
+},{threshold:0.07});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
