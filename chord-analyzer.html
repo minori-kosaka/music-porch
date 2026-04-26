@@ -387,21 +387,21 @@ const CHORD_TYPES = [
   { intervals:[0,4,7,11],          name:"長七和音（メジャーセブンス）",       short:"-maj7",   quality:"major" },
   { intervals:[0,4,7,10],          name:"属七和音（ドミナントセブンス）",     short:"-7",      quality:"dominant" },
   { intervals:[0,3,7,10],          name:"短七和音（マイナーセブンス）",       short:"-m7",     quality:"minor" },
-  { intervals:[0,3,7,11],          name:"短長七和音（マイナーメジャー7）",    short:"-mM7",    quality:"minor" },
+  { intervals:[0,3,7,11],          name:"短長七和音（マイナーメジャー7）",    short:"-mM7",    quality:"mM7" },
   { intervals:[0,3,6,9],           name:"減七和音（ディミニッシュセブンス）", short:"-dim7",   quality:"diminished" },
   { intervals:[0,3,6,10],          name:"半減七和音（ハーフディミニッシュ）", short:"-m7b5",   quality:"diminished" },
-  { intervals:[0,4,8,10],          name:"増七和音（オーギュメント7）",        short:"-aug7",   quality:"augmented" },
-  { intervals:[0,4,8,11],          name:"増長七和音（オーギュメントmaj7）",   short:"-augM7",  quality:"augmented" },
+  { intervals:[0,4,8,10],          name:"増七和音（オーギュメント7）",        short:"-aug7",   quality:"aug7" },
+  { intervals:[0,4,8,11],          name:"増長七和音（オーギュメントmaj7）",   short:"-augM7",  quality:"augM7" },
   { intervals:[0,4,7,10,14],       name:"属九和音（ドミナント9th）",          short:"-9",      quality:"dominant9" },
   { intervals:[0,4,7,11,14],       name:"長九和音（メジャー9th）",            short:"-maj9",   quality:"major9" },
   { intervals:[0,3,7,10,14],       name:"短九和音（マイナー9th）",            short:"-m9",     quality:"minor9" },
-  { intervals:[0,4,7,10,13],       name:"属b9和音（ドミナントb9）",           short:"-7b9",    quality:"dominant9" },
-  { intervals:[0,4,7,10,15],       name:"属#9和音（ドミナント#9）",           short:"-7s9",    quality:"dominant9" },
-  { intervals:[0,3,7,11,14],       name:"短長九和音（マイナーメジャー9th）",  short:"-mM9",    quality:"minor9" },
+  { intervals:[0,4,7,10,13],       name:"属b9和音（ドミナントb9）",           short:"-7b9",    quality:"dominant9b" },
+  { intervals:[0,4,7,10,15],       name:"属#9和音（ドミナント#9）",           short:"-7s9",    quality:"dominant9s" },
+  { intervals:[0,3,7,11,14],       name:"短長九和音（マイナーメジャー9th）",  short:"-mM9",    quality:"mM9" },
   { intervals:[0,4,7,10,14,17],    name:"属十一和音（ドミナント11th）",       short:"-11",     quality:"dominant11" },
   { intervals:[0,4,7,11,14,17],    name:"長十一和音（メジャー11th）",         short:"-maj11",  quality:"major11" },
   { intervals:[0,3,7,10,14,17],    name:"短十一和音（マイナー11th）",         short:"-m11",    quality:"minor11" },
-  { intervals:[0,4,7,10,14,18],    name:"属#11和音（リディアン7th）",         short:"-7s11",   quality:"dominant11" },
+  { intervals:[0,4,7,10,14,18],    name:"属#11和音（リディアン7th）",         short:"-7s11",   quality:"lydian7" },
   { intervals:[0,4,7,10,14,17,21], name:"属十三和音（ドミナント13th）",       short:"-13",     quality:"dominant13" },
   { intervals:[0,4,7,11,14,17,21], name:"長十三和音（メジャー13th）",         short:"-maj13",  quality:"major13" },
   { intervals:[0,3,7,10,14,17,21], name:"短十三和音（マイナー13th）",         short:"-m13",    quality:"minor13" },
@@ -418,6 +418,13 @@ const TUNING_HINTS = {
   minor:      { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:"根音はチューナー通りに"}, 1:{label:"+16 cent 高く",cents:16,color:"#e76f51",tip:"短三度は純正律で高め"}, 2:{label:"+2 cent 高く",cents:2,color:"#f4a261",tip:"完全五度はわずかに高め"}, 3:{label:"±0〜−16 cent",cents:-8,color:"#9c89b8",tip:"七音は和音の性格によって調整"} },
   diminished: { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:""}, 1:{label:"+16 cent 高く",cents:16,color:"#e76f51",tip:"短三度は純正律で高め"}, 2:{label:"+33 cent 高く",cents:33,color:"#e63946",tip:"減五度は特に高め（緊張感を出す）"}, 3:{label:"±0 cent",cents:0,color:"#9c89b8",tip:"減七度"} },
   augmented:  { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:""}, 1:{label:"−14 cent 低く",cents:-14,color:"#e76f51",tip:"長三度は純正律で低め"}, 2:{label:"−16 cent 低く",cents:-16,color:"#e63946",tip:"増五度はやや低め"} },
+  aug7:       { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:"根音はチューナー通りに"}, 1:{label:"−14 cent 低く",cents:-14,color:"#e76f51",tip:"長三度は純正律で低め"}, 2:{label:"−16 cent 低く",cents:-16,color:"#e63946",tip:"増五度はやや低め"}, 3:{label:"−31 cent 低く",cents:-31,color:"#9c89b8",tip:"短七度は大幅に低め"} },
+  augM7:      { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:"根音はチューナー通りに"}, 1:{label:"−14 cent 低く",cents:-14,color:"#e76f51",tip:"長三度は純正律で低め"}, 2:{label:"−16 cent 低く",cents:-16,color:"#e63946",tip:"増五度はやや低め"}, 3:{label:"+0 cent",cents:0,color:"#9c89b8",tip:"長七度はほぼぴったり"} },
+  mM7:        { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:"根音はチューナー通りに"}, 1:{label:"+16 cent 高く",cents:16,color:"#e76f51",tip:"短三度は純正律で高め"}, 2:{label:"+2 cent 高く",cents:2,color:"#f4a261",tip:"完全五度はわずかに高め"}, 3:{label:"+0 cent",cents:0,color:"#9c89b8",tip:"長七度はほぼぴったり"} },
+  mM9:        { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:"根音はチューナー通りに"}, 1:{label:"+16 cent 高く",cents:16,color:"#e76f51",tip:"短三度は純正律で高め"}, 2:{label:"+2 cent 高く",cents:2,color:"#f4a261",tip:"完全五度はわずかに高め"}, 3:{label:"+0 cent",cents:0,color:"#9c89b8",tip:"長七度はほぼぴったり"}, 4:{label:"+4 cent 高く",cents:4,color:"#7bb8d4",tip:"長九度はわずかに高め"} },
+  dominant9b: { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:"根音はチューナー通りに"}, 1:{label:"−14 cent 低く",cents:-14,color:"#e76f51",tip:"長三度は純正律で低め"}, 2:{label:"+2 cent 高く",cents:2,color:"#f4a261",tip:"完全五度はわずかに高め"}, 3:{label:"−31 cent 低く",cents:-31,color:"#e63946",tip:"短七度は大幅に低め"}, 4:{label:"+16 cent 高く",cents:16,color:"#9c89b8",tip:"♭9は高めに取り緊張感を強調"} },
+  dominant9s: { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:"根音はチューナー通りに"}, 1:{label:"−14 cent 低く",cents:-14,color:"#e76f51",tip:"長三度は純正律で低め"}, 2:{label:"+2 cent 高く",cents:2,color:"#f4a261",tip:"完全五度はわずかに高め"}, 3:{label:"−31 cent 低く",cents:-31,color:"#e63946",tip:"短七度は大幅に低め"}, 4:{label:"−14 cent 低く",cents:-14,color:"#9c89b8",tip:"♯9（増九度）は長三度と同様低め"} },
+  lydian7:    { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:"根音はチューナー通りに"}, 1:{label:"−14 cent 低く",cents:-14,color:"#e76f51",tip:"長三度は純正律で低め"}, 2:{label:"+2 cent 高く",cents:2,color:"#f4a261",tip:"完全五度はわずかに高め"}, 3:{label:"−31 cent 低く",cents:-31,color:"#e63946",tip:"短七度は大幅に低め"}, 4:{label:"+4 cent 高く",cents:4,color:"#9c89b8",tip:"長九度はわずかに高め"}, 5:{label:"+4 cent 高く",cents:4,color:"#7bb8d4",tip:"♯11（増四度）はやや高め"} },
   dominant:   { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:"根音はチューナー通りに"}, 1:{label:"−14 cent 低く",cents:-14,color:"#e76f51",tip:"長三度は純正律で低め"}, 2:{label:"+2 cent 高く",cents:2,color:"#f4a261",tip:"完全五度はわずかに高め"}, 3:{label:"−31 cent 低く",cents:-31,color:"#e63946",tip:"短七度は大幅に低め（導音的解決を意識）"} },
   suspended:  { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:""}, 1:{label:"+2 cent 高く",cents:2,color:"#f4a261",tip:"四度・二度音はほぼぴったり"}, 2:{label:"+2 cent 高く",cents:2,color:"#f4a261",tip:"完全五度はわずかに高め"} },
   dominant9:  { 0:{label:"ぴったり（0 cent）",cents:0,color:"#2a9d8a",tip:"根音はチューナー通りに"}, 1:{label:"−14 cent 低く",cents:-14,color:"#e76f51",tip:"長三度は純正律で低め"}, 2:{label:"+2 cent 高く",cents:2,color:"#f4a261",tip:"完全五度はわずかに高め"}, 3:{label:"−31 cent 低く",cents:-31,color:"#e63946",tip:"短七度は大幅に低め"}, 4:{label:"+4 cent 高く",cents:4,color:"#9c89b8",tip:"長九度はわずかに高め（純正律長二度）"} },
@@ -651,6 +658,35 @@ const CHORD_DESCRIPTIONS = {
   minor13: {
     title: "📐 短十三和音（マイナー13th）について",
     body: "マイナー系の最大拡張和音で、深く複雑な響きが特徴です。アンサンブルでは各パートの役割を明確にしながら、純正律調整を積み重ねることが重要です。"
+  },
+  // 追加分
+  mM7: {
+    title: "📐 短長七和音（マイナーメジャー7th）について",
+    body: "短三和音に長七度を加えた、緊張感と哀愁を併せ持つ独特の和音です。映画音楽やジャズで多用されます。短三度を高め、長七度はほぼ平均律通りにとることが基本ですが、全体の暗い緊張感を意識した演奏が重要です。"
+  },
+  aug7: {
+    title: "📐 増七和音（オーギュメント7th）について",
+    body: "増三和音に短七度を加えた、強い浮遊感と緊張を持つ和音です。増五度と短七度が組み合わさることで、解決への強い推進力が生まれます。短七度を低めにとることで、解決感がより明確になります。"
+  },
+  augM7: {
+    title: "📐 増長七和音（オーギュメントメジャー7th）について",
+    body: "増三和音に長七度を加えた、神秘的で浮遊感の強い和音です。長七度はほぼ平均律通りでよいですが、増五度の処理が響きの核心です。解決先を明確に意識した演奏が効果的です。"
+  },
+  mM9: {
+    title: "📐 短長九和音（マイナーメジャー9th）について",
+    body: "短長七和音に長九度を加えた、複雑で叙情的な響きです。短三度・長七度・長九度が絡み合い、独特の緊張感を生みます。各音の純正律調整を意識することで、豊かな倍音が得られます。"
+  },
+  dominant9b: {
+    title: "📐 属♭9和音（ドミナント♭9）について",
+    body: "属七和音に短九度（♭9）を加えた、非常に強い緊張感を持つ和音です。♭9はフラメンコや近代音楽でよく使われる色彩豊かな音です。第七音の大幅な低めと、♭9の独特の緊張感を意識した演奏が重要です。"
+  },
+  dominant9s: {
+    title: "📐 属♯9和音（ドミナント♯9）について",
+    body: "属七和音に増九度（♯9）を加えた、ブルージーで個性的な響きです。「ヘンドリックスコード」とも呼ばれ、ロックやジャズで多用されます。長三度と♯9が半音でぶつかる緊張感が特徴です。"
+  },
+  lydian7: {
+    title: "📐 属♯11和音（リディアン7th）について",
+    body: "属七和音に増十一度（♯11）を加えた、明るく開放的な緊張感を持つ和音です。リディアンスケールの特徴音である♯11が加わることで、独特の浮遊感と解決への期待感が生まれます。"
   },
 };
 
