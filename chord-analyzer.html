@@ -2,7 +2,6 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z20P2Y7LF8"></script>
   <script>
@@ -11,14 +10,6 @@
     gtag('js', new Date());
     gtag('config', 'G-Z20P2Y7LF8');
   </script>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>和音判定ツール | Music Porch</title>
-
-  <!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>和音判定ツール | Music Porch</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -368,15 +359,8 @@ const NAT_IDX_SHARP = [0, 0, 1, 1, 2, 3, 3, 4, 4, 5, 5, 6]; // C C# D D# E F F# 
 const NAT_IDX_FLAT  = [0, 1, 1, 2, 2, 3, 4, 4, 5, 5, 6, 6]; // C Db D  Eb E F  Gb G Ab  A Bb B
 
 // 和音内のroleIndex → 度数オフセット
-// 根音=0度, 三度=2度, 五度=4度, 七度=6度, 九度=1度, 十一度=3度, 十三度=5度
 const ROLE_TO_DEGREE = [0, 2, 4, 6, 1, 3, 5];
 
-/**
- * rootPC:    根音のピッチクラス (0-11)
- * targetPC:  対象音のピッチクラス (0-11)
- * roleIdx:   和音内での音の役割インデックス (0=根音,1=三度,2=五度...)
- * preferFlat: trueでフラット系表記
- */
 function spellingByRole(rootPC, targetPC, roleIdx, preferFlat) {
   rootPC   = mod12(rootPC);
   targetPC = mod12(targetPC);
@@ -461,17 +445,13 @@ const AD_BANNERS = [
   { label:"📄 Note", heading:"演奏が上手になる考え方", body:"上達を妨げているのは技術じゃなくて「考え方」かもしれない。", cta:"Noteで読む", url:"https://note.com/minori_kosaka/n/ne02a1aa80927?sub_rt=share_sb", accent:"#41c9b4" },
   { label:"📄 Note", heading:"譜読みが早くなる訓練", body:"初見力を鍛える具体的な練習法を解説。", cta:"Noteで読む", url:"https://note.com/minori_kosaka/n/need553ba5a82?sub_rt=share_sb", accent:"#41c9b4" },
 ];
-// ローテーション: 広告→広告→レビュー→広告→広告→レビュー→…
-// slot: 0,1 = 広告, 2 = レビュー (3サイクル)
-let rotationCount = 0; // 判定回数
-let adBannerIndex = 0; // 広告の中でのインデックス
+let rotationCount = 0;
+let adBannerIndex = 0;
 
 // ---- State ----
-// selected: [{pc, preferFlat, accidental}]
-// accidental: '' | '♯' | '♭' | '𝄪' | '𝄫'  (ダブル系含む臨時記号)
 let selected = [];
-let defaultFlat = false;  // デフォルト表記系
-let pendingAcc  = null;   // 次の鍵盤タップに適用する臨時記号 (null=デフォルト)
+let defaultFlat = false;
+let pendingAcc  = null;
 
 function mod12(n) { return ((n % 12) + 12) % 12; }
 
@@ -480,39 +460,29 @@ function setDefaultFlat(isFlat) {
   defaultFlat = isFlat;
   document.getElementById('btn-sharp').classList.toggle('active', !isFlat);
   document.getElementById('btn-flat').classList.toggle('active',  isFlat);
-  // 選択済み音の表記を更新（臨時記号なしのもののみ）
   selected = selected.map(s => s.accidental === '' ? {...s, preferFlat: isFlat} : s);
   renderSelected();
 }
 
 function selectAcc(el, acc) {
-  // 同じボタンを再度押したらキャンセル
   if (pendingAcc === acc && acc !== '') {
     pendingAcc = null;
     document.querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
     return;
   }
-  pendingAcc = acc === '' ? null : acc; // ♮はキャンセル扱い
+  pendingAcc = acc === '' ? null : acc;
   document.querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
   if (pendingAcc !== null) el.classList.add('active');
 }
 
-// 臨時記号からPCシフト量を取得
 const ACC_SHIFT = { '': 0, '♯': 1, '♭': -1, '𝄪': 2, '𝄫': -2 };
 
-// 表示名生成: 自然音名(pc) + 臨時記号
 const FLAT_BASE  = ["ド","レ♭","レ","ミ♭","ミ","ファ","ソ♭","ソ","ラ♭","ラ","シ♭","シ"];
 const SHARP_BASE = ["ド","ド♯","レ","レ♯","ミ","ファ","ファ♯","ソ","ソ♯","ラ","ラ♯","シ"];
-// 白鍵の音名（ナチュラル）
 const NATURAL_NAME = {0:"ド",2:"レ",4:"ミ",5:"ファ",7:"ソ",9:"ラ",11:"シ"};
 
 function displayName(pc, preferFlat, acc) {
   if (acc && acc !== '') {
-    // 臨時記号モード: 元の白鍵音名 + 臨時記号
-    // PCから白鍵を逆算
-    const basePCmap = preferFlat
-      ? {0:"ド",1:"レ",2:"レ",3:"ミ",4:"ミ",5:"ファ",6:"ソ",7:"ソ",8:"ラ",9:"ラ",10:"シ",11:"シ"}
-      : {0:"ド",1:"ド",2:"レ",3:"レ",4:"ミ",5:"ファ",6:"ファ",7:"ソ",8:"ソ",9:"ラ",10:"ラ",11:"シ"};
     const shift = ACC_SHIFT[acc] || 0;
     const origPC = mod12(pc - shift);
     const baseName = NATURAL_NAME[origPC] || (preferFlat ? FLAT_BASE[origPC] : SHARP_BASE[origPC]);
@@ -553,7 +523,6 @@ function tapKey(basePC) {
   const pc = mod12(basePC + shift);
   const preferFlat = defaultFlat;
 
-  // 既に同じpc+acc+flatで選択済みなら解除
   const idx = selected.findIndex(s => s.pc === pc && s.accidental === acc);
   if (idx >= 0) {
     selected.splice(idx, 1);
@@ -561,7 +530,6 @@ function tapKey(basePC) {
     selected.push({ pc, preferFlat, accidental: acc });
   }
 
-  // 臨時記号ボタンをリセット
   pendingAcc = null;
   document.querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
 
@@ -596,7 +564,6 @@ function renderSelected() {
       el.appendChild(btn);
     });
   }
-  // ピアノのハイライト更新
   document.querySelectorAll('.white-key').forEach(key => {
     const pc = parseInt(key.dataset.note);
     key.classList.toggle('selected', selected.some(s => s.pc === pc && s.accidental === ''));
@@ -604,7 +571,6 @@ function renderSelected() {
   document.querySelectorAll('.black-key').forEach(key => {
     const pc = parseInt(key.dataset.note);
     key.classList.toggle('selected', selected.some(s => s.pc === pc && s.accidental === ''));
-    // ラベル更新
     key.textContent = defaultFlat ? FLAT_BASE[pc] : SHARP_BASE[pc];
   });
 }
@@ -641,385 +607,4 @@ const CHORD_DESCRIPTIONS = {
     body: "強い解決感を持つ最も重要な和音のひとつです。純正律では第七音を約31セント低くとることが最大のポイント。この大きな調整が和音の解決感を高め、アンサンブル全体の響きを引き締めます。"
   },
   dominant9: {
-    title: "📐 属九和音（ドミナント9th）について",
-    body: "属七和音に長九度を加えた豊かな響きです。第七音を低く、長三度を低くとる基本は同じ。第九音は長二度と同じ純正律調整でわずかに高めです。ジャズや近代音楽で多用されます。"
-  },
-  major9: {
-    title: "📐 長九和音（メジャー9th）について",
-    body: "メジャーセブンスに長九度が加わった明るく豊かな和音です。各音をていねいに調整することで、倍音が複雑に絡み合う美しい響きが生まれます。"
-  },
-  minor9: {
-    title: "📐 短九和音（マイナー9th）について",
-    body: "マイナーセブンスに長九度が加わった和音です。短三度を高め、短七度を低めにとる基本調整に加え、第九音のわずかな高めの調整が和音全体を豊かにします。"
-  },
-  dominant11: {
-    title: "📐 属十一和音（ドミナント11th）について",
-    body: "属七和音をさらに拡張した複雑な響きです。構成音が多いため、全員が純正律を意識することでアンサンブルの響きが大きく変わります。第七音の大きな調整が特に重要です。"
-  },
-  major11: {
-    title: "📐 長十一和音（メジャー11th）について",
-    body: "メジャー系の拡張和音で、開放的で明るい響きが特徴です。第十一音（完全四度）はほぼ平均律通りで、豊かな響きの中に安定感があります。"
-  },
-  minor11: {
-    title: "📐 短十一和音（マイナー11th）について",
-    body: "マイナー系の拡張和音で、深みのある暗い響きが特徴です。構成音が多いほど純正律調整の効果が大きく、アンサンブルでの響きの充実に直結します。"
-  },
-  dominant13: {
-    title: "📐 属十三和音（ドミナント13th）について",
-    body: "7音すべてを含む最大の拡張和音です。実際の演奏では一部の音を省略することが多いですが、各音の純正律調整を意識することで圧倒的な響きが得られます。"
-  },
-  major13: {
-    title: "📐 長十三和音（メジャー13th）について",
-    body: "メジャー系の最大拡張和音です。明るく開放的な響きの中に、各音の純正律調整が重なることで、倍音の豊かな「鳴る和音」が実現します。"
-  },
-  minor13: {
-    title: "📐 短十三和音（マイナー13th）について",
-    body: "マイナー系の最大拡張和音で、深く複雑な響きが特徴です。アンサンブルでは各パートの役割を明確にしながら、純正律調整を積み重ねることが重要です。"
-  },
-  // 追加分
-  mM7: {
-    title: "📐 短長七和音（マイナーメジャー7th）について",
-    body: "短三和音に長七度を加えた、緊張感と哀愁を併せ持つ独特の和音です。映画音楽やジャズで多用されます。短三度を高め、長七度はほぼ平均律通りにとることが基本ですが、全体の暗い緊張感を意識した演奏が重要です。"
-  },
-  aug7: {
-    title: "📐 増七和音（オーギュメント7th）について",
-    body: "増三和音に短七度を加えた、強い浮遊感と緊張を持つ和音です。増五度と短七度が組み合わさることで、解決への強い推進力が生まれます。短七度を低めにとることで、解決感がより明確になります。"
-  },
-  augM7: {
-    title: "📐 増長七和音（オーギュメントメジャー7th）について",
-    body: "増三和音に長七度を加えた、神秘的で浮遊感の強い和音です。長七度はほぼ平均律通りでよいですが、増五度の処理が響きの核心です。解決先を明確に意識した演奏が効果的です。"
-  },
-  mM9: {
-    title: "📐 短長九和音（マイナーメジャー9th）について",
-    body: "短長七和音に長九度を加えた、複雑で叙情的な響きです。短三度・長七度・長九度が絡み合い、独特の緊張感を生みます。各音の純正律調整を意識することで、豊かな倍音が得られます。"
-  },
-  dominant9b: {
-    title: "📐 属♭9和音（ドミナント♭9）について",
-    body: "属七和音に短九度（♭9）を加えた、非常に強い緊張感を持つ和音です。♭9はフラメンコや近代音楽でよく使われる色彩豊かな音です。第七音の大幅な低めと、♭9の独特の緊張感を意識した演奏が重要です。"
-  },
-  dominant9s: {
-    title: "📐 属♯9和音（ドミナント♯9）について",
-    body: "属七和音に増九度（♯9）を加えた、ブルージーで個性的な響きです。「ヘンドリックスコード」とも呼ばれ、ロックやジャズで多用されます。長三度と♯9が半音でぶつかる緊張感が特徴です。"
-  },
-  lydian7: {
-    title: "📐 属♯11和音（リディアン7th）について",
-    body: "属七和音に増十一度（♯11）を加えた、明るく開放的な緊張感を持つ和音です。リディアンスケールの特徴音である♯11が加わることで、独特の浮遊感と解決への期待感が生まれます。"
-  },
-};
-
-// ---- Analysis ----
-// selectedエントリから音名文字列を生成（臨時記号込み）
-function selectedNoteName(s) {
-  return displayName(s.pc, s.preferFlat, s.accidental);
-}
-
-function analyzeChord(notes) {
-  const results = [];
-  const seen = new Set();
-  for (const rootPC of notes) {
-    for (const ct of CHORD_TYPES) {
-      if (ct.intervals.length !== notes.length) continue;
-      const matches = ct.intervals.every(int => notes.includes(mod12(rootPC + int)));
-      if (!matches) continue;
-      const key = rootPC + '_' + ct.short;
-      if (seen.has(key)) continue;
-      seen.add(key);
-
-      const bassNote = notes[0];
-      const rootIndex = ct.intervals.findIndex(int => mod12(rootPC + int) === mod12(bassNote));
-      const inversion = rootIndex >= 0 ? rootIndex : 0;
-
-      // 根音のselectedエントリを取得（臨時記号・preferFlat確定）
-      const rootEntry = selected.find(s => s.pc === rootPC);
-      const rootAcc   = rootEntry ? rootEntry.accidental  : '';
-      const rootFlat  = rootEntry ? rootEntry.preferFlat  : defaultFlat;
-
-      // 根音の正確な音名を生成（臨時記号込み）
-      const rootNameJP = displayName(rootPC, rootFlat, rootAcc);
-      const rootNameEN = (() => {
-        // EN版: 日本語名からEN変換せず spellingByRole + 臨時記号で作る
-        if (rootAcc === '') {
-          return spellingByRole(rootPC, rootPC, 0, rootFlat).en;
-        }
-        // 臨時記号ありの場合: 白鍵基準音名 + 臨時記号
-        const shift = ACC_SHIFT[rootAcc] || 0;
-        const origPC = mod12(rootPC - shift);
-        const baseEN = spellingByRole(origPC, origPC, 0, rootFlat).en;
-        const accEN  = rootAcc; // ♯,♭,𝄪,𝄫 そのまま
-        return baseEN + accEN;
-      })();
-
-      // 各音のroleと表示名（selectedの臨時記号に忠実に）
-      const noteRoles = notes.map(n => {
-        const pc = mod12(n - rootPC);
-        const roleIdx = ct.intervals.findIndex(int => mod12(int) === pc);
-        const tuning = (TUNING_HINTS[ct.quality] || {})[roleIdx] || {label:'±0 cent',cents:0,color:'#888',tip:''};
-        // その音のselectedエントリ
-        const entry = selected.find(s => s.pc === n);
-        const noteJP = entry ? displayName(entry.pc, entry.preferFlat, entry.accidental)
-                              : spellingByRole(rootPC, n, roleIdx, rootFlat).jp;
-        const noteEN = entry && entry.accidental !== ''
-          ? (() => {
-              const shift2 = ACC_SHIFT[entry.accidental] || 0;
-              const origPC2 = mod12(entry.pc - shift2);
-              return spellingByRole(origPC2, origPC2, 0, entry.preferFlat).en + entry.accidental;
-            })()
-          : spellingByRole(rootPC, n, roleIdx, rootFlat).en;
-        return { noteEN, noteJP, role: NOTE_ROLES[roleIdx] || '不明', roleIdx, tuning };
-      }).sort((a, b) => a.roleIdx - b.roleIdx);
-
-      // 調性内での機能: 選択した音名と矛盾しない調性のみ表示
-      // 選択した各音のPCセットと調性スケールが全部一致するものだけ残す
-      const keyMemberships = [];
-      for (let k = 0; k < 12; k++) {
-        [MAJOR_SCALE, MINOR_SCALE].forEach((scale, si) => {
-          scale.forEach((deg, di) => {
-            if (mod12(k + deg) === rootPC) {
-              const allFit = ct.intervals.every(int =>
-                scale.some(s => mod12(k + s) === mod12(rootPC + int))
-              );
-              if (!allFit) return;
-              // さらに: 選択した各音に臨時記号がある場合、
-              // その音がこの調性スケールに存在するか確認
-              const accFit = selected.every(s => {
-                if (s.accidental === '') return true; // 臨時記号なしは問わない
-                // 臨時記号ありの音: スケール上に同じPCが存在するか
-                return scale.some(sc => mod12(k + sc) === s.pc);
-              });
-              if (!accFit) return;
-              keyMemberships.push({
-                keyName: spellingByRole(k, k, 0, si === 1).en + (si === 0 ? '-dur' : '-moll'),
-                degree: DEGREE_NAMES[di],
-              });
-            }
-          });
-        });
-      }
-
-      // ♯/♭切り替え用スペリング（従来通り）
-      const buildSpelling = (preferFlat) => ({
-        chordName: spellingByRole(rootPC, rootPC, 0, preferFlat).en + ct.short,
-        rootJP: spellingByRole(rootPC, rootPC, 0, preferFlat).jp,
-        noteRoles: notes.map(n => {
-          const pc = mod12(n - rootPC);
-          const roleIdx = ct.intervals.findIndex(int => mod12(int) === pc);
-          const tuning = (TUNING_HINTS[ct.quality] || {})[roleIdx] || {label:'±0 cent',cents:0,color:'#888',tip:''};
-          const sp = spellingByRole(rootPC, n, roleIdx, preferFlat);
-          return { noteEN: sp.en, noteJP: sp.jp, role: NOTE_ROLES[roleIdx] || '不明', roleIdx, tuning };
-        }).sort((a, b) => a.roleIdx - b.roleIdx),
-      });
-      const sharpSpelling = buildSpelling(false);
-      const flatSpelling  = buildSpelling(true);
-
-      results.push({
-        _rootPC: rootPC,
-        _quality: ct.quality,
-        rootJP: rootNameJP,
-        chordName: rootNameEN + ct.short,
-        typeName: ct.name,
-        inversion,
-        keyMemberships: keyMemberships.slice(0, 4),
-        noteRoles,      // 臨時記号に忠実な表示
-        sharpSpelling,  // ♯/♭トグル用
-        flatSpelling,
-        isFlat: rootFlat,
-      });
-    }
-  }
-  return results;
-}
-
-function analyze() {
-  if (selected.length < 2) return;
-  const notes = selected.map(s => s.pc);
-  const results = analyzeChord(notes);
-  // 最初に押した音が根音の候補を先頭に並べる
-  const firstPC = notes[0];
-  results.sort((a, b) => {
-    const aIsFirst = a._rootPC === firstPC ? 0 : 1;
-    const bIsFirst = b._rootPC === firstPC ? 0 : 1;
-    return aIsFirst - bIsFirst;
-  });
-  const noResult = document.getElementById('no-result');
-  const section  = document.getElementById('results-section');
-  const list     = document.getElementById('results-list');
-  const justNote = document.getElementById('just-note');
-  const adSection= document.getElementById('ad-section');
-
-  list.innerHTML = '';
-
-  if (results.length === 0) {
-    noResult.style.display = 'block';
-    section.style.display = 'none';
-    justNote.style.display = 'none';
-  } else {
-    noResult.style.display = 'none';
-    section.style.display = 'block';
-    justNote.style.display = 'block';
-    // 1番目の判定候補の和音タイプに応じた説明を表示
-    const topQuality = results[0] ? results[0]._quality : null;
-    const desc = (topQuality && CHORD_DESCRIPTIONS[topQuality]) || {
-      title: "📐 純正律について",
-      body: "上記のcent値は12平均律を基準（0cent）とした純正律の差です。アンサンブルでは各音の役割に応じて調整することで、倍音が揃い「鳴る和音」になります。"
-    };
-    // カッコ内を小さく表示
-    const titleHtml = desc.title.replace(/（([^）]+)）/g, '<span class="paren">（$1）</span>');
-    document.getElementById('just-note-title').innerHTML = titleHtml;
-    document.getElementById('just-note-body').textContent  = desc.body;
-    document.getElementById('results-label').textContent = `判定結果 — ${results.length}件`;
-    results.forEach((r, i) => list.appendChild(buildChordCard(r, i === 0)));
-  }
-
-  // Rotation: slot 0,1=広告 / slot 2=レビュー
-  const slot = rotationCount % 3;
-  rotationCount++;
-  const bannerEl  = document.getElementById('ad-banner');
-  const reviewEl  = document.getElementById('review-card');
-  if (slot === 2) {
-    // レビューカード表示
-    bannerEl.style.display = 'none';
-    reviewEl.style.display = 'block';
-  } else {
-    // 広告表示
-    reviewEl.style.display = 'none';
-    const ad = AD_BANNERS[adBannerIndex % AD_BANNERS.length];
-    adBannerIndex++;
-    bannerEl.href = ad.url;
-    bannerEl.style.border = '1px solid #8a7040';
-    bannerEl.style.borderLeft = '3px solid #c0a040';
-    document.getElementById('ad-label').textContent = ad.label;
-    document.getElementById('ad-label').style.color = '#8a6a20';
-    document.getElementById('ad-heading').textContent = ad.heading;
-    document.getElementById('ad-body').textContent = ad.body;
-    document.getElementById('ad-cta').textContent = ad.cta + ' →';
-    document.getElementById('ad-cta').style.color = '#c07800';
-    document.getElementById('ad-cta').style.borderBottom = '1px solid #c0780066';
-    bannerEl.style.display = 'block';
-  }
-  adSection.style.display = 'block';
-}
-
-function buildChordCard(r, isFirst) {
-  const card = document.createElement('div');
-  card.className = 'chord-card';
-
-  let isFlat = r.isFlat;
-
-  const header = document.createElement('button');
-  header.className = 'chord-header';
-
-  const body = document.createElement('div');
-  body.className = 'chord-body' + (isFirst ? ' open' : '');
-
-  function getSpelling() { return isFlat ? r.flatSpelling : r.sharpSpelling; }
-
-  function renderHeader() {
-    const sp = getSpelling();
-    header.innerHTML = `
-      <div class="chord-root-badge">${sp.rootJP}</div>
-      <div>
-        <div class="chord-name">${sp.chordName}</div>
-        <div class="chord-sub">${r.typeName}</div>
-      </div>
-      <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
-        <span class="spelling-toggle" title="♭/♯切り替え" style="font-size:11px;padding:3px 8px;border-radius:10px;background:#1e4a42;color:#6b9e96;border:1px solid #2a5a50;cursor:pointer">
-          ${isFlat ? '♭系' : '♯系'}
-        </span>
-        <span class="chord-toggle" style="color:#2a9d8a;font-size:18px">${isFirst ? '▲' : '▼'}</span>
-      </div>
-    `;
-    // spelling toggle独立クリック
-    header.querySelector('.spelling-toggle').addEventListener('click', (e) => {
-      e.stopPropagation();
-      isFlat = !isFlat;
-      renderHeader();
-      renderNoteRoles();
-    });
-  }
-
-  // Key memberships
-  if (r.keyMemberships.length > 0) {
-    const kl = document.createElement('div');
-    kl.className = 'key-list';
-    kl.innerHTML = `<div class="key-list-label">調性内での機能</div>`;
-    const chips = document.createElement('div');
-    chips.className = 'key-chips';
-    r.keyMemberships.forEach(km => {
-      const chip = document.createElement('span');
-      chip.className = 'key-chip';
-      chip.textContent = `${km.keyName} の ${km.degree}`;
-      chips.appendChild(chip);
-    });
-    kl.appendChild(chips);
-    body.appendChild(kl);
-  }
-
-  // Note roles
-  const nrl = document.createElement('div');
-  nrl.className = 'note-roles-label';
-  nrl.textContent = '各音の役割と音程調整';
-  body.appendChild(nrl);
-  const rolesContainer = document.createElement('div');
-  body.appendChild(rolesContainer);
-
-  function renderNoteRoles() {
-    rolesContainer.innerHTML = '';
-    const sp = getSpelling();
-    sp.noteRoles.forEach((nr, idx) => {
-      const nrc = document.createElement('div');
-      nrc.className = 'note-role-card';
-      nrc.style.border = `1px solid ${nr.tuning.color}44`;
-      nrc.style.borderLeft = `3px solid ${nr.tuning.color}`;
-      nrc.style.animationDelay = (idx * 0.08) + 's';
-      const clamp = Math.max(-50, Math.min(50, nr.tuning.cents));
-      const dotLeft = 50 + clamp;
-      const dotColor = nr.tuning.cents === 0 ? '#2a9d8a' : nr.tuning.cents < 0 ? '#60b4f0' : '#e76f51';
-      const centsLabel = nr.tuning.cents > 0 ? `+${nr.tuning.cents}` : nr.tuning.cents;
-      nrc.innerHTML = `
-        <div class="note-role-header">
-          <span class="note-role-name" style="color:${nr.tuning.color}">${nr.noteJP}</span>
-          <div>
-            <div class="note-role-sub">${nr.role}</div>
-            <div class="note-role-label">${nr.tuning.label}</div>
-          </div>
-          <span class="note-role-cents" style="color:${dotColor}">${centsLabel} c</span>
-        </div>
-        <div class="cent-bar">
-          <div class="cent-bar-center"></div>
-          <div class="cent-bar-dot" style="left:${dotLeft}%;background:${dotColor};box-shadow:0 0 6px ${dotColor}"></div>
-        </div>
-        ${nr.tuning.tip ? `<div class="note-role-tip">💡 ${nr.tuning.tip}</div>` : ''}
-      `;
-      rolesContainer.appendChild(nrc);
-    });
-  }
-
-  renderHeader();
-  renderNoteRoles();
-
-  header.onclick = (e) => {
-    if (e.target.closest('.spelling-toggle')) return;
-    const isOpen = body.classList.toggle('open');
-    header.querySelector('.chord-toggle').textContent = isOpen ? '▲' : '▼';
-  };
-
-  card.appendChild(header);
-  card.appendChild(body);
-  return card;
-}
-
-function reset() {
-  selected = [];
-  pendingAcc = null;
-  document.querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
-  renderSelected();
-  resetResults();
-  updateAnalyzeBtn();
-}
-
-// ---- Init ----
-buildPiano();
-updateAnalyzeBtn();
-</script>
-</body>
-</html>
+    title: "📐 属
