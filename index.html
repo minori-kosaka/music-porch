@@ -162,6 +162,10 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
 .ptb td { padding:10px 9px; border-bottom:1px solid var(--bd); font-size:.8rem; }
 .ptb td:first-child { font-weight:500; }
 .ptb td:not(:first-child) { text-align:right; font-family:'Noto Sans JP',sans-serif; font-size:.78rem; font-weight:300; line-height:1.55; color:var(--dark); }
+.price-prefix,
+.price-tax { font-size:.68em; color:var(--lt); font-weight:300; }
+.price-prefix { margin-right:2px; }
+.price-tax { margin-left:2px; }
 .ptb tr:last-child td { border-bottom:none; }
 .ptb .ar td:not(:first-child) { color:var(--teal-dk); }
 .p-cp { font-size:.66rem; color:var(--lt); line-height:2; margin-top:12px; text-align:center; }
@@ -412,9 +416,9 @@ footer small { font-size:.6rem; color:rgba(255,255,255,.15); }
         <table class="ptb">
           <thead><tr><th>回数</th><th>年間総額</th><th>1回90分</th></tr></thead>
           <tbody>
-            <tr class="ar"><td>月1回</td><td>118,800円</td><td>9,900円（税込）</td></tr>
-            <tr class="ar"><td>月2回</td><td>224,400円</td><td>9,350円（税込）</td></tr>
-            <tr class="ar"><td>月3回</td><td>316,800円</td><td>8,800円（税込）</td></tr>
+            <tr class="ar"><td>月1回</td><td>118,800円</td><td><span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span></td></tr>
+            <tr class="ar"><td>月2回</td><td>224,400円</td><td><span class="price-prefix">1回</span>9,350円<span class="price-tax">（税込）</span></td></tr>
+            <tr class="ar"><td>月3回</td><td>316,800円</td><td><span class="price-prefix">1回</span>8,800円<span class="price-tax">（税込）</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -423,9 +427,9 @@ footer small { font-size:.6rem; color:rgba(255,255,255,.15); }
         <table class="ptb">
           <thead><tr><th>回数</th><th>月額</th><th>1回90分</th></tr></thead>
           <tbody>
-            <tr><td>月1回</td><td>10,450円</td><td>10,450円（税込）</td></tr>
-            <tr><td>月2回</td><td>19,800円</td><td>9,900円（税込）</td></tr>
-            <tr><td>月3回</td><td>28,050円</td><td>9,350円（税込）</td></tr>
+            <tr><td>月1回</td><td>10,450円</td><td><span class="price-prefix">1回</span>10,450円<span class="price-tax">（税込）</span></td></tr>
+            <tr><td>月2回</td><td>19,800円</td><td><span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span></td></tr>
+            <tr><td>月3回</td><td>28,050円</td><td><span class="price-prefix">1回</span>9,350円<span class="price-tax">（税込）</span></td></tr>
           </tbody>
         </table>
       </div>
