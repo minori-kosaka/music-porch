@@ -636,6 +636,22 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
       </div>
 
       <div class="ab-benefits">
+        <div class="benefit-row" onclick="openModal('materialsModal')">
+          <span class="br-icon">📚</span>
+          <span class="br-text">
+            <span class="br-main">教材費0円</span>
+            <span class="br-sub">必要な教材を無料でご用意</span>
+          </span>
+          <span class="br-arrow">›</span>
+        </div>
+        <div class="benefit-row" onclick="openModal('lessonTimeModal')">
+          <span class="br-icon">⏱</span>
+          <span class="br-text">
+            <span class="br-main">1回90分に延長</span>
+            <span class="br-sub">準備・片づけ込みでじっくり受講</span>
+          </span>
+          <span class="br-arrow">›</span>
+        </div>
         <div class="benefit-row" onclick="openModal('extraAnnualModal')">
           <span class="br-icon">➕</span>
           <span class="br-text">
@@ -655,16 +671,16 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
         <div class="benefit-row" onclick="openModal('scheduleModal')">
           <span class="br-icon">📅</span>
           <span class="br-text">
-            <span class="br-main">全日程を事前に仮押さえ可能</span>
-            <span class="br-sub">（変更OK）</span>
+            <span class="br-main">優先予約</span>
+            <span class="br-sub">ご契約時に日程の仮押さえOK</span>
           </span>
           <span class="br-arrow">›</span>
         </div>
-        <div class="benefit-row" onclick="openModal('noteModal')">
+        <div class="benefit-row" onclick="openModal('noteAnnualModal')">
           <span class="br-icon">📝</span>
           <span class="br-text">
-            <span class="br-main">有料Noteが月額500円</span>
-            <span class="br-sub">通常1,000円／月・任意</span>
+            <span class="br-main">有料Note割引</span>
+            <span class="br-sub">初月無料＆翌月以降500円</span>
           </span>
           <span class="br-arrow">›</span>
         </div>
@@ -758,6 +774,42 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
 
 <!-- ── Modals ── -->
 
+<!-- 教材 -->
+<div class="modal-overlay" id="materialsModal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('materialsModal')">✕</button>
+    <div class="modal-head">
+      <div class="modal-badge">年間プラン特典</div>
+      <div class="modal-title">教材費0円</div>
+      <div class="modal-sub">必要な教材は無料でご用意します</div>
+    </div>
+    <div class="modal-body">
+      <div class="schedule-feats">
+        <div class="sf"><span class="sf-icon">🎼</span><div class="sf-text"><strong>ポジション表や音階一覧など</strong><br>オリジナル教材を必要に応じてお渡しします。</div></div>
+        <div class="sf"><span class="sf-icon">🏆</span><div class="sf-text"><strong>過去の受賞曲例も共有</strong><br>コンクール用の参考資料など、出せる範囲でご相談に乗ります。</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 時間延長 -->
+<div class="modal-overlay" id="lessonTimeModal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('lessonTimeModal')">✕</button>
+    <div class="modal-head">
+      <div class="modal-badge">年間プラン特典</div>
+      <div class="modal-title">1回90分に延長</div>
+      <div class="modal-sub">単発レッスンより30分長く、じっくり進められます</div>
+    </div>
+    <div class="modal-body">
+      <div class="schedule-feats">
+        <div class="sf"><span class="sf-icon">⏱</span><div class="sf-text"><strong>1回90分</strong><br>準備・片づけ込みで、基礎から曲まで余裕を持って確認できます。</div></div>
+        <div class="sf"><span class="sf-icon">✅</span><div class="sf-text"><strong>相談時間も取りやすい</strong><br>課題整理や練習方針まで、レッスン内で落ち着いて扱えます。</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- 年間追加 -->
 <div class="modal-overlay" id="extraAnnualModal" onclick="if(event.target===this)closeModal(this.id)">
   <div class="modal-box">
@@ -819,8 +871,8 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
     <button class="modal-close" onclick="closeModal('scheduleModal')">✕</button>
     <div class="modal-head">
       <div class="modal-badge">年間プラン特典</div>
-      <div class="modal-title">全日程仮押さえ</div>
-      <div class="modal-sub">レッスン枠が、ずっと自分のもの</div>
+      <div class="modal-title">優先予約</div>
+      <div class="modal-sub">ご契約時に1年分のレッスン日程を仮決定できます</div>
     </div>
     <div class="modal-body">
       <div class="cal-box">
@@ -835,12 +887,28 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
           <div class="cg-cell sun">23</div><div class="cg-cell">24</div><div class="cg-cell">25</div><div class="cg-cell">26</div><div class="cg-cell">27</div><div class="cg-cell">28</div><div class="cg-cell sat">29</div>
           <div class="cg-cell sun">30</div><div class="cg-cell">31</div>
         </div>
-        <div class="cal-legend"><div class="cal-dot"></div>第2・4土曜日 19:00〜20:00 を仮押さえ中</div>
+        <div class="cal-legend"><div class="cal-dot"></div>第2・4土曜日 19:00〜20:30 を仮押さえ中</div>
       </div>
       <div class="schedule-feats">
-        <div class="sf"><span class="sf-icon">✅</span><div class="sf-text"><strong>枠を持っている安心感</strong><br>本番前や忙しい時期も、スケジュールを心配せず練習に集中できます。</div></div>
+        <div class="sf"><span class="sf-icon">✅</span><div class="sf-text"><strong>優先的に日程を確保</strong><br>基本は1年分の予定をまとめて仮押さえできるので安心です。</div></div>
         <div class="sf"><span class="sf-icon">🔄</span><div class="sf-text"><strong>柔軟に振り替えOK</strong><br>事前にご連絡いただければ別日に変更できます。</div></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- annual note -->
+<div class="modal-overlay" id="noteAnnualModal" onclick="if(event.target===this)closeModal(this.id)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('noteAnnualModal')">✕</button>
+    <div class="modal-head">
+      <div class="modal-badge">年間プラン特典</div>
+      <div class="modal-title">有料Note割引</div>
+      <div class="modal-sub">年間プランの方は初月無料、翌月以降は月額500円でご案内します</div>
+    </div>
+    <div class="modal-body">
+      <p class="line-note">通常1,000円／月の有料メンバーシップを、希望者のみ割引価格でご利用いただけます。いつでも解約できます。</p>
+      <a href="https://note.com/minori_kosaka" target="_blank" class="note-link-btn">📝 Noteをもっと見る</a>
     </div>
   </div>
 </div>
