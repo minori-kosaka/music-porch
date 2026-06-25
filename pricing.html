@@ -160,7 +160,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
 /* plan cards row */
 .plan-row-3 {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 2px;
   margin-bottom: 2px;
 }
@@ -170,7 +170,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
 .plan-card {
   background: var(--white);
   border: 1px solid var(--bd);
-  padding: 22px 18px;
+  padding: 20px 10px;
   text-align: center;
   cursor: pointer;
   transition: background .2s, border-color .2s;
@@ -192,7 +192,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
 .pc-freq { font-size:.74rem; font-weight:500; color:var(--mid); margin-bottom:10px; }
 .pc-price {
   font-family:'Noto Sans JP',sans-serif;
-  font-size:1.18rem;
+  font-size:1.02rem;
   font-weight:300;
   color:var(--teal-dk);
   line-height:1.45;
@@ -254,7 +254,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
 .monthly-block {
   background: var(--off);
   border: 1px solid var(--bd);
-  padding: 24px 22px;
+  padding: 20px 18px;
   margin-bottom: 20px;
 }
 .mb-title {
@@ -309,20 +309,20 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
 .mbb-icon { font-size:.9rem; flex-shrink:0; }
 .mbb-main { font-size:.75rem; font-weight:500; color:var(--text); }
 .mbb-sub { font-size:.65rem; color:var(--mid); }
-.monthly-plan-grid { display:grid; grid-template-columns:1fr; gap:8px; }
+.monthly-plan-grid { display:grid; grid-template-columns:1fr; gap:6px; }
 .monthly-card {
-  background: linear-gradient(160deg, #ffffff 0%, #f2faf7 100%);
+  background: var(--white);
   border: 1px solid var(--bd);
-  padding: 16px 16px;
+  padding: 12px 14px;
   cursor:pointer;
   transition:border-color .2s, transform .2s;
 }
 .monthly-card:hover { border-color:var(--teal); transform:translateY(-1px); }
-.monthly-card.featured { border-color:rgba(42,157,138,.45); background:linear-gradient(160deg, #ffffff 0%, #e2f5ef 100%); }
+.monthly-card.featured { border-color:rgba(42,157,138,.32); background:var(--teal-pl); }
 .mc-top { display:flex; justify-content:space-between; gap:12px; align-items:flex-start; margin-bottom:8px; }
 .mc-freq { font-size:.78rem; font-weight:500; color:var(--text); }
 .mc-label { font-size:.62rem; color:var(--lt); text-align:right; }
-.mc-price { font-size:1.08rem; color:var(--teal-dk); line-height:1.45; }
+.mc-price { font-size:.96rem; color:var(--teal-dk); line-height:1.45; }
 .mc-price { white-space:nowrap; }
 .mc-total { font-size:.65rem; color:var(--mid); margin-top:3px; }
 .price-original { color:var(--lt); text-decoration:line-through; text-decoration-thickness:1px; }
@@ -359,6 +359,63 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
 .comparison-table td:not(:first-child) { text-align:center; }
 .comparison-table tr:last-child td { border-bottom:none; }
 .comparison-table td:first-child { color:var(--mid); font-weight:500; white-space:nowrap; }
+
+/* recommender */
+.recommender-block {
+  margin-top: 20px;
+  border: 1px solid var(--bd);
+  background: var(--off);
+  padding: 24px 22px;
+}
+.reco-lead {
+  font-size:.78rem;
+  color:var(--mid);
+  line-height:1.8;
+  margin-bottom:16px;
+}
+.reco-grid {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+@media(max-width:600px){ .reco-grid { grid-template-columns:1fr; } }
+.reco-field label {
+  display:block;
+  font-size:.6rem;
+  letter-spacing:.08em;
+  color:var(--lt);
+  margin-bottom:5px;
+}
+.reco-field select {
+  width:100%;
+  border:1px solid var(--bd);
+  background:var(--white);
+  color:var(--text);
+  font:inherit;
+  font-size:.78rem;
+  padding:10px 9px;
+}
+.reco-btn {
+  border:0;
+  background:var(--teal);
+  color:var(--white);
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.06em;
+  padding:12px 18px;
+  cursor:pointer;
+}
+.reco-result {
+  margin-top:14px;
+  border:1px solid var(--bdt);
+  background:var(--white);
+  padding:14px 16px;
+  display:none;
+}
+.reco-result.show { display:block; }
+.reco-plan { font-size:.92rem; font-weight:500; color:var(--teal-dk); margin-bottom:4px; }
+.reco-reason { font-size:.74rem; color:var(--mid); line-height:1.8; }
 
 /* guide */
 .guide-block {
@@ -756,82 +813,45 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
       </div>
     </div>
 
-    <!-- monthly + guide 2col -->
-    <div class="bottom-grid">
-
-      <!-- monthly -->
-      <div class="monthly-block">
-        <div class="mb-title">月額プラン</div>
-        <div class="plan-subtitle">～月謝制・月払い・1回60分～</div>
-        <div class="monthly-plan-grid">
-          <div class="monthly-card" onclick="openModal('voiceM1')">
-            <div class="mc-top"><div class="mc-freq">月1回</div><div class="mc-label">ゆっくり継続</div></div>
-            <div class="mc-price"><span class="price-prefix">1回</span>10,450円<span class="price-tax">（税込）</span></div>
-            <div class="mc-total">月額 10,450円</div>
-          </div>
-          <div class="monthly-card" onclick="openModal('voiceM2')">
-            <div class="mc-top"><div class="mc-freq">月2回</div><div class="mc-label">仕事・学業と両立</div></div>
-            <div class="mc-price"><span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span></div>
-            <div class="mc-total">月額 19,800円</div>
-          </div>
-          <div class="monthly-card featured" onclick="openModal('voiceM3')">
-            <div class="mc-top"><div class="mc-freq">月3回</div><div class="mc-label">いちばん人気</div></div>
-            <div class="mc-price"><span class="price-prefix">1回</span>9,350円<span class="price-tax">（税込）</span></div>
-            <div class="mc-total">月額 28,050円</div>
-          </div>
+    <!-- monthly -->
+    <div class="monthly-block">
+      <div class="mb-title">月額プラン</div>
+      <div class="plan-subtitle">～月謝制・月払い・1回60分～</div>
+      <div class="monthly-plan-grid">
+        <div class="monthly-card" onclick="openModal('voiceM1')">
+          <div class="mc-top"><div class="mc-freq">月1回</div><div class="mc-label">ゆっくり継続</div></div>
+          <div class="mc-price"><span class="price-prefix">1回</span>10,450円<span class="price-tax">（税込）</span></div>
+          <div class="mc-total">月額 10,450円</div>
         </div>
-        <div class="mb-benefits">
-          <div class="mb-benefit" onclick="openModal('materialsModal')">
-            <span class="mbb-icon">📚</span>
-            <span><div class="mbb-main">教材費無料</div><div class="mbb-sub">必要な教材をご用意</div></span>
-          </div>
-          <div class="mb-benefit" onclick="openModal('extraMonthlyModal')">
-            <span class="mbb-icon">➕</span>
-            <span><div class="mbb-main">追加レッスンは1回分の料金で</div><div class="mbb-sub">申し込み回数に制限なし！</div></span>
-          </div>
-          <div class="mb-benefit" onclick="openModal('noteModal')">
-            <span class="mbb-icon">📝</span>
-            <span><div class="mbb-main">有料Noteが初月無料＆500円</div><div class="mbb-sub">通常1,000円／月・任意</div></span>
-          </div>
-          <div class="mb-benefit" onclick="openModal('lineModal')">
-            <span class="mbb-icon">💬</span>
-            <span><div class="mbb-main">公式LINEで相談OK</div><div class="mbb-sub">月2回まで相談OK</div></span>
-          </div>
+        <div class="monthly-card" onclick="openModal('voiceM2')">
+          <div class="mc-top"><div class="mc-freq">月2回</div><div class="mc-label">仕事・学業と両立</div></div>
+          <div class="mc-price"><span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span></div>
+          <div class="mc-total">月額 19,800円</div>
+        </div>
+        <div class="monthly-card featured" onclick="openModal('voiceM3')">
+          <div class="mc-top"><div class="mc-freq">月3回</div><div class="mc-label">いちばん人気</div></div>
+          <div class="mc-price"><span class="price-prefix">1回</span>9,350円<span class="price-tax">（税込）</span></div>
+          <div class="mc-total">月額 28,050円</div>
         </div>
       </div>
-
-      <!-- guide -->
-      <div class="guide-block">
-        <div class="guide-sec-title">おすすめの選び方</div>
-        <div class="guide-sec-title" style="margin-top:4px;">— 回数 —</div>
-        <div class="guide-item">
-          <div class="gi-line"></div>
-          <div class="gi-text"><strong>ゆっくり継続</strong>したい → 月1回</div>
+      <div class="mb-benefits">
+        <div class="mb-benefit" onclick="openModal('materialsModal')">
+          <span class="mbb-icon">📚</span>
+          <span><div class="mbb-main">教材費無料</div><div class="mbb-sub">必要な教材をご用意</div></span>
         </div>
-        <div class="guide-item">
-          <div class="gi-line"></div>
-          <div class="gi-text"><strong>仕事・学業と両立</strong>したい → 月2回</div>
+        <div class="mb-benefit" onclick="openModal('extraMonthlyModal')">
+          <span class="mbb-icon">➕</span>
+          <span><div class="mbb-main">追加レッスンは1回分の料金で</div><div class="mbb-sub">申し込み回数に制限なし！</div></span>
         </div>
-        <div class="guide-item">
-          <div class="gi-line"></div>
-          <div class="gi-text"><strong>いちばん人気</strong>のペース → 月3回</div>
+        <div class="mb-benefit" onclick="openModal('noteModal')">
+          <span class="mbb-icon">📝</span>
+          <span><div class="mbb-main">有料Noteが初月無料＆500円</div><div class="mbb-sub">通常1,000円／月・任意</div></span>
         </div>
-        <div class="guide-item">
-          <div class="gi-line"></div>
-          <div class="gi-text"><strong>がっつり上達</strong>したい → 月4回 <span class="gi-note">（年間プラン）</span></div>
-        </div>
-        <div class="guide-divider"></div>
-        <div class="guide-sec-title">— プランの種類 —</div>
-        <div class="guide-item">
-          <div class="gi-line"></div>
-          <div class="gi-text"><strong>まず試してみたい</strong> → 単発・月額</div>
-        </div>
-        <div class="guide-item">
-          <div class="gi-line"></div>
-          <div class="gi-text"><strong>継続が決まったら</strong> → 年間 <span class="gi-note">予約枠を確保しやすく、費用もお得</span></div>
+        <div class="mb-benefit" onclick="openModal('lineModal')">
+          <span class="mbb-icon">💬</span>
+          <span><div class="mbb-main">公式LINEで相談OK</div><div class="mbb-sub">月2回まで相談OK</div></span>
         </div>
       </div>
-
     </div>
 
     <div class="comparison-block">
@@ -855,6 +875,43 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
             <tr><td>LINE相談</td><td>✕</td><td>月2回まで</td><td>無制限</td></tr>
           </tbody>
         </table>
+      </div>
+    </div>
+
+    <div class="recommender-block">
+      <div class="mb-title">おすすめプラン診断</div>
+      <p class="reco-lead">あなたの情報を入れて判定ボタンを押すと、おすすめのプランが出てきます。</p>
+      <div class="reco-grid">
+        <div class="reco-field">
+          <label for="recoGoal">目的</label>
+          <select id="recoGoal">
+            <option value="steady">ゆっくり継続</option>
+            <option value="balance">仕事・学業と両立</option>
+            <option value="popular">しっかり上達</option>
+            <option value="intense">がっつり上達</option>
+          </select>
+        </div>
+        <div class="reco-field">
+          <label for="recoCommitment">契約スタイル</label>
+          <select id="recoCommitment">
+            <option value="monthly">まずは月払い</option>
+            <option value="annual">1年で続けたい</option>
+            <option value="either">どちらでもOK</option>
+          </select>
+        </div>
+        <div class="reco-field">
+          <label for="recoSupport">サポート</label>
+          <select id="recoSupport">
+            <option value="normal">必要なときだけ</option>
+            <option value="line">LINE相談も使いたい</option>
+            <option value="schedule">予約枠を押さえたい</option>
+          </select>
+        </div>
+      </div>
+      <button class="reco-btn" type="button" onclick="recommendPlan()">判定する</button>
+      <div class="reco-result" id="recoResult" aria-live="polite">
+        <div class="reco-plan" id="recoPlan"></div>
+        <div class="reco-reason" id="recoReason"></div>
       </div>
     </div>
 
@@ -1068,6 +1125,28 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
 <script>
 function openModal(id){ document.getElementById(id).classList.add('open'); }
 function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+function recommendPlan(){
+  const goal = document.getElementById('recoGoal').value;
+  const commitment = document.getElementById('recoCommitment').value;
+  const support = document.getElementById('recoSupport').value;
+  const countMap = {
+    steady: { count: '月1回', label: 'ゆっくり継続' },
+    balance: { count: '月2回', label: '仕事・学業と両立' },
+    popular: { count: '月3回', label: 'いちばん人気' },
+    intense: { count: '月4回', label: 'がっつり上達' }
+  };
+  const picked = countMap[goal];
+  const wantsAnnual = commitment === 'annual' || support === 'schedule' || support === 'line' || goal === 'intense';
+  const planType = wantsAnnual ? '年間プラン' : '月額プラン';
+  const count = planType === '月額プラン' && goal === 'intense' ? '月3回' : picked.count;
+  const note = planType === '年間プラン'
+    ? '90分レッスン、予約枠の仮押さえ、LINE相談無制限まで含めて使えます。'
+    : '月払いで始めやすく、必要に応じて追加レッスンも入れられます。';
+  document.getElementById('recoPlan').textContent = `${planType} ${count}`;
+  document.getElementById('recoReason').textContent = `${picked.label}の希望に合うペースです。${note}`;
+  document.getElementById('recoResult').classList.add('show');
+}
 
 const voiceData = [
   {
