@@ -883,21 +883,23 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
       <p class="reco-lead">あなたの情報を入れて判定ボタンを押すと、おすすめのプランが出てきます。</p>
       <div class="reco-grid">
         <div class="reco-field">
-          <label for="recoFrequency">理想のレッスン頻度は？</label>
-          <select id="recoFrequency">
-            <option value="1">月1回</option>
-            <option value="2">月2回</option>
-            <option value="3">月3回</option>
-            <option value="4">月4回</option>
+          <label for="recoFun">楽しさをどれくらい優先する？</label>
+          <select id="recoFun">
+            <option value="5">5 とても優先したい</option>
+            <option value="4">4 優先したい</option>
+            <option value="3">3 どちらも大事</option>
+            <option value="2">2 少しだけ</option>
+            <option value="1">1 あまり優先しない</option>
           </select>
         </div>
         <div class="reco-field">
-          <label for="recoConcern">一番の懸念は？</label>
-          <select id="recoConcern">
-            <option value="frequency">月の回数を通いきれるのか</option>
-            <option value="continuity">何か月も継続できるのか</option>
-            <option value="price">金額が高い</option>
-            <option value="none">特にない</option>
+          <label for="recoGrowth">上達をどれくらい優先する？</label>
+          <select id="recoGrowth">
+            <option value="5">5 とても優先したい</option>
+            <option value="4">4 優先したい</option>
+            <option value="3">3 どちらも大事</option>
+            <option value="2">2 少しだけ</option>
+            <option value="1">1 あまり優先しない</option>
           </select>
         </div>
       </div>
@@ -1120,36 +1122,31 @@ function openModal(id){ document.getElementById(id).classList.add('open'); }
 function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 
 function recommendPlan(){
-  const frequency = document.getElementById('recoFrequency').value;
-  const concern = document.getElementById('recoConcern').value;
-  const frequencyMap = {
-    '1': { count: '月1回', label: 'ゆっくり継続' },
-    '2': { count: '月2回', label: '仕事・学業と両立' },
-    '3': { count: '月3回', label: '両立しながら上達' },
-    '4': { count: '月4回', label: '短期集中・高頻度' }
-  };
-  const picked = frequencyMap[frequency];
-  let planTitle = `年間プラン ${picked.count}`;
-  let note = `${picked.label}の希望に合うペースです。`;
-  if (concern === 'frequency') {
-    if (frequency === '1') {
-      note += '月1回でも不安がある場合は、年間プラン月1回で枠を確保しつつ、難しい月の分を翌月2回にする調整を相談する形がおすすめです。';
-    } else if (frequency === '3') {
-      note += '月3回は毎週ではなく、月に1週間はレッスンがないペースです。試験・本番・お盆休みなどを避けながら調整しやすいので、両立しながら上達したい方に向いています。\n不安が強ければ、年間プラン月2回から始める案もあります。';
-    } else if (frequency === '4') {
-      note += '月4回は高頻度なので、予約枠を先に押さえられる年間プランが向いています。不安があれば月3回に落として、必要な月だけ追加レッスンを入れる案もあります。';
-    } else {
-      note += '回数が不安なら、年間プラン月2回を基本にして、忙しい月は日程調整しながら続ける形がおすすめです。';
-    }
-  } else if (concern === 'continuity') {
-    planTitle = `月額プラン ${frequency === '4' ? '月3回' : picked.count}`;
-    note += '何か月も続けられるかが不安な場合は、まず月額プランで始めてOKです。続けられそうだと分かったら、90分レッスン・予約枠の仮押さえ・LINE相談無制限が使える年間プランへ切り替える流れがおすすめです。';
-  } else if (concern === 'price') {
-    note += '金額が気になる場合も、1回あたりの負担を抑えやすい年間プランがおすすめです。';
+  const fun = Number(document.getElementById('recoFun').value);
+  const growth = Number(document.getElementById('recoGrowth').value);
+  const diff = growth - fun;
+  let planTitle = '年間プラン 月2回';
+  let note = '';
+  if (growth <= 2 && fun >= 4) {
+    planTitle = '年間プラン 月1回';
+    note = '趣味として楽しく、ゆっくり続けたい方には月1回がおすすめです。無理そうな月があれば、翌月2回にするなど日程調整を相談しながら続けられます。';
+  } else if (growth >= 5 && diff >= 2) {
+    planTitle = '年間プラン 月4回';
+    note = '上達をかなり優先したい場合は、短期集中・高頻度の月4回が合いやすいです。不安があれば月3回にして、必要な月だけ追加レッスンを入れる案もあります。';
+  } else if (growth >= 4 && diff >= 1) {
+    planTitle = '年間プラン 月3回';
+    note = '上達をしっかり狙いつつ、毎週ではなく月に1週間は空くペースです。試験・本番・お盆休みなどを避けながら調整しやすいので、仕事・学業との両立もしやすいです。';
+  } else if (fun >= 4 && growth >= 3) {
+    planTitle = '年間プラン 月2回 または 月3回';
+    note = '楽しさも上達も大事にしたい場合は、月2回で無理なく続けるか、月3回で少し上達寄りにするのがおすすめです。迷う場合は月2回から始めて、必要な時期だけ追加レッスンを入れる案もあります。';
+  } else if (growth >= 3) {
+    planTitle = '年間プラン 月2回';
+    note = '無理なく上達したい場合は月2回が基準になります。練習の方向性を確認しながら、仕事・学業とも両立しやすいペースです。';
   } else {
-    note += '特に大きな懸念がなければ、90分レッスン・予約枠の仮押さえ・LINE相談無制限まで使える年間プランがおすすめです。';
+    planTitle = '年間プラン 月1回';
+    note = '負担を抑えて楽しく続けたい場合は月1回がおすすめです。ゆっくりでも継続できる枠を持っておくと、練習のリズムを作りやすくなります。';
   }
-  if (frequency === '3' && concern !== 'frequency') note += '月3回は試験や本番を避けながら、仕事・学業との両立もしやすいペースです。';
+  note += '年間プランなら90分レッスン、予約枠の仮押さえ、LINE相談無制限まで使えます。';
   document.getElementById('recoPlan').textContent = planTitle;
   document.getElementById('recoReason').textContent = note;
   document.getElementById('recoResult').classList.add('show');
