@@ -415,7 +415,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
 }
 .reco-result.show { display:block; }
 .reco-plan { font-size:.92rem; font-weight:500; color:var(--teal-dk); margin-bottom:4px; }
-.reco-reason { font-size:.74rem; color:var(--mid); line-height:1.8; }
+.reco-reason { font-size:.74rem; color:var(--mid); line-height:1.8; white-space:pre-line; }
 
 /* guide */
 .guide-block {
@@ -894,7 +894,8 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
         <div class="reco-field">
           <label for="recoConcern">一番の懸念は？</label>
           <select id="recoConcern">
-            <option value="attendance">通いきれるのか</option>
+            <option value="frequency">月の回数を通いきれるのか</option>
+            <option value="continuity">何か月も継続できるのか</option>
             <option value="price">金額が高い</option>
             <option value="none">特にない</option>
           </select>
@@ -1128,21 +1129,28 @@ function recommendPlan(){
     '4': { count: '月4回', label: '短期集中・高頻度' }
   };
   const picked = frequencyMap[frequency];
-  const isMonthly = concern === 'attendance' && frequency !== '4';
-  const planType = isMonthly ? '月額プラン' : '年間プラン';
-  const count = planType === '月額プラン' && frequency === '4' ? '月3回' : picked.count;
+  let planTitle = `年間プラン ${picked.count}`;
   let note = `${picked.label}の希望に合うペースです。`;
-  if (concern === 'attendance') {
-    note += planType === '月額プラン'
-      ? '通い切れるか不安がある場合は、まず月払いで始めて、続けられそうなら年間プランへ切り替える流れがおすすめです。'
-      : '月4回を希望する場合は、予約枠を先に押さえられる年間プランの方が継続しやすくなります。';
+  if (concern === 'frequency') {
+    if (frequency === '1') {
+      note += '月1回でも不安がある場合は、年間プラン月1回で枠を確保しつつ、難しい月の分を翌月2回にする調整を相談する形がおすすめです。';
+    } else if (frequency === '3') {
+      note += '月3回は毎週ではなく、月に1週間はレッスンがないペースです。試験・本番・お盆休みなどを避けながら調整しやすいので、両立しながら上達したい方に向いています。\n不安が強ければ、年間プラン月2回から始める案もあります。';
+    } else if (frequency === '4') {
+      note += '月4回は高頻度なので、予約枠を先に押さえられる年間プランが向いています。不安があれば月3回に落として、必要な月だけ追加レッスンを入れる案もあります。';
+    } else {
+      note += '回数が不安なら、年間プラン月2回を基本にして、忙しい月は日程調整しながら続ける形がおすすめです。';
+    }
+  } else if (concern === 'continuity') {
+    planTitle = `月額プラン ${frequency === '4' ? '月3回' : picked.count}`;
+    note += '何か月も続けられるかが不安な場合は、まず月額プランで始めてOKです。続けられそうだと分かったら、90分レッスン・予約枠の仮押さえ・LINE相談無制限が使える年間プランへ切り替える流れがおすすめです。';
   } else if (concern === 'price') {
     note += '金額が気になる場合も、1回あたりの負担を抑えやすい年間プランがおすすめです。';
   } else {
     note += '特に大きな懸念がなければ、90分レッスン・予約枠の仮押さえ・LINE相談無制限まで使える年間プランがおすすめです。';
   }
-  if (frequency === '3') note += '月3回は試験や本番を避けながら、仕事・学業との両立もしやすいペースです。';
-  document.getElementById('recoPlan').textContent = `${planType} ${count}`;
+  if (frequency === '3' && concern !== 'frequency') note += '月3回は試験や本番を避けながら、仕事・学業との両立もしやすいペースです。';
+  document.getElementById('recoPlan').textContent = planTitle;
   document.getElementById('recoReason').textContent = note;
   document.getElementById('recoResult').classList.add('show');
 }
