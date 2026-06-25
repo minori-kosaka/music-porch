@@ -901,23 +901,12 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
           </select>
         </div>
         <div class="reco-field">
-          <label for="recoFun">楽しさをどれくらい優先する？</label>
-          <select id="recoFun">
-            <option value="5">5 とても優先したい</option>
-            <option value="4">4 優先したい</option>
-            <option value="3">3 どちらも大事</option>
-            <option value="2">2 少しだけ</option>
-            <option value="1">1 あまり優先しない</option>
-          </select>
-        </div>
-        <div class="reco-field">
-          <label for="recoGrowth">上達をどれくらい優先する？</label>
+          <label for="recoGrowth">レッスンの目的は？</label>
           <select id="recoGrowth">
-            <option value="5">5 とても優先したい</option>
-            <option value="4">4 優先したい</option>
-            <option value="3">3 どちらも大事</option>
-            <option value="2">2 少しだけ</option>
-            <option value="1">1 あまり優先しない</option>
+            <option value="4">明確な結果が欲しい</option>
+            <option value="3" selected>そこそこ上達したい</option>
+            <option value="2">焦らず上達したい</option>
+            <option value="1">ゆっくり楽しみたい</option>
           </select>
         </div>
       </div>
@@ -1142,7 +1131,6 @@ function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 function recommendPlan(){
   const frequency = Number(document.getElementById('recoFrequency').value);
   const concern = document.getElementById('recoConcern').value;
-  const fun = Number(document.getElementById('recoFun').value);
   const growth = Number(document.getElementById('recoGrowth').value);
   const selectedCount = `月${frequency}回`;
   let planTitle = `年間プラン ${selectedCount}`;
@@ -1177,16 +1165,31 @@ function recommendPlan(){
     notes.push('月3回でも試験や本番を避けながら、仕事・学業との両立はしやすいペースです。');
   }
 
-  if (growth >= 4 && frequency <= 2) {
-    notes.push('上達を強く優先するなら、月2回を下限にして、余裕があれば月3回も検討すると変化を感じやすくなります。');
-  } else if (growth >= 4 && frequency >= 3) {
-    notes.push('上達重視の回答なので、月3回以上を年間で押さえる判断は相性が良いです。');
-  }
-
-  if (fun >= 4 && growth <= 2 && frequency >= 3) {
-    notes.push('楽しさ優先で負担を抑えたい場合は、月1〜2回に下げて長く続ける選択も合います。');
-  } else if (fun >= 4 && growth >= 3) {
-    notes.push('楽しさと上達の両方を大事にするなら、月2回は無理なく、月3回は少し上達寄りのバランスです。');
+  if (growth === 4) {
+    if (concern === 'monthly-count') {
+      notes.push('明確な結果も欲しい場合は、まず通える回数で始めて、慣れてきたら月3回や追加レッスンを検討すると現実的です。');
+    } else if (concern !== 'continuity' && frequency <= 2) {
+      planTitle = '年間プラン 月3回';
+      notes.push('明確な結果が欲しい場合は、月1〜2回よりも月3回のほうが変化を作りやすいです。年間で枠を押さえて、必要な月だけ追加レッスンを入れる形がおすすめです。');
+    } else {
+      notes.push('明確な結果が欲しい回答なので、月3回以上のペースは相性が良いです。');
+    }
+  } else if (growth === 3) {
+    if (concern !== 'monthly-count' && concern !== 'continuity' && frequency === 1) {
+      planTitle = '年間プラン 月2回';
+      notes.push('そこそこ上達したい場合は、月1回より月2回のほうが練習の方向性を確認しやすくなります。');
+    } else {
+      notes.push('そこそこ上達したい場合は、月2〜3回が現実的なバランスです。');
+    }
+  } else if (growth === 2) {
+    notes.push('焦らず上達したい場合は、無理に回数を増やしすぎず、続けやすい回数で年間のリズムを作るのがおすすめです。');
+  } else {
+    if (concern !== 'monthly-count' && concern !== 'continuity' && frequency >= 3) {
+      planTitle = '年間プラン 月1回';
+      notes.push('ゆっくり楽しみたい場合は、月3回以上より月1回で長く続ける形が合いやすいです。');
+    } else {
+      notes.push('ゆっくり楽しみたい場合は、月1回を軸にして無理のないペースで続けるのがおすすめです。');
+    }
   }
 
   const note = notes.join('\n');
