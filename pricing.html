@@ -580,7 +580,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
   <div class="ph-inner">
     <span class="ph-lb">Lesson Pricing</span>
     <h1 class="ph-tt">レッスン<em>料金</em></h1>
-    <p class="ph-sub">単発・体験・月額プランは60分 ／ 年間・受験生限定プランは90分 ／ すべて税込</p>
+    <p class="ph-sub">単発・体験・月額プランは60分 ／ 年間プランは90分 ／ すべて税込</p>
   </div>
 </div>
 
@@ -711,27 +711,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
             <span><div class="mbb-main">公式LINEで相談OK</div><div class="mbb-sub">最優先でご対応いたします</div></span>
           </div>
         </div>
-      </div>
-
-      <div class="monthly-block">
-        <div class="mb-title">受験生限定プラン</div>
-        <table class="price-table">
-          <thead>
-            <tr>
-              <th>回数</th>
-              <th>総額</th>
-              <th>1回90分</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr onclick="openModal('voiceS12')" style="cursor:pointer;">
-              <td>年間12回</td><td>118,800円</td><td><span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span></td>
-            </tr>
-            <tr onclick="openModal('voiceS8')" style="cursor:pointer;">
-              <td>年間8回</td><td>85,800円</td><td><span class="price-prefix">1回</span>10,725円<span class="price-tax">（税込）</span></td>
-            </tr>
-          </tbody>
-        </table>
       </div>
 
       <!-- guide -->
@@ -932,38 +911,18 @@ const voiceData = [
     tags:['本番・コンクールに向けて集中的に仕上げたい方','コスパ重視でしっかり上達したい方','週1は多いが月2では少ないと感じる方','短期間で大きく変化したい方'],
     voices:[
       {text:'コンクール前の時期、週1近くで見てもらえるのが心強かった。技術的なことだけじゃなくて気持ちの面も整理できた。', attr:'10代・中学生'},
-      {text:'月3回プランで入って、本番前はさらに追加レッスンを入れました。同じ9,350円で増やせるので、直前期も費用を気にせず動けた。', attr:'20代・音大受験生'},
+      {text:'月3回プランで入って、本番前はさらに追加レッスンを入れました。同じ9,350円で増やせるので、直前期も費用を気にせず動けた。', attr:'20代・学生'},
       {text:'週1は多すぎるけど月2では少ない、というちょうど間のペースが自分には合ってました。', attr:'30代・趣味プレイヤー'},
     ]
   },
   {
     id:'voiceA4', badge:'年間プラン', title:'月4回', sub:'集中的に取り組みたい方に',
     price:'<span class="price-prefix">1回</span>8,800円<span class="price-tax">（税込）</span>', total:'年間総額 105,600円',
-    tags:['本番・受験に向けて頻度を上げたい方','1回あたりの費用を抑えたい方','短期間で演奏を整えたい方','継続的なチェックが必要な方'],
+    tags:['本番に向けて頻度を上げたい方','1回あたりの費用を抑えたい方','短期間で演奏を整えたい方','継続的なチェックが必要な方'],
     voices:[
       {text:'本番前に回数を増やして、毎回課題を確認できたのが心強かったです。', attr:'10代・学生'},
-      {text:'一人で悩む時間が減って、練習の方向がぶれにくくなりました。', attr:'20代・受験生'},
+      {text:'一人で悩む時間が減って、練習の方向がぶれにくくなりました。', attr:'20代・学生'},
       {text:'費用を見通しやすく、必要な時期に集中して通えるのが助かります。', attr:'30代・社会人'},
-    ]
-  },
-  {
-    id:'voiceS12', badge:'受験生限定', title:'年間12回', sub:'受験に向けて月1回ペースで整えたい方に',
-    price:'<span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span>', total:'年間総額 118,800円',
-    tags:['受験までの年間計画を立てたい方','月1回のペースで基礎と曲を確認したい方','90分でじっくり見てもらいたい方','追加レッスンも同料金で検討したい方'],
-    voices:[
-      {text:'毎月のレッスンで、受験までに何を仕上げるか整理できました。', attr:'10代・受験生'},
-      {text:'90分あるので、基礎と曲の両方をしっかり見てもらえます。', attr:'10代・受験生'},
-      {text:'年間の見通しが立つので、家族とも相談しやすかったです。', attr:'保護者'},
-    ]
-  },
-  {
-    id:'voiceS8', badge:'受験生限定', title:'年間8回', sub:'必要な時期に絞って受講したい方に',
-    price:'<span class="price-prefix">1回</span>10,725円<span class="price-tax">（税込）</span>', total:'年間総額 85,800円',
-    tags:['部活や学校行事と両立したい方','必要なタイミングに絞って受講したい方','受験前の要所で確認したい方','90分で効率よく進めたい方'],
-    voices:[
-      {text:'予定に合わせて必要な時期に受けられるので、無理なく続けられました。', attr:'10代・受験生'},
-      {text:'毎月ではなくても、節目で確認してもらえる安心感がありました。', attr:'10代・受験生'},
-      {text:'回数と総額が決まっているので、計画を立てやすかったです。', attr:'保護者'},
     ]
   },
   {
