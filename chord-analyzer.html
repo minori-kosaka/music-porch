@@ -143,9 +143,11 @@
     #multi-input-pane { display: none; }
     #multi-actions { display: flex; gap: 8px; margin-top: 10px; }
     #btn-multi-analyze, #btn-multi-clear {
-      flex: 1; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 700;
+      border-radius: 8px; padding: 8px 12px; font-size: 12px; font-weight: 700;
       border: 1px solid #1e4a42; background: #0a1a18; color: #6b9e96;
     }
+    #btn-multi-analyze { flex: 1; }
+    #btn-multi-clear { flex: 0 0 auto; }
     #btn-multi-analyze { background: #12322d; color: #a0d4cc; border-color: #2a9d8a55; }
     #multi-results { display: none; margin: 18px 0 28px; }
     #multi-results-label { font-size: 11px; color: #6b9e96; letter-spacing: 2px; margin-bottom: 10px; }
@@ -158,7 +160,13 @@
     .multi-row:last-of-type { border-bottom: 1px solid #1e4a42; border-radius: 0 0 10px 10px; }
     .multi-source { color: #a0d4cc; word-break: break-word; }
     .multi-answer { color: #e0f0ed; }
+    .multi-answer-btn {
+      border: none; background: none; padding: 0; color: #e0f0ed;
+      font-size: 12px; font-weight: 700; text-align: left; text-decoration: underline;
+      text-underline-offset: 3px;
+    }
     .multi-note { color: #6b9e96; font-size: 11px; margin-top: 3px; }
+    .multi-detail { grid-column: 1 / -1; margin-top: 8px; }
 
     #btn-row { display: flex; gap: 10px; margin-bottom: 28px; }
     #btn-analyze {
@@ -171,9 +179,9 @@
       color: #fff; animation: pulse 2s infinite;
     }
     #btn-reset {
-      padding: 14px 18px; border-radius: 12px;
+      padding: 10px 12px; border-radius: 10px;
       background: none; border: 1px solid #1e4a42;
-      color: #6b9e96; font-size: 14px;
+      color: #6b9e96; font-size: 12px;
     }
 
     #no-result {
@@ -297,10 +305,9 @@
 <div id="settings-panel" aria-label="設定">
   <label for="note-language">音名表示</label>
   <select id="note-language" onchange="setNoteLanguage(this.value)">
-    <option value="jp">日本語（ドレミ）</option>
+    <option value="it">イタリア語（ドレミ）</option>
     <option value="en">英語（C D E）</option>
     <option value="de">ドイツ語（C D E F G A H）</option>
-    <option value="it">イタリア語（Do Re Mi）</option>
   </select>
   <div id="settings-help">入力欄は選択中の音名に加えて、CDEFGAB と ドレミも読み取れます。</div>
 </div>
@@ -350,7 +357,7 @@
       <textarea id="multi-note-input" rows="7" placeholder="ドミソ&#10;レファラ&#10;G B D F"></textarea>
       <div id="multi-actions">
         <button id="btn-multi-analyze" onclick="analyzeMulti()">一括判定</button>
-        <button id="btn-multi-clear" onclick="clearMulti()">クリア</button>
+        <button id="btn-multi-clear" onclick="clearMulti()">入力消去</button>
       </div>
       <div id="input-help">行頭に ' を付けた行はコメントとして読み飛ばします。</div>
     </div>
@@ -358,7 +365,7 @@
 
   <div id="btn-row">
     <button id="btn-analyze" onclick="analyze()">▶ 和音を判定する</button>
-    <button id="btn-reset" onclick="reset()">リセット</button>
+    <button id="btn-reset" onclick="reset()">選択解除</button>
   </div>
 
   <div id="multi-results">
@@ -529,6 +536,7 @@ let adBannerIndex = 0;
 let selected = [];
 let defaultFlat = false;
 let pendingAcc  = null;
+let multiResultCache = [];
 
 function mod12(n) { return ((n % 12) + 12) % 12; }
 
@@ -571,17 +579,18 @@ const NOTE_LANG_TABLES = {
     flat: ["C","Des","D","Es","E","F","Ges","G","As","A","B","H"],
   },
   it: {
-    sharp:["Do","Do#","Re","Re#","Mi","Fa","Fa#","Sol","Sol#","La","La#","Si"],
-    flat: ["Do","Reb","Re","Mib","Mi","Fa","Solb","Sol","Lab","La","Sib","Si"],
+    sharp:["ド","ド♯","レ","レ♯","ミ","ファ","ファ♯","ソ","ソ♯","ラ","ラ♯","シ"],
+    flat: ["ド","レ♭","レ","ミ♭","ミ","ファ","ソ♭","ソ","ラ♭","ラ","シ♭","シ"],
   },
 };
 const LANGUAGE_EXAMPLES = {
   jp: "例: ドミソ / ファ シ♭ ド",
   en: "例: C E G / F Bb C",
   de: "例: C E G / F B C",
-  it: "例: Do Mi Sol / Fa Sib Do",
+  it: "例: ドミソ / ファ シ♭ ド",
 };
-let noteLanguage = localStorage.getItem('chordAnalyzerNoteLanguage') || 'jp';
+let noteLanguage = localStorage.getItem('chordAnalyzerNoteLanguage') || 'it';
+if (noteLanguage === 'jp') noteLanguage = 'it';
 
 function displayName(pc, preferFlat, acc) {
   return noteName(pc, acc === '♭' || preferFlat);
@@ -594,6 +603,31 @@ function noteName(pc, preferFlat = defaultFlat) {
 
 function chordRootName(rootPC, preferFlat) {
   return noteName(rootPC, preferFlat);
+}
+
+function chordSuffix(shortName) {
+  if (shortName === '-dur') {
+    if (noteLanguage === 'de') return '-dur';
+    if (noteLanguage === 'en') return ' major';
+    return 'メジャー';
+  }
+  if (shortName === '-moll') {
+    if (noteLanguage === 'de') return '-moll';
+    if (noteLanguage === 'en') return ' minor';
+    return 'マイナー';
+  }
+  return shortName.replace(/^-/, '');
+}
+
+function chordDisplayName(rootPC, preferFlat, chordType) {
+  return chordRootName(rootPC, preferFlat) + chordSuffix(chordType.short);
+}
+
+function scaleDisplayName(rootPC, isMinor) {
+  const root = noteName(rootPC, isMinor);
+  if (noteLanguage === 'de') return root + (isMinor ? '-moll' : '-dur');
+  if (noteLanguage === 'en') return root + (isMinor ? ' minor' : ' major');
+  return root + (isMinor ? '短調' : '長調');
 }
 
 function normalizeAccidental(acc) {
@@ -681,7 +715,7 @@ function toggleSettings() {
 }
 
 function setNoteLanguage(lang) {
-  noteLanguage = NOTE_LANG_TABLES[lang] ? lang : 'jp';
+  noteLanguage = NOTE_LANG_TABLES[lang] ? lang : 'it';
   localStorage.setItem('chordAnalyzerNoteLanguage', noteLanguage);
   document.getElementById('note-language').value = noteLanguage;
   document.getElementById('single-note-input').placeholder = `${LANGUAGE_EXAMPLES[noteLanguage]} / C E G`;
@@ -728,6 +762,11 @@ function buildPiano() {
 }
 
 function tapKey(basePC) {
+  const textInput = document.getElementById('single-note-input');
+  if (textInput.value) {
+    textInput.value = '';
+    selected = [];
+  }
   const acc = pendingAcc !== null ? pendingAcc : '';
   const shift = ACC_SHIFT[acc] || 0;
   const pc = mod12(basePC + shift);
@@ -848,13 +887,13 @@ function analyzeChord(notes) {
               if (!allFit) return;
               const accFit = selected.every(s => { if (s.accidental === '') return true; return scale.some(sc => mod12(k + sc) === s.pc); });
               if (!accFit) return;
-              keyMemberships.push({ keyName: noteName(k, si === 1) + (si === 0 ? '-dur' : '-moll'), degree: DEGREE_NAMES[di] });
+              keyMemberships.push({ keyName: scaleDisplayName(k, si === 1), degree: DEGREE_NAMES[di] });
             }
           });
         });
       }
       const buildSpelling = (preferFlat) => ({
-        chordName: chordRootName(rootPC, preferFlat) + ct.short,
+        chordName: chordDisplayName(rootPC, preferFlat, ct),
         rootJP: noteName(rootPC, preferFlat),
         noteRoles: notes.map(n => {
           const pc = mod12(n - rootPC);
@@ -865,7 +904,7 @@ function analyzeChord(notes) {
       });
       results.push({
         _rootPC: rootPC, _quality: ct.quality, rootJP: rootNameJP,
-        chordName: rootNameEN + ct.short, typeName: ct.name, inversion,
+        chordName: chordDisplayName(rootPC, rootFlat, ct), typeName: ct.name, inversion,
         keyMemberships: keyMemberships.slice(0, 4), noteRoles,
         sharpSpelling: buildSpelling(false), flatSpelling: buildSpelling(true), isFlat: rootFlat,
       });
@@ -902,14 +941,15 @@ function findNearMatches(notes) {
       const diffCount = missing.length + extra.length;
       if (diffCount === 0 || diffCount > 2) return;
       if (Math.abs(chordPCs.length - input.length) > 2) return;
-      const name = chordRootName(rootPC, preferFlat) + ct.short;
+      const name = chordDisplayName(rootPC, preferFlat, ct);
       const key = name + ':' + missing.join(',') + ':' + extra.join(',');
       if (seen.has(key)) return;
       seen.add(key);
       const semitoneShift = missing.length === 1 && extra.length === 1 && (
         mod12(missing[0] - extra[0]) === 1 || mod12(extra[0] - missing[0]) === 1
       );
-      candidates.push({ name, typeName: ct.name, rootPC, missing, extra, diffCount, semitoneShift, preferFlat });
+      const omitRoot = missing.includes(rootPC) && !input.includes(rootPC);
+      candidates.push({ name, typeName: ct.name, rootPC, missing, extra, diffCount, semitoneShift, omitRoot, preferFlat });
     });
   }
   return candidates
@@ -917,9 +957,18 @@ function findNearMatches(notes) {
     .slice(0, 6);
 }
 
+function findRootOmissionMatches(notes) {
+  if (notes.length < 4) return [];
+  return findNearMatches(notes)
+    .filter(match => match.omitRoot && match.extra.length === 0 && match.missing.length === 1)
+    .slice(0, 3);
+}
+
 function nearMatchText(match) {
   const parts = [];
-  if (match.missing.length) parts.push(`不足: ${match.missing.map(pc => simplePCName(pc, match.preferFlat)).join('・')}`);
+  if (match.omitRoot) parts.push(`根音省略: ${simplePCName(match.rootPC, match.preferFlat)}`);
+  const missing = match.missing.filter(pc => !(match.omitRoot && pc === match.rootPC));
+  if (missing.length) parts.push(`不足: ${missing.map(pc => simplePCName(pc, match.preferFlat)).join('・')}`);
   if (match.extra.length) parts.push(`余分: ${match.extra.map(pc => simplePCName(pc, match.preferFlat)).join('・')}`);
   if (match.semitoneShift) parts.push('半音ずれの可能性');
   return parts.join(' / ');
@@ -968,6 +1017,12 @@ function analyze() {
     document.getElementById('just-note-body').textContent = desc.body;
     document.getElementById('results-label').textContent = `判定結果 — ${results.length}件`;
     results.forEach((r, i) => list.appendChild(buildChordCard(r, i === 0)));
+    const omissionMatches = findRootOmissionMatches(notes);
+    if (omissionMatches.length) {
+      const omissionEl = document.createElement('div');
+      omissionEl.innerHTML = buildNearMatchList(omissionMatches).replace('近い候補（過不足チェック）', '根音省略候補');
+      list.appendChild(omissionEl);
+    }
   }
   const slot = rotationCount % 3;
   rotationCount++;
@@ -1002,9 +1057,15 @@ function summarizeChordResults(notes, parsedEntries) {
   selected = previousSelected;
   if (exact.length > 0) {
     exact.sort((a, b) => a.chordName.length - b.chordName.length);
+    const omissions = findRootOmissionMatches(notes);
+    const omissionNote = omissions.length
+      ? `根音省略候補: ${omissions.map(m => `${m.name}（${simplePCName(m.rootPC, m.preferFlat)}省略）`).join(' / ')}`
+      : '';
+    const extraNote = exact.length > 3 ? `ほか ${exact.length - 3} 件` : '';
     return {
       answer: `完全一致: ${exact.slice(0, 3).map(r => r.chordName).join(' / ')}`,
-      note: exact.length > 3 ? `ほか ${exact.length - 3} 件` : ''
+      note: [extraNote, omissionNote].filter(Boolean).join(' / '),
+      exactResults: exact
     };
   }
   const previousForNear = selected;
@@ -1026,13 +1087,14 @@ function analyzeMulti() {
   const list = document.getElementById('multi-results-list');
   const section = document.getElementById('multi-results');
   list.innerHTML = '';
+  multiResultCache = [];
   const outputs = [];
   rows.forEach(line => {
     const text = line.trim();
     if (!text || text.startsWith("'")) return;
     const parsed = parseNoteText(text);
     if (parsed.length < 2) {
-      outputs.push({ source: text, answer: '入力不足', note: '2音以上を入力してください' });
+      outputs.push({ source: text, answer: '入力不足', note: '2音以上を入力してください', exactResults: [] });
       return;
     }
     const notes = uniquePCs(parsed);
@@ -1043,25 +1105,41 @@ function analyzeMulti() {
     return;
   }
   document.getElementById('multi-results-label').textContent = `一括判定結果 — ${outputs.length}件`;
-  outputs.forEach(row => {
+  multiResultCache = outputs;
+  outputs.forEach((row, index) => {
     const el = document.createElement('div');
     el.className = 'multi-row';
+    const answerHtml = row.exactResults && row.exactResults.length
+      ? `<button class="multi-answer-btn" onclick="showMultiDetail(${index})">${row.answer}</button>`
+      : `<div class="multi-answer">${row.answer}</div>`;
     el.innerHTML = `
       <div class="multi-source">${row.source}</div>
       <div>
-        <div class="multi-answer">${row.answer}</div>
+        ${answerHtml}
         ${row.note ? `<div class="multi-note">${row.note}</div>` : ''}
       </div>
+      <div class="multi-detail" id="multi-detail-${index}"></div>
     `;
     list.appendChild(el);
   });
   section.style.display = 'block';
 }
 
+function showMultiDetail(index) {
+  document.querySelectorAll('.multi-detail').forEach(el => el.innerHTML = '');
+  const row = multiResultCache[index];
+  if (!row || !row.exactResults || !row.exactResults.length) return;
+  const detail = document.getElementById(`multi-detail-${index}`);
+  row.exactResults.slice(0, 3).forEach((result, i) => {
+    detail.appendChild(buildChordCard(result, i === 0));
+  });
+}
+
 function clearMulti() {
   document.getElementById('multi-note-input').value = '';
   document.getElementById('multi-results').style.display = 'none';
   document.getElementById('multi-results-list').innerHTML = '';
+  multiResultCache = [];
 }
 
 function buildChordCard(r, isFirst) {
