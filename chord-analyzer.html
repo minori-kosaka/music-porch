@@ -95,6 +95,46 @@
       font-family: 'Noto Serif JP', serif; transition: all 0.15s;
     }
 
+    #text-input-section {
+      margin: 0 auto 20px; padding: 16px;
+      border: 1px solid #1e4a42; border-radius: 12px;
+      background: #071714;
+    }
+    .input-label { font-size: 11px; color: #6b9e96; letter-spacing: 2px; margin-bottom: 8px; }
+    #single-note-input, #multi-note-input {
+      width: 100%; border: 1px solid #1e4a42; border-radius: 8px;
+      background: #0a1a18; color: #e0f0ed; font: 14px 'Noto Sans JP', sans-serif;
+      padding: 10px 12px;
+    }
+    #single-note-input:focus, #multi-note-input:focus { border-color: #2a9d8a; outline: none; box-shadow: 0 0 0 2px #2a9d8a22; }
+    #single-note-input::placeholder, #multi-note-input::placeholder { color: #3a6a62; }
+    #input-help { margin-top: 8px; color: #547b75; font-size: 11px; line-height: 1.6; }
+    #input-tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+    .input-tab {
+      flex: 1; border: 1px solid #1e4a42; border-radius: 8px;
+      background: #0a1a18; color: #6b9e96; padding: 8px; font-size: 12px; font-weight: 700;
+    }
+    .input-tab.active { background: #2a9d8a; color: #fff; border-color: #2a9d8a; }
+    #multi-input-pane { display: none; }
+    #multi-actions { display: flex; gap: 8px; margin-top: 10px; }
+    #btn-multi-analyze, #btn-multi-clear {
+      flex: 1; border-radius: 8px; padding: 10px; font-size: 13px; font-weight: 700;
+      border: 1px solid #1e4a42; background: #0a1a18; color: #6b9e96;
+    }
+    #btn-multi-analyze { background: #12322d; color: #a0d4cc; border-color: #2a9d8a55; }
+    #multi-results { display: none; margin: 18px 0 28px; }
+    #multi-results-label { font-size: 11px; color: #6b9e96; letter-spacing: 2px; margin-bottom: 10px; }
+    .multi-row {
+      display: grid; grid-template-columns: minmax(110px, 0.9fr) minmax(0, 1.2fr);
+      gap: 8px; padding: 10px 12px; border: 1px solid #1e4a42; border-bottom: none;
+      background: #0a1a18; font-size: 12px; line-height: 1.5;
+    }
+    .multi-row:first-of-type { border-radius: 10px 10px 0 0; }
+    .multi-row:last-of-type { border-bottom: 1px solid #1e4a42; border-radius: 0 0 10px 10px; }
+    .multi-source { color: #a0d4cc; word-break: break-word; }
+    .multi-answer { color: #e0f0ed; }
+    .multi-note { color: #6b9e96; font-size: 11px; margin-top: 3px; }
+
     #btn-row { display: flex; gap: 10px; margin-bottom: 28px; }
     #btn-analyze {
       flex: 1; padding: 14px; border-radius: 12px; border: none;
@@ -162,6 +202,16 @@
     .cent-bar-center { position: absolute; left: 50%; top: 0; width: 1px; height: 100%; background: #2a9d8a; opacity: 0.5; }
     .cent-bar-dot { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; border-radius: 50%; transition: left 0.3s ease; }
     .note-role-tip { font-size: 11px; color: #6b9e96; margin-top: 6px; line-height: 1.5; }
+    .near-match-list { margin-top: 14px; }
+    .near-match-title { font-size: 11px; color: #6b9e96; letter-spacing: 1px; margin-bottom: 8px; }
+    .near-match-card {
+      padding: 12px 14px; margin-bottom: 8px; border-radius: 10px;
+      background: #0d1f1c; border: 1px solid #2a9d8a33; font-size: 12px; line-height: 1.6;
+    }
+    .near-match-name { color: #e0f0ed; font-weight: 700; margin-bottom: 4px; }
+    .near-match-diff { color: #8abab4; }
+    .diff-plus { color: #f4a261; }
+    .diff-minus { color: #60b4f0; }
 
     #just-note {
       display: none; margin-top: 20px; padding: 18px 20px; border-radius: 14px;
@@ -247,14 +297,41 @@
     <span class="empty">鍵盤をタップして音を選択してください</span>
   </div>
 
+  <div id="text-input-section">
+    <div id="input-tabs">
+      <button id="tab-single-input" class="input-tab active" onclick="setInputMode('single')">単発入力</button>
+      <button id="tab-multi-input" class="input-tab" onclick="setInputMode('multi')">複数行入力</button>
+    </div>
+    <div id="single-input-pane">
+      <div class="input-label">音名を直接入力</div>
+      <input id="single-note-input" type="text" placeholder="例: ドミソ / C E G / ファ シ♭ ド" oninput="applyTextInput()" />
+      <div id="input-help">ドレミファソラシ、CDEFGAB、♯/#、♭/b に対応。入力すると鍵盤選択にも反映されます。</div>
+    </div>
+    <div id="multi-input-pane">
+      <div class="input-label">1行に1つずつ入力して一括判定</div>
+      <textarea id="multi-note-input" rows="7" placeholder="ドミソ&#10;レファラ&#10;G B D F"></textarea>
+      <div id="multi-actions">
+        <button id="btn-multi-analyze" onclick="analyzeMulti()">一括判定</button>
+        <button id="btn-multi-clear" onclick="clearMulti()">クリア</button>
+      </div>
+      <div id="input-help">行頭に ' を付けた行はコメントとして読み飛ばします。</div>
+    </div>
+  </div>
+
   <div id="btn-row">
     <button id="btn-analyze" onclick="analyze()">▶ 和音を判定する</button>
     <button id="btn-reset" onclick="reset()">リセット</button>
   </div>
 
+  <div id="multi-results">
+    <div id="multi-results-label"></div>
+    <div id="multi-results-list"></div>
+  </div>
+
   <div id="no-result">
     この音の組み合わせは一般的な和音パターンに一致しませんでした。<br>
     <span>異名同音や別の組み合わせを試してみてください。</span>
+    <div id="near-no-result"></div>
   </div>
 
   <div id="results-section">
@@ -335,12 +412,23 @@ const CHORD_TYPES = [
   { intervals:[0,4,8],             name:"増三和音（オーギュメント）",         short:"-aug",    quality:"augmented" },
   { intervals:[0,5,7],             name:"四度和音（sus4）",                   short:"-sus4",   quality:"suspended" },
   { intervals:[0,2,7],             name:"二度和音（sus2）",                   short:"-sus2",   quality:"suspended" },
+  { intervals:[0,7],               name:"五度和音（パワーコード）",           short:"-5",      quality:"suspended" },
+  { intervals:[0,4,6],             name:"減五度付き長三和音",                 short:"-b5",     quality:"diminished" },
+  { intervals:[0,4,7,9],           name:"長六和音（メジャー6）",              short:"-6",      quality:"major" },
+  { intervals:[0,3,7,9],           name:"短六和音（マイナー6）",              short:"-m6",     quality:"minor" },
   { intervals:[0,4,7,11],          name:"長七和音（メジャーセブンス）",       short:"-maj7",   quality:"major" },
   { intervals:[0,4,7,10],          name:"属七和音（ドミナントセブンス）",     short:"-7",      quality:"dominant" },
   { intervals:[0,3,7,10],          name:"短七和音（マイナーセブンス）",       short:"-m7",     quality:"minor" },
   { intervals:[0,3,7,11],          name:"短長七和音（マイナーメジャー7）",    short:"-mM7",    quality:"mM7" },
+  { intervals:[0,4,6,10],          name:"減五度付き属七和音",                 short:"-7b5",    quality:"diminished" },
+  { intervals:[0,4,6,11],          name:"減五度付きメジャー7",                short:"-maj7b5", quality:"diminished" },
+  { intervals:[0,3,6,11],          name:"減五度付きマイナーメジャー7",        short:"-mM7b5",  quality:"diminished" },
+  { intervals:[0,5,7,10],          name:"属七sus4和音",                       short:"-7sus4",  quality:"dominant" },
   { intervals:[0,3,6,9],           name:"減七和音（ディミニッシュセブンス）", short:"-dim7",   quality:"diminished" },
   { intervals:[0,3,6,10],          name:"半減七和音（ハーフディミニッシュ）", short:"-m7b5",   quality:"diminished" },
+  { intervals:[0,2,4,7],           name:"add9和音",                           short:"-add9",   quality:"major9" },
+  { intervals:[0,2,3,7],           name:"m(add9)和音",                        short:"-madd9",  quality:"minor9" },
+  { intervals:[0,4,5,7],           name:"add4和音",                           short:"-add4",   quality:"suspended" },
   { intervals:[0,4,8,10],          name:"増七和音（オーギュメント7）",        short:"-aug7",   quality:"aug7" },
   { intervals:[0,4,8,11],          name:"増長七和音（オーギュメントmaj7）",   short:"-augM7",  quality:"augM7" },
   { intervals:[0,4,7,10,14],       name:"属九和音（ドミナント9th）",          short:"-9",      quality:"dominant9" },
@@ -349,6 +437,8 @@ const CHORD_TYPES = [
   { intervals:[0,4,7,10,13],       name:"属b9和音（ドミナントb9）",           short:"-7b9",    quality:"dominant9b" },
   { intervals:[0,4,7,10,15],       name:"属#9和音（ドミナント#9）",           short:"-7s9",    quality:"dominant9s" },
   { intervals:[0,3,7,11,14],       name:"短長九和音（マイナーメジャー9th）",  short:"-mM9",    quality:"mM9" },
+  { intervals:[0,4,7,9,14],        name:"6/9和音",                            short:"-69",     quality:"major9" },
+  { intervals:[0,3,7,9,14],        name:"m6/9和音",                           short:"-m69",    quality:"minor9" },
   { intervals:[0,4,7,10,14,17],    name:"属十一和音（ドミナント11th）",       short:"-11",     quality:"dominant11" },
   { intervals:[0,4,7,11,14,17],    name:"長十一和音（メジャー11th）",         short:"-maj11",  quality:"major11" },
   { intervals:[0,3,7,10,14,17],    name:"短十一和音（マイナー11th）",         short:"-m11",    quality:"minor11" },
@@ -427,6 +517,8 @@ const ACC_SHIFT = { '': 0, '♯': 1, '♭': -1, '𝄪': 2, '𝄫': -2 };
 const FLAT_BASE  = ["ド","レ♭","レ","ミ♭","ミ","ファ","ソ♭","ソ","ラ♭","ラ","シ♭","シ"];
 const SHARP_BASE = ["ド","ド♯","レ","レ♯","ミ","ファ","ファ♯","ソ","ソ♯","ラ","ラ♯","シ"];
 const NATURAL_NAME = {0:"ド",2:"レ",4:"ミ",5:"ファ",7:"ソ",9:"ラ",11:"シ"};
+const JP_NOTE_PC = { "ド":0, "レ":2, "ミ":4, "ファ":5, "ソ":7, "ラ":9, "シ":11 };
+const EN_NOTE_PC = { C:0, D:2, E:4, F:5, G:7, A:9, B:11 };
 
 function displayName(pc, preferFlat, acc) {
   if (acc && acc !== '') {
@@ -436,6 +528,60 @@ function displayName(pc, preferFlat, acc) {
     return baseName + acc;
   }
   return preferFlat ? FLAT_BASE[pc] : SHARP_BASE[pc];
+}
+
+function normalizeAccidental(acc) {
+  if (!acc) return '';
+  if (acc === '#' || acc === '＃' || acc === '♯') return '♯';
+  if (acc === 'b' || acc === 'ｂ' || acc === '♭') return '♭';
+  if (acc === '𝄪') return '𝄪';
+  if (acc === '𝄫') return '𝄫';
+  return '';
+}
+
+function parseNoteText(text) {
+  const source = (text || '').replace(/　/g, ' ');
+  const notes = [];
+  const tokenReg = /(ファ|ド|レ|ミ|ソ|ラ|シ|[A-Ga-g])\s*([#＃♯bｂ♭𝄪𝄫]?)/g;
+  let match;
+  while ((match = tokenReg.exec(source)) !== null) {
+    const rawName = match[1];
+    const acc = normalizeAccidental(match[2]);
+    const isEnglish = /^[A-Ga-g]$/.test(rawName);
+    const basePC = isEnglish ? EN_NOTE_PC[rawName.toUpperCase()] : JP_NOTE_PC[rawName];
+    if (basePC === undefined) continue;
+    const pc = mod12(basePC + (ACC_SHIFT[acc] || 0));
+    const preferFlat = acc === '♭' || defaultFlat;
+    if (!notes.some(n => n.pc === pc)) notes.push({ pc, preferFlat, accidental: acc });
+  }
+  return notes;
+}
+
+function uniquePCs(entries) {
+  const pcs = [];
+  entries.forEach(entry => {
+    if (!pcs.includes(entry.pc)) pcs.push(entry.pc);
+  });
+  return pcs;
+}
+
+function setSelectedFromText(text) {
+  selected = parseNoteText(text);
+  renderSelected();
+  resetResults();
+  updateAnalyzeBtn();
+}
+
+function applyTextInput() {
+  setSelectedFromText(document.getElementById('single-note-input').value);
+}
+
+function setInputMode(mode) {
+  const isMulti = mode === 'multi';
+  document.getElementById('tab-single-input').classList.toggle('active', !isMulti);
+  document.getElementById('tab-multi-input').classList.toggle('active', isMulti);
+  document.getElementById('single-input-pane').style.display = isMulti ? 'none' : 'block';
+  document.getElementById('multi-input-pane').style.display = isMulti ? 'block' : 'none';
 }
 
 const WHITE_KEY_NOTES = [0,2,4,5,7,9,11];
@@ -484,6 +630,7 @@ function resetResults() {
   document.getElementById('ad-section').style.display = 'none';
   document.getElementById('ad-banner').style.display = 'none';
   document.getElementById('review-card').style.display = 'none';
+  document.getElementById('near-no-result').innerHTML = '';
 }
 
 function renderSelected() {
@@ -516,7 +663,7 @@ function renderSelected() {
 
 function updateAnalyzeBtn() {
   const btn = document.getElementById('btn-analyze');
-  btn.classList.toggle('active', selected.length >= 2);
+  btn.classList.toggle('active', uniquePCs(selected).length >= 2);
 }
 
 const CHORD_DESCRIPTIONS = {
@@ -615,9 +762,75 @@ function analyzeChord(notes) {
   return results;
 }
 
+function chordTonePCs(rootPC, chordType) {
+  const pcs = [];
+  chordType.intervals.forEach(int => {
+    const pc = mod12(rootPC + int);
+    if (!pcs.includes(pc)) pcs.push(pc);
+  });
+  return pcs;
+}
+
+function simplePCName(pc, preferFlat) {
+  return preferFlat ? FLAT_BASE[pc] : SHARP_BASE[pc];
+}
+
+function findNearMatches(notes) {
+  const input = [...new Set(notes.map(mod12))];
+  if (input.length === 0) return [];
+  const preferFlat = selected.some(s => s.preferFlat) || defaultFlat;
+  const candidates = [];
+  const seen = new Set();
+  for (let rootPC = 0; rootPC < 12; rootPC++) {
+    CHORD_TYPES.forEach(ct => {
+      const chordPCs = chordTonePCs(rootPC, ct);
+      if (chordPCs.length < 2) return;
+      const missing = chordPCs.filter(pc => !input.includes(pc));
+      const extra = input.filter(pc => !chordPCs.includes(pc));
+      const diffCount = missing.length + extra.length;
+      if (diffCount === 0 || diffCount > 2) return;
+      if (Math.abs(chordPCs.length - input.length) > 2) return;
+      const name = spellingByRole(rootPC, rootPC, 0, preferFlat).en + ct.short;
+      const key = name + ':' + missing.join(',') + ':' + extra.join(',');
+      if (seen.has(key)) return;
+      seen.add(key);
+      const semitoneShift = missing.length === 1 && extra.length === 1 && (
+        mod12(missing[0] - extra[0]) === 1 || mod12(extra[0] - missing[0]) === 1
+      );
+      candidates.push({ name, typeName: ct.name, rootPC, missing, extra, diffCount, semitoneShift, preferFlat });
+    });
+  }
+  return candidates
+    .sort((a, b) => a.diffCount - b.diffCount || a.missing.length - b.missing.length || a.name.length - b.name.length)
+    .slice(0, 6);
+}
+
+function nearMatchText(match) {
+  const parts = [];
+  if (match.missing.length) parts.push(`不足: ${match.missing.map(pc => simplePCName(pc, match.preferFlat)).join('・')}`);
+  if (match.extra.length) parts.push(`余分: ${match.extra.map(pc => simplePCName(pc, match.preferFlat)).join('・')}`);
+  if (match.semitoneShift) parts.push('半音ずれの可能性');
+  return parts.join(' / ');
+}
+
+function buildNearMatchList(matches) {
+  if (!matches.length) return '';
+  return `
+    <div class="near-match-list">
+      <div class="near-match-title">近い候補（過不足チェック）</div>
+      ${matches.map(m => `
+        <div class="near-match-card">
+          <div class="near-match-name">${m.name} <span class="multi-note">${m.typeName}</span></div>
+          <div class="near-match-diff">${nearMatchText(m)}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
 function analyze() {
-  if (selected.length < 2) return;
-  const notes = selected.map(s => s.pc);
+  if (uniquePCs(selected).length < 2) return;
+  const notes = uniquePCs(selected);
   const results = analyzeChord(notes);
   const firstPC = notes[0];
   results.sort((a, b) => (a._rootPC === firstPC ? 0 : 1) - (b._rootPC === firstPC ? 0 : 1));
@@ -631,6 +844,7 @@ function analyze() {
     noResult.style.display = 'block';
     section.style.display = 'none';
     justNote.style.display = 'none';
+    document.getElementById('near-no-result').innerHTML = buildNearMatchList(findNearMatches(notes));
   } else {
     noResult.style.display = 'none';
     section.style.display = 'block';
@@ -667,6 +881,75 @@ function analyze() {
     bannerEl.style.display = 'block';
   }
   adSection.style.display = 'block';
+}
+
+function summarizeChordResults(notes, parsedEntries) {
+  const previousSelected = selected;
+  selected = parsedEntries;
+  const exact = analyzeChord(notes);
+  selected = previousSelected;
+  if (exact.length > 0) {
+    exact.sort((a, b) => a.chordName.length - b.chordName.length);
+    return {
+      answer: exact.slice(0, 3).map(r => r.chordName).join(' / '),
+      note: exact.length > 3 ? `ほか ${exact.length - 3} 件` : ''
+    };
+  }
+  const previousForNear = selected;
+  selected = parsedEntries;
+  const near = findNearMatches(notes);
+  selected = previousForNear;
+  if (near.length > 0) {
+    return {
+      answer: near.slice(0, 2).map(m => m.name).join(' / '),
+      note: near.slice(0, 2).map(nearMatchText).join(' | ')
+    };
+  }
+  return { answer: '該当なし', note: '一般的な和音パターンに一致しませんでした' };
+}
+
+function analyzeMulti() {
+  const raw = document.getElementById('multi-note-input').value || '';
+  const rows = raw.split(/\r?\n/);
+  const list = document.getElementById('multi-results-list');
+  const section = document.getElementById('multi-results');
+  list.innerHTML = '';
+  const outputs = [];
+  rows.forEach(line => {
+    const text = line.trim();
+    if (!text || text.startsWith("'")) return;
+    const parsed = parseNoteText(text);
+    if (parsed.length < 2) {
+      outputs.push({ source: text, answer: '入力不足', note: '2音以上を入力してください' });
+      return;
+    }
+    const notes = uniquePCs(parsed);
+    outputs.push({ source: text, ...summarizeChordResults(notes, parsed) });
+  });
+  if (outputs.length === 0) {
+    section.style.display = 'none';
+    return;
+  }
+  document.getElementById('multi-results-label').textContent = `一括判定結果 — ${outputs.length}件`;
+  outputs.forEach(row => {
+    const el = document.createElement('div');
+    el.className = 'multi-row';
+    el.innerHTML = `
+      <div class="multi-source">${row.source}</div>
+      <div>
+        <div class="multi-answer">${row.answer}</div>
+        ${row.note ? `<div class="multi-note">${row.note}</div>` : ''}
+      </div>
+    `;
+    list.appendChild(el);
+  });
+  section.style.display = 'block';
+}
+
+function clearMulti() {
+  document.getElementById('multi-note-input').value = '';
+  document.getElementById('multi-results').style.display = 'none';
+  document.getElementById('multi-results-list').innerHTML = '';
 }
 
 function buildChordCard(r, isFirst) {
@@ -768,8 +1051,10 @@ function reset() {
   selected = [];
   pendingAcc = null;
   document.querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('single-note-input').value = '';
   renderSelected();
   resetResults();
+  clearMulti();
   updateAnalyzeBtn();
 }
 
