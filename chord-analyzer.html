@@ -68,7 +68,8 @@
     #main.multi-mode #no-result,
     #main.multi-mode #results-section { display: none !important; }
 
-    #piano-section { margin-top: 32px; margin-bottom: 24px; }
+    #mode-tabs { margin: 28px auto 18px; display: flex; gap: 6px; }
+    #piano-section { margin-top: 0; margin-bottom: 24px; }
     #piano-label { font-size: 11px; color: #6b9e96; letter-spacing: 2px; margin-bottom: 12px; text-align: center; }
     #piano-controls {
       display: flex; align-items: center; justify-content: space-between;
@@ -134,7 +135,6 @@
     #single-note-input:focus, #multi-note-input:focus { border-color: #2a9d8a; outline: none; box-shadow: 0 0 0 2px #2a9d8a22; }
     #single-note-input::placeholder, #multi-note-input::placeholder { color: #3a6a62; }
     #input-help { margin-top: 8px; color: #547b75; font-size: 11px; line-height: 1.6; }
-    #input-tabs { display: flex; gap: 6px; margin-bottom: 12px; }
     .input-tab {
       flex: 1; border: 1px solid #1e4a42; border-radius: 8px;
       background: #0a1a18; color: #6b9e96; padding: 8px; font-size: 12px; font-weight: 700;
@@ -312,6 +312,11 @@
 </div>
 
 <div id="main">
+  <div id="mode-tabs">
+    <button id="tab-single-input" class="input-tab active" onclick="setInputMode('single')">単発入力</button>
+    <button id="tab-multi-input" class="input-tab" onclick="setInputMode('multi')">複数行入力</button>
+  </div>
+
   <div id="piano-section">
     <div id="piano-label">音名を選択（複数可）</div>
     <div id="piano-controls">
@@ -335,10 +340,6 @@
   </div>
 
   <div id="text-input-section">
-    <div id="input-tabs">
-      <button id="tab-single-input" class="input-tab active" onclick="setInputMode('single')">単発入力</button>
-      <button id="tab-multi-input" class="input-tab" onclick="setInputMode('multi')">複数行入力</button>
-    </div>
     <div id="single-input-pane">
       <div class="input-label">音名を直接入力</div>
       <input id="single-note-input" type="text" placeholder="例: ドミソ / C E G / ファ シ♭ ド" oninput="applyTextInput()" />
