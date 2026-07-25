@@ -609,13 +609,15 @@ function chordSuffix(shortName) {
   if (shortName === '-dur') {
     if (noteLanguage === 'de') return '-dur';
     if (noteLanguage === 'en') return ' major';
-    return 'メジャー';
+    return '-マッジョーレ';
   }
   if (shortName === '-moll') {
     if (noteLanguage === 'de') return '-moll';
     if (noteLanguage === 'en') return ' minor';
-    return 'マイナー';
+    return '-ミノーレ';
   }
+  if (noteLanguage === 'it' && shortName === '-dim') return '-ディミヌイト';
+  if (noteLanguage === 'it' && shortName === '-aug') return '-アウメント';
   return shortName.replace(/^-/, '');
 }
 
@@ -1063,7 +1065,8 @@ function summarizeChordResults(notes, parsedEntries) {
       : '';
     const extraNote = exact.length > 3 ? `ほか ${exact.length - 3} 件` : '';
     return {
-      answer: `完全一致: ${exact.slice(0, 3).map(r => r.chordName).join(' / ')}`,
+      status: '完全一致',
+      answer: exact.slice(0, 3).map(r => r.chordName).join(' / '),
       note: [extraNote, omissionNote].filter(Boolean).join(' / '),
       exactResults: exact
     };
@@ -1074,11 +1077,12 @@ function summarizeChordResults(notes, parsedEntries) {
   selected = previousForNear;
   if (near.length > 0) {
     return {
+      status: '近い候補',
       answer: '近い候補',
       note: near.slice(0, 3).map(m => `${m.name}: ${nearMatchText(m)}`).join(' | ')
     };
   }
-  return { answer: '該当なし', note: '一般的な和音パターンに一致しませんでした' };
+  return { status: '', answer: '該当なし', note: '一般的な和音パターンに一致しませんでした' };
 }
 
 function analyzeMulti() {
@@ -1094,7 +1098,7 @@ function analyzeMulti() {
     if (!text || text.startsWith("'")) return;
     const parsed = parseNoteText(text);
     if (parsed.length < 2) {
-      outputs.push({ source: text, answer: '入力不足', note: '2音以上を入力してください', exactResults: [] });
+      outputs.push({ source: text, status: '', answer: '入力不足', note: '2音以上を入力してください', exactResults: [] });
       return;
     }
     const notes = uniquePCs(parsed);
@@ -1115,6 +1119,7 @@ function analyzeMulti() {
     el.innerHTML = `
       <div class="multi-source">${row.source}</div>
       <div>
+        ${row.status && row.status !== row.answer ? `<div class="multi-note">${row.status}</div>` : ''}
         ${answerHtml}
         ${row.note ? `<div class="multi-note">${row.note}</div>` : ''}
       </div>
