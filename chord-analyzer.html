@@ -607,17 +607,23 @@ function chordRootName(rootPC, preferFlat) {
 
 function chordSuffix(shortName) {
   if (shortName === '-dur') {
-    if (noteLanguage === 'de') return '-dur';
+    if (noteLanguage === 'de') return '-Dur';
     if (noteLanguage === 'en') return ' major';
     return '-マッジョーレ';
   }
   if (shortName === '-moll') {
-    if (noteLanguage === 'de') return '-moll';
+    if (noteLanguage === 'de') return '-Moll';
     if (noteLanguage === 'en') return ' minor';
     return '-ミノーレ';
   }
-  if (noteLanguage === 'it' && shortName === '-dim') return '-ディミヌイト';
-  if (noteLanguage === 'it' && shortName === '-aug') return '-アウメント';
+  if (shortName === '-dim') {
+    if (noteLanguage === 'de') return '-vermindert';
+    if (noteLanguage === 'it') return '-ディミヌイト';
+  }
+  if (shortName === '-aug') {
+    if (noteLanguage === 'de') return '-übermäßig';
+    if (noteLanguage === 'it') return '-アウメンタート';
+  }
   return shortName.replace(/^-/, '');
 }
 
@@ -627,7 +633,7 @@ function chordDisplayName(rootPC, preferFlat, chordType) {
 
 function scaleDisplayName(rootPC, isMinor) {
   const root = noteName(rootPC, isMinor);
-  if (noteLanguage === 'de') return root + (isMinor ? '-moll' : '-dur');
+  if (noteLanguage === 'de') return root + (isMinor ? '-Moll' : '-Dur');
   if (noteLanguage === 'en') return root + (isMinor ? ' minor' : ' major');
   return root + (isMinor ? '短調' : '長調');
 }
