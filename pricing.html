@@ -705,7 +705,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
   <div class="ph-inner">
     <span class="ph-lb">Lesson Pricing</span>
     <h1 class="ph-tt">レッスン<em>料金</em></h1>
-    <p class="ph-sub">単発・体験・月額プランは60分 ／ 年間プランは90分 ／ すべて税込</p>
+    <p class="ph-sub">体験・単発・年間プランは60分を基本に設定 ／ すべて税込</p>
   </div>
 </div>
 
@@ -715,48 +715,56 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
 
     <div class="rate-summary">
       <div class="rate-line">
-        <span class="rate-name">単発レッスン</span>
-        <span class="rate-price">1回11,000円（税込）／60分</span>
-      </div>
-      <div class="rate-line">
         <span class="rate-name">体験レッスン</span>
         <span class="rate-price">1回5,500円（税込）／60分</span>
+      </div>
+      <div class="rate-line">
+        <span class="rate-name">個人レッスン</span>
+        <span class="rate-price">11,000円／60分</span>
+      </div>
+      <div class="rate-line">
+        <span class="rate-name">個人レッスン</span>
+        <span class="rate-price">16,500円／90分</span>
+      </div>
+      <div class="rate-line">
+        <span class="rate-name">個人レッスン</span>
+        <span class="rate-price">22,000円／120分</span>
       </div>
     </div>
 
     <!-- annual -->
     <div class="annual-block">
-      <div class="ab-badge">✦ おすすめ</div>
+      <div class="ab-badge">✦ 年間で続ける方へ</div>
       <div class="ab-title">年間プラン</div>
-      <div class="plan-subtitle">～1年契約・一括払い・1回90分～</div>
+      <div class="plan-subtitle">～3月申込／4月〜翌3月・1回60分～<br>※ 本番・受験など熱量高く取り組みたい方は、時間や進め方を個別相談で調整可能です。</div>
 
       <div class="plan-row-3">
         <div class="plan-card tone-1" onclick="openModal('voiceA1')">
           <div class="pc-label">ゆっくり継続</div>
-          <div class="pc-freq">月1回</div>
+          <div class="pc-freq">年12回</div>
           <div class="pc-price"><span class="price-prefix">1回</span>10,450円<span class="price-tax">（税込）</span></div>
           <div class="pc-total">年間総額 125,400円</div>
           <div class="pc-click-hint">詳細を見る ↗</div>
         </div>
         <div class="plan-card tone-2" onclick="openModal('voiceA2')">
-          <div class="pc-label">仕事・学業と両立</div>
-          <div class="pc-freq">月2回</div>
+          <div class="pc-label">月2回程度のペース</div>
+          <div class="pc-freq">年24回</div>
           <div class="pc-price"><span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span></div>
-          <div class="pc-total">年間総額 118,800円</div>
+          <div class="pc-total">年間総額 237,600円</div>
           <div class="pc-click-hint">詳細を見る ↗</div>
         </div>
         <div class="plan-card tone-3 featured" onclick="openModal('voiceA3')">
-          <div class="pc-label">いちばん人気</div>
-          <div class="pc-freq">月3回</div>
+          <div class="pc-label">しっかり継続</div>
+          <div class="pc-freq">年36回</div>
           <div class="pc-price"><span class="price-prefix">1回</span>9,350円<span class="price-tax">（税込）</span></div>
-          <div class="pc-total">年間総額 112,200円</div>
+          <div class="pc-total">年間総額 336,600円</div>
           <div class="pc-click-hint">詳細を見る ↗</div>
         </div>
         <div class="plan-card tone-4" onclick="openModal('voiceA4')">
-          <div class="pc-label">短期集中・高頻度</div>
-          <div class="pc-freq">月4回</div>
+          <div class="pc-label">高頻度で取り組む</div>
+          <div class="pc-freq">年48回</div>
           <div class="pc-price"><span class="price-prefix">1回</span>8,800円<span class="price-tax">（税込）</span></div>
-          <div class="pc-total">年間総額 105,600円</div>
+          <div class="pc-total">年間総額 422,400円</div>
           <div class="pc-click-hint">詳細を見る ↗</div>
         </div>
       </div>
@@ -770,19 +778,11 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
           </span>
           <span class="br-arrow">›</span>
         </div>
-        <div class="benefit-row" onclick="openModal('lessonTimeModal')">
-          <span class="br-icon">⏱</span>
-          <span class="br-text">
-            <span class="br-main">1回90分に延長</span>
-            <span class="br-sub">準備・片づけ込みでじっくり受講</span>
-          </span>
-          <span class="br-arrow">›</span>
-        </div>
         <div class="benefit-row" onclick="openModal('extraAnnualModal')">
           <span class="br-icon">➕</span>
           <span class="br-text">
-            <span class="br-main">追加レッスンは1回分の料金で</span>
-            <span class="br-sub">申し込み回数に制限なし！</span>
+            <span class="br-main">追加レッスンも契約プランの1回料金</span>
+            <span class="br-sub">必要なときに追加できます</span>
           </span>
           <span class="br-arrow">›</span>
         </div>
@@ -790,15 +790,15 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
           <span class="br-icon">💬</span>
           <span class="br-text">
             <span class="br-main">公式LINEで相談OK</span>
-            <span class="br-sub">回数制限なく相談OK</span>
+            <span class="br-sub">年間プランは回数制限なし</span>
           </span>
           <span class="br-arrow">›</span>
         </div>
         <div class="benefit-row" onclick="openModal('scheduleModal')">
           <span class="br-icon">📅</span>
           <span class="br-text">
-            <span class="br-main">優先予約</span>
-            <span class="br-sub">ご契約時に日程の仮押さえOK</span>
+            <span class="br-main">日程を仮押さえ</span>
+            <span class="br-sub">ご契約時に1年分を仮決めできます</span>
           </span>
           <span class="br-arrow">›</span>
         </div>
@@ -813,45 +813,19 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
       </div>
     </div>
 
-    <!-- monthly -->
     <div class="monthly-block">
-      <div class="mb-title">月額プラン</div>
-      <div class="plan-subtitle">～月謝制・月払い・1回60分～</div>
-      <div class="monthly-plan-grid">
-        <div class="monthly-card" onclick="openModal('voiceM1')">
-          <div class="mc-top"><div class="mc-freq">月1回</div><div class="mc-label">ゆっくり継続</div></div>
-          <div class="mc-price"><span class="price-prefix">1回</span>10,450円<span class="price-tax">（税込）</span></div>
-          <div class="mc-total">月額 10,450円</div>
-        </div>
-        <div class="monthly-card" onclick="openModal('voiceM2')">
-          <div class="mc-top"><div class="mc-freq">月2回</div><div class="mc-label">仕事・学業と両立</div></div>
-          <div class="mc-price"><span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span></div>
-          <div class="mc-total">月額 19,800円</div>
-        </div>
-        <div class="monthly-card featured" onclick="openModal('voiceM3')">
-          <div class="mc-top"><div class="mc-freq">月3回</div><div class="mc-label">いちばん人気</div></div>
-          <div class="mc-price"><span class="price-prefix">1回</span>9,350円<span class="price-tax">（税込）</span></div>
-          <div class="mc-total">月額 28,050円</div>
-        </div>
-      </div>
-      <div class="mb-benefits">
-        <div class="mb-benefit" onclick="openModal('materialsModal')">
-          <span class="mbb-icon">📚</span>
-          <span><div class="mbb-main">教材費無料</div><div class="mbb-sub">必要な教材をご用意</div></span>
-        </div>
-        <div class="mb-benefit" onclick="openModal('extraMonthlyModal')">
-          <span class="mbb-icon">➕</span>
-          <span><div class="mbb-main">追加レッスンは1回分の料金で</div><div class="mbb-sub">申し込み回数に制限なし！</div></span>
-        </div>
-        <div class="mb-benefit" onclick="openModal('noteModal')">
-          <span class="mbb-icon">📝</span>
-          <span><div class="mbb-main">有料Noteが初月無料＆500円</div><div class="mbb-sub">通常1,000円／月・任意</div></span>
-        </div>
-        <div class="mb-benefit" onclick="openModal('lineModal')">
-          <span class="mbb-icon">💬</span>
-          <span><div class="mbb-main">公式LINEで相談OK</div><div class="mbb-sub">月2回まで相談OK</div></span>
-        </div>
-      </div>
+      <div class="mb-title">グループ・補足料金</div>
+      <table class="price-table">
+        <thead>
+          <tr><th>内容</th><th>時間</th><th>料金</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>グループレッスン</td><td>90分</td><td>20,000円</td></tr>
+          <tr><td>グループレッスン</td><td>120分</td><td>27,000円</td></tr>
+          <tr><td>楽典・和声</td><td>60分</td><td>5,500円</td></tr>
+          <tr><td>音大受験生</td><td colspan="2">通常の個人レッスン料金 × 1.3</td></tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="comparison-block">
@@ -860,19 +834,19 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
         <table class="comparison-table">
           <thead>
             <tr>
-              <th>特典</th>
-              <th>単発プラン</th>
-              <th>月額プラン</th>
+              <th>項目</th>
+              <th>単発レッスン</th>
               <th>年間プラン</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td>レッスン時間</td><td>60分</td><td>60分</td><td>90分</td></tr>
-            <tr><td>追加レッスン</td><td>11,000円</td><td>1回あたりの金額</td><td>1回あたりの金額</td></tr>
-            <tr><td>教材費</td><td>無料</td><td>無料</td><td>無料<br>必要があれば自作教材をご用意</td></tr>
-            <tr><td>予約</td><td>都度</td><td>前月25日以降</td><td>契約時に1年分を仮決め<br>変更は都度OK</td></tr>
-            <tr><td>有料Note</td><td>定価1,000円</td><td>初月無料<br>50％OFFの500円</td><td>初月無料<br>50％OFFの500円</td></tr>
-            <tr><td>LINE相談</td><td>✕</td><td>月2回まで</td><td>無制限</td></tr>
+            <tr><td>レッスン時間</td><td>60・90・120分</td><td>60分</td></tr>
+            <tr><td>料金</td><td>11,000円〜</td><td>8,800〜10,450円／回</td></tr>
+            <tr><td>追加レッスン</td><td>単発料金</td><td>契約プランの1回料金</td></tr>
+            <tr><td>教材費</td><td>無料</td><td>無料</td></tr>
+            <tr><td>予約</td><td>都度</td><td>契約時に1年分を仮押さえ</td></tr>
+            <tr><td>有料Note</td><td>定価1,000円</td><td>初月無料<br>50％OFFの500円</td></tr>
+            <tr><td>LINE相談</td><td>✕</td><td>無制限</td></tr>
           </tbody>
         </table>
       </div>
@@ -880,33 +854,33 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
 
     <div class="recommender-block">
       <div class="mb-title">おすすめプラン診断</div>
-      <p class="reco-lead">あなたの情報を入れて判定ボタンを押すと、おすすめのプランが出てきます。</p>
+      <p class="reco-lead">希望する頻度や続け方から、単発・年間のどちらが合いそうかを目安として表示します。</p>
       <div class="reco-grid">
         <div class="reco-field">
           <label for="recoFrequency">理想のレッスン頻度は？</label>
           <select id="recoFrequency">
-            <option value="1">月1回</option>
-            <option value="2">月2回</option>
-            <option value="3" selected>月3回</option>
-            <option value="4">月4回</option>
+            <option value="1">月1回程度</option>
+            <option value="2">月2回程度</option>
+            <option value="3" selected>月3回程度</option>
+            <option value="4">月4回程度</option>
           </select>
         </div>
         <div class="reco-field">
           <label for="recoConcern">一番の懸念は？</label>
           <select id="recoConcern">
-            <option value="monthly-count">月の回数を通いきれるのか</option>
-            <option value="continuity">何か月も継続できるのか</option>
-            <option value="price">金額が高い</option>
+            <option value="monthly-count">予定どおり通えるか不安</option>
+            <option value="continuity">1年間続けられるか不安</option>
+            <option value="price">1回あたりの金額を抑えたい</option>
             <option value="none">特にない</option>
           </select>
         </div>
         <div class="reco-field">
           <label for="recoGrowth">レッスンの目的は？</label>
           <select id="recoGrowth">
-            <option value="4">明確な結果が欲しい</option>
-            <option value="3" selected>そこそこ上達したい</option>
-            <option value="2">焦らず上達したい</option>
-            <option value="1">ゆっくり楽しみたい</option>
+            <option value="single">課題を1つ整理したい</option>
+            <option value="foundation" selected>基礎＋曲を見てほしい</option>
+            <option value="performance">本番に向けて仕上げたい</option>
+            <option value="intensive">受験・複数課題を集中して扱いたい</option>
           </select>
         </div>
       </div>
@@ -917,7 +891,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
       </div>
     </div>
 
-    <p class="note-cap">※ 本契約後の会場費は生徒様のご負担になります。<br>入会を強制することは一切ありません。</p>
+    <p class="note-cap">※ 年間プランは3月申込・4月〜翌3月の契約です。<br>※ 本契約後の会場費は生徒様のご負担になります。</p>
 
     <!-- LINE CTA -->
     <div class="line-cta">
@@ -950,24 +924,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
   </div>
 </div>
 
-<!-- 時間延長 -->
-<div class="modal-overlay" id="lessonTimeModal" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('lessonTimeModal')">✕</button>
-    <div class="modal-head">
-      <div class="modal-badge">年間プラン特典</div>
-      <div class="modal-title">1回90分に延長</div>
-      <div class="modal-sub">単発レッスンより30分長く、じっくり進められます</div>
-    </div>
-    <div class="modal-body">
-      <div class="schedule-feats">
-        <div class="sf"><span class="sf-icon">⏱</span><div class="sf-text"><strong>1回90分</strong><br>準備・片づけ込みで、基礎から曲まで余裕を持って確認できます。</div></div>
-        <div class="sf"><span class="sf-icon">✅</span><div class="sf-text"><strong>相談時間も取りやすい</strong><br>課題整理や練習方針まで、レッスン内で落ち着いて扱えます。</div></div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- 年間追加 -->
 <div class="modal-overlay" id="extraAnnualModal" onclick="if(event.target===this)closeModal(this.id)">
   <div class="modal-box">
@@ -975,30 +931,13 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
     <div class="modal-head">
       <div class="modal-badge">年間プラン特典</div>
       <div class="modal-title">追加レッスン</div>
-      <div class="modal-sub">契約プランの1回料金（税込）／90分で、何回でも受講OK</div>
+      <div class="modal-sub">契約プランと同じ1回料金（税込）／60分で追加できます</div>
     </div>
     <div class="modal-body">
-      <div class="mrow"><span class="mrow-label">月1回プラン</span><span class="mrow-price"><span class="price-prefix">1回</span>10,450円<span class="price-tax">（税込）</span></span></div>
-      <div class="mrow"><span class="mrow-label">月2回プラン</span><span class="mrow-price"><span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span></span></div>
-      <div class="mrow"><span class="mrow-label">月3回プラン</span><span class="mrow-price"><span class="price-prefix">1回</span>9,350円<span class="price-tax">（税込）</span></span></div>
-      <div class="mrow"><span class="mrow-label">月4回プラン</span><span class="mrow-price"><span class="price-prefix">1回</span>8,800円<span class="price-tax">（税込）</span></span></div>
-    </div>
-  </div>
-</div>
-
-<!-- 月額追加 -->
-<div class="modal-overlay" id="extraMonthlyModal" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('extraMonthlyModal')">✕</button>
-    <div class="modal-head">
-      <div class="modal-badge">月額プラン特典</div>
-      <div class="modal-title">追加レッスン</div>
-      <div class="modal-sub">契約プランの1回料金（税込）／60分で、何回でも受講OK</div>
-    </div>
-    <div class="modal-body">
-      <div class="mrow"><span class="mrow-label">月1回プラン</span><span class="mrow-price"><span class="price-prefix">1回</span>10,450円<span class="price-tax">（税込）</span></span></div>
-      <div class="mrow"><span class="mrow-label">月2回プラン</span><span class="mrow-price"><span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span></span></div>
-      <div class="mrow"><span class="mrow-label">月3回プラン</span><span class="mrow-price"><span class="price-prefix">1回</span>9,350円<span class="price-tax">（税込）</span></span></div>
+      <div class="mrow"><span class="mrow-label">年12回プラン</span><span class="mrow-price"><span class="price-prefix">1回</span>10,450円<span class="price-tax">（税込）</span></span></div>
+      <div class="mrow"><span class="mrow-label">年24回プラン</span><span class="mrow-price"><span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span></span></div>
+      <div class="mrow"><span class="mrow-label">年36回プラン</span><span class="mrow-price"><span class="price-prefix">1回</span>9,350円<span class="price-tax">（税込）</span></span></div>
+      <div class="mrow"><span class="mrow-label">年48回プラン</span><span class="mrow-price"><span class="price-prefix">1回</span>8,800円<span class="price-tax">（税込）</span></span></div>
     </div>
   </div>
 </div>
@@ -1012,7 +951,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
       <div class="modal-title">LINEで気軽に相談</div>
     </div>
     <div class="modal-body">
-      <p class="line-note">レッスンのことを、気軽に相談できます。月額プランは月2回まで、年間プランは回数制限なくご相談いただけます。</p>
+      <p class="line-note">年間プランの方は、レッスンのことを回数制限なくLINEでご相談いただけます。</p>
       <div class="chat-wrap">
         <div class="chat-bubble chat-left">テナーバスからバストロに持ち替えたんですけど、Ges管ロータリーは積極的に使った方がいいですか？</div>
         <div class="chat-bubble chat-right">解放感がある良い音を目指すなら、ロータリーを使わない方が良い音が鳴ると思います！</div>
@@ -1045,7 +984,7 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
           <div class="cg-cell sun">23</div><div class="cg-cell">24</div><div class="cg-cell">25</div><div class="cg-cell">26</div><div class="cg-cell">27</div><div class="cg-cell">28</div><div class="cg-cell sat">29</div>
           <div class="cg-cell sun">30</div><div class="cg-cell">31</div>
         </div>
-        <div class="cal-legend"><div class="cal-dot"></div>第2・4土曜日 19:00〜20:30 を仮押さえ中</div>
+        <div class="cal-legend"><div class="cal-dot"></div>第2・4土曜日 19:00〜20:00 を仮押さえ中</div>
       </div>
       <div class="schedule-feats">
         <div class="sf"><span class="sf-icon">✅</span><div class="sf-text"><strong>優先的に日程を確保</strong><br>基本は1年分の予定をまとめて仮押さえできるので安心です。</div></div>
@@ -1088,39 +1027,6 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 5%; display
   </div>
 </div>
 
-<!-- note -->
-<div class="modal-overlay" id="noteModal" onclick="if(event.target===this)closeModal(this.id)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal('noteModal')">✕</button>
-    <div class="modal-head">
-      <div class="modal-badge">プラン特典</div>
-      <div class="modal-title">有料Note 初月無料＆500円</div>
-      <div class="modal-sub">練習・上達・レッスンの考え方を経験をもとに書いています</div>
-    </div>
-    <div class="modal-body">
-      <div class="note-articles">
-        <a href="https://note.com/minori_kosaka/n/ne02a1aa80927" target="_blank" class="na">
-          <div class="na-cat">上達・考え方</div>
-          <div class="na-title">演奏が上手になる考え方</div>
-          <div class="na-desc">伸び悩みを感じたとき、どう考えると前に進めるか。</div>
-        </a>
-        <a href="https://note.com/minori_kosaka/n/nf62968938656" target="_blank" class="na">
-          <div class="na-cat">練習ツール</div>
-          <div class="na-title">トロンボーンのポジション表を作ってみた</div>
-          <div class="na-desc">自作のポジション表を無料配布。</div>
-        </a>
-        <a href="https://note.com/minori_kosaka/n/n289af2b8b463" target="_blank" class="na">
-          <div class="na-cat">レッスン・費用</div>
-          <div class="na-title">レッスン代の裏話</div>
-          <div class="na-desc">レッスン料に含まれているものを、先生目線で正直に書きました。</div>
-        </a>
-      </div>
-      <p class="line-note"><span class="price-original">メンバーシップ 月1,000円</span><br>月額プランの方は、初月無料、翌月以降は月額500円でご利用いただけます。<br>※いつでも解約可能。希望者のみ。</p>
-      <a href="https://note.com/minori_kosaka" target="_blank" class="note-link-btn">📝 Noteをもっと見る</a>
-    </div>
-  </div>
-</div>
-
 <!-- voice modals (generated by JS) -->
 <div id="voice-modals"></div>
 
@@ -1131,78 +1037,59 @@ function closeModal(id){ document.getElementById(id).classList.remove('open'); }
 function recommendPlan(){
   const frequency = Number(document.getElementById('recoFrequency').value);
   const concern = document.getElementById('recoConcern').value;
-  const growth = Number(document.getElementById('recoGrowth').value);
-  const selectedCount = `月${frequency}回`;
-  let planTitle = `年間プラン ${selectedCount}`;
+  const goal = document.getElementById('recoGrowth').value;
+  const annualCounts = {1:12, 2:24, 3:36, 4:48};
+  const singleTimes = {
+    single: 60,
+    foundation: 90,
+    performance: 90,
+    intensive: 120
+  };
+  let planTitle = `年間プラン 年${annualCounts[frequency]}回（基本60分）`;
   const notes = [];
 
-  if (concern === 'monthly-count') {
-    if (frequency === 1) {
-      planTitle = '年間プラン 月1回';
-      notes.push('月1回でも通えるか不安な場合は、年間プラン月1回で枠を確保しつつ、難しい月の分を翌月2回にする調整がおすすめです。');
-    } else if (frequency === 3) {
-      planTitle = '年間プラン 月3回';
-      notes.push('月3回は毎週ではなく、月に1週間はレッスンがないペースです。試験・本番・お盆休みなどを避けながら調整しやすいので、不安が強ければ年間プラン月2回も候補になります。');
-    } else if (frequency === 4) {
-      planTitle = '年間プラン 月4回';
-      notes.push('月4回はしっかり通える方向けです。回数が不安なら、年間プラン月3回を軸にして、必要な月だけ追加レッスンを入れる形も合います。');
-    } else {
-      planTitle = '年間プラン 月2回';
-      notes.push('月2回は隔週に近いペースで、仕事・学業や本番前後の予定とも調整しやすい回数です。');
+  const preferSingle = concern === 'continuity' || concern === 'monthly-count';
+
+  if (preferSingle) {
+    const time = singleTimes[goal];
+    planTitle = `単発レッスン（おすすめ：${time}分）`;
+    notes.push('1年間の契約や回数消化に不安がある場合は、まず単発で始めると予定に合わせやすいです。');
+    if (goal === 'single') {
+      notes.push('課題を1つ整理するなら、60分でポイントを絞って確認するのがおすすめです。');
+    } else if (goal === 'foundation') {
+      notes.push('基礎と曲の両方を見るなら、90分あると急がず確認しやすくなります。');
+    } else if (goal === 'performance') {
+      notes.push('本番に向けた仕上げは、基礎確認と曲の実践を両方扱える90分がおすすめです。');
+    } else if (goal === 'intensive') {
+      notes.push('受験や複数課題をまとめて扱う場合は、120分で集中的に進めるのがおすすめです。');
     }
-  } else if (concern === 'continuity') {
-    planTitle = `月額プラン ${frequency === 4 ? '月3回' : selectedCount}`;
-    notes.push('何か月も続けられるかが一番不安な場合は、まず月額プランで始めてOKです。続けられそうだと感じたタイミングで、年間プランに切り替えると無理がありません。');
-  } else if (concern === 'price') {
-    planTitle = `年間プラン ${selectedCount}`;
-    notes.push('金額が気になる場合ほど、1回あたりの負担を抑えやすい年間プランが候補になります。回数に迷う場合は、理想より1つ下の回数にして必要な月だけ追加する案もあります。');
   } else {
-    planTitle = `年間プラン ${selectedCount}`;
-    notes.push('大きな不安がなければ、90分レッスン・予約枠の仮押さえ・LINE相談無制限が使える年間プランがおすすめです。');
-  }
-
-  if (frequency === 3 && concern !== 'monthly-count') {
-    notes.push('月3回でも試験や本番を避けながら、仕事・学業との両立はしやすいペースです。');
-  }
-
-  if (growth === 4) {
-    if (concern === 'monthly-count') {
-      notes.push('明確な結果も欲しい場合は、まず通える回数で始めて、慣れてきたら月3回や追加レッスンを検討すると現実的です。');
-    } else if (concern !== 'continuity' && frequency <= 2) {
-      planTitle = '年間プラン 月3回';
-      notes.push('明確な結果が欲しい場合は、月1〜2回よりも月3回のほうが変化を作りやすいです。年間で枠を押さえて、必要な月だけ追加レッスンを入れる形がおすすめです。');
+    if (concern === 'price') {
+      notes.push(`年${annualCounts[frequency]}回プランなら、単発60分11,000円より1回あたりの料金を抑えられます。`);
     } else {
-      notes.push('明確な結果が欲しい回答なので、月3回以上のペースは相性が良いです。');
+      notes.push(`月${frequency}回程度のペースなら、年${annualCounts[frequency]}回プランが目安になります。`);
     }
-  } else if (growth === 3) {
-    if (concern !== 'monthly-count' && concern !== 'continuity' && frequency === 1) {
-      planTitle = '年間プラン 月2回';
-      notes.push('そこそこ上達したい場合は、月1回より月2回のほうが練習の方向性を確認しやすくなります。');
+    notes.push('年間プランは3月申込・4月〜翌3月、1回60分が基本です。');
+
+    if (goal === 'performance' || goal === 'intensive') {
+      notes.push('本番・受験など熱量高く取り組みたい場合は、60分に固定せず、必要な時間や進め方を個別相談で調整できます。');
+    } else if (goal === 'foundation') {
+      notes.push('基礎と曲を継続して見ていく場合は、年間60分でも回数を重ねることで進めやすいです。');
     } else {
-      notes.push('そこそこ上達したい場合は、月2〜3回が現実的なバランスです。');
-    }
-  } else if (growth === 2) {
-    notes.push('焦らず上達したい場合は、無理に回数を増やしすぎず、続けやすい回数で年間のリズムを作るのがおすすめです。');
-  } else {
-    if (concern !== 'monthly-count' && concern !== 'continuity' && frequency >= 3) {
-      planTitle = '年間プラン 月1回';
-      notes.push('ゆっくり楽しみたい場合は、月3回以上より月1回で長く続ける形が合いやすいです。');
-    } else {
-      notes.push('ゆっくり楽しみたい場合は、月1回を軸にして無理のないペースで続けるのがおすすめです。');
+      notes.push('課題を1つずつ整理しながら継続したい場合は、年間60分が使いやすい目安です。');
     }
   }
 
-  const note = notes.join('\n');
   document.getElementById('recoPlan').textContent = planTitle;
-  document.getElementById('recoReason').textContent = note;
+  document.getElementById('recoReason').textContent = notes.join('\n');
   document.getElementById('recoResult').classList.add('show');
 }
 
 const voiceData = [
   {
-    id:'voiceA1', badge:'年間プラン', title:'月1回', sub:'ゆっくり継続したい方に',
+    id:'voiceA1', badge:'年間プラン', title:'年12回', sub:'月1回程度でゆっくり継続したい方に',
     price:'<span class="price-prefix">1回</span>10,450円<span class="price-tax">（税込）</span>', total:'年間総額 125,400円',
-    tags:['お仕事や学校と折り合いをつけて無理なく続けたい方','まとまった練習時間が取れない方','コツコツ上達したい方','普段は個人練習、月1回は人と演奏したい方'],
+    tags:['お仕事や学校と折り合いをつけて無理なく続けたい方','まとまった練習時間が取れない方','コツコツ上達したい方','月1回程度のペースで確認したい方'],
     voices:[
       {text:'仕事が忙しくて毎週は無理だけど、月1回なら続けられました。枠が確保されてるから、来月も絶対行くぞって思える。', attr:'20代・社会人'},
       {text:'子育てしながらで練習時間もあまりとれないけど、レッスンの日は自分のための時間って感じで充実してます。', attr:'30代・主婦'},
@@ -1210,63 +1097,33 @@ const voiceData = [
     ]
   },
   {
-    id:'voiceA2', badge:'年間プラン', title:'月2回', sub:'仕事・学業と両立しながら続けたい方に',
-    price:'<span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span>', total:'年間総額 118,800円',
-    tags:['練習の進捗を確認しながら着実に進めたい方','自習の方向性を固めたい方','隔週でペースを作りたい方','時期によって回数を調整したい方'],
+    id:'voiceA2', badge:'年間プラン', title:'年24回', sub:'月2回程度で仕事・学業と両立したい方に',
+    price:'<span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span>', total:'年間総額 237,600円',
+    tags:['練習の進捗を確認しながら着実に進めたい方','自習の方向性を固めたい方','月2回程度でペースを作りたい方','必要な時期に追加レッスンも使いたい方'],
     voices:[
       {text:'隔週ペースがちょうどよくて、前のレッスンで言われたことを試してまた報告できる感じが好き。成長してる実感がある。', attr:'10代・高校生'},
       {text:'月2回にしてから、練習の質が変わった気がします。次のレッスンまでに何をするか逆算できるようになった。', attr:'20代・大学生'},
-      {text:'吹奏楽の本番前は追加レッスンを入れて週1ペースにしました。同じ料金で増やせるのは年間プランならではだと思う。', attr:'30代・アマチュア奏者'},
+      {text:'吹奏楽の本番前は追加レッスンを入れて週1ペースにしました。契約プランと同じ1回料金で追加できるのが助かりました。', attr:'30代・アマチュア奏者'},
     ]
   },
   {
-    id:'voiceA3', badge:'年間プラン', title:'月3回', sub:'いちばん人気。上達のリズムを作りたい方に',
-    price:'<span class="price-prefix">1回</span>9,350円<span class="price-tax">（税込）</span>', total:'年間総額 112,200円',
-    tags:['本番・コンクールに向けて集中的に仕上げたい方','コスパ重視でしっかり上達したい方','週1は多いが月2では少ないと感じる方','短期間で大きく変化したい方'],
+    id:'voiceA3', badge:'年間プラン', title:'年36回', sub:'月3回程度でしっかり取り組みたい方に',
+    price:'<span class="price-prefix">1回</span>9,350円<span class="price-tax">（税込）</span>', total:'年間総額 336,600円',
+    tags:['本番・コンクールに向けて継続的に仕上げたい方','定期的に課題を確認したい方','月2回では少ないと感じる方','演奏を継続的に整えたい方'],
     voices:[
       {text:'コンクール前の時期、週1近くで見てもらえるのが心強かった。技術的なことだけじゃなくて気持ちの面も整理できた。', attr:'10代・中学生'},
-      {text:'月3回プランで入って、本番前はさらに追加レッスンを入れました。同じ9,350円で増やせるので、直前期も費用を気にせず動けた。', attr:'20代・学生'},
+      {text:'月3回ペースで入って、本番前はさらに追加レッスンを入れました。同じ9,350円で追加できるので、直前期も動きやすかった。', attr:'20代・学生'},
       {text:'週1は多すぎるけど月2では少ない、というちょうど間のペースが自分には合ってました。', attr:'30代・趣味プレイヤー'},
     ]
   },
   {
-    id:'voiceA4', badge:'年間プラン', title:'月4回', sub:'短期集中・高頻度で取り組みたい方に',
-    price:'<span class="price-prefix">1回</span>8,800円<span class="price-tax">（税込）</span>', total:'年間総額 105,600円',
-    tags:['本番に向けて頻度を上げたい方','1回あたりの費用を抑えたい方','短期間で演奏を整えたい方','継続的なチェックが必要な方'],
+    id:'voiceA4', badge:'年間プラン', title:'年48回', sub:'月4回程度の高頻度で取り組みたい方に',
+    price:'<span class="price-prefix">1回</span>8,800円<span class="price-tax">（税込）</span>', total:'年間総額 422,400円',
+    tags:['高い頻度で継続して見てもらいたい方','1回あたりの費用を抑えたい方','演奏を細かくチェックしたい方','継続的な確認が必要な方'],
     voices:[
       {text:'本番前に回数を増やして、毎回課題を確認できたのが心強かったです。', attr:'10代・学生'},
       {text:'一人で悩む時間が減って、練習の方向がぶれにくくなりました。', attr:'20代・学生'},
-      {text:'費用を見通しやすく、必要な時期に集中して通えるのが助かります。', attr:'30代・社会人'},
-    ]
-  },
-  {
-    id:'voiceM1', badge:'月額プラン', title:'月1回', sub:'ゆっくり継続したい方に',
-    price:'<span class="price-prefix">1回</span>10,450円<span class="price-tax">（税込）</span>', total:'月額 10,450円',
-    tags:['まずは気軽に試してみたい方','月1回がちょうどいいペースの方','続けられるか不安な方','他の習い事と並行したい方'],
-    voices:[
-      {text:'まず体験してみたくて。1回ごとじゃないから毎月継続しやすいし、年間契約するほど踏み切れない自分にはちょうどよかった。', attr:'20代・初心者'},
-      {text:'他の習い事もあって月1がMAX。それでも毎回すごく具体的なフィードバックをもらえるので、一人練習の方向性が定まる。', attr:'30代・社会人'},
-      {text:'気軽に始められて、気づいたら半年経ってた。続けられてるのはレッスン自体が楽しいからだと思う。', attr:'40代・再開組'},
-    ]
-  },
-  {
-    id:'voiceM2', badge:'月額プラン', title:'月2回', sub:'仕事・学業と両立しながら続けたい方に',
-    price:'<span class="price-prefix">1回</span>9,900円<span class="price-tax">（税込）</span>', total:'月額 19,800円',
-    tags:['まだ年間契約に踏み切れない方','隔週でリズムを作りたい方','適度なプレッシャーが欲しい方','月によって予定が変わりやすい方'],
-    voices:[
-      {text:'年間契約はまだ迷ってるけど、月2回ならちゃんと通えてる。自分のペースに合ってる気がする。', attr:'10代・高校生'},
-      {text:'隔週でレッスンがあると練習もサボれない（笑）。いい意味でのプレッシャーが続けるモチベになってます。', attr:'20代・社会人'},
-      {text:'月によって予定が変わるので、月額の方が調整しやすくて助かってます。振り替えも対応してもらえるので。', attr:'30代・パート'},
-    ]
-  },
-  {
-    id:'voiceM3', badge:'月額プラン', title:'月3回', sub:'いちばん人気。上達のリズムを作りたい方に',
-    price:'<span class="price-prefix">1回</span>9,350円<span class="price-tax">（税込）</span>', total:'月額 28,050円（9,350円×3回）',
-    tags:['発表会・本番に向けて短期集中したい方','本番前の数ヶ月だけ回数を増やしたい方','特定の課題を集中的に直したい方','週1ペースで取り組みたい方'],
-    voices:[
-      {text:'発表会に向けて短期集中で申し込みました。週1ペースで見てもらえて、想像以上に仕上がった。', attr:'10代・中学生'},
-      {text:'社会人バンドの演奏会前に3ヶ月だけ月3回にして、終わったら月1に戻す、という使い方をしています。', attr:'30代・アマチュア'},
-      {text:'吹き方の癖を直したくて、集中的に通うことにしました。短期間でも変化を実感できて、続けるか検討中。', attr:'20代・転向組'},
+      {text:'費用を見通しやすく、定期的に通えるのが助かります。', attr:'30代・社会人'},
     ]
   },
 ];
