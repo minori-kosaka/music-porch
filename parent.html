@@ -445,7 +445,7 @@ nav{
 .ptb td:nth-child(2){text-align:right;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--lt);}
 /* 1回あたり列：大きく目立つ */
 .ptb td:last-child{text-align:right;font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--sage2);font-weight:400;}
-/* 月額プランは2列なので月額列も目立つ */
+/* 2列の料金表は料金列を見やすく */
 .ptb.two-col td:nth-child(2){font-size:1.1rem;color:var(--lt);}
 .ptb.two-col td:last-child{font-size:1.45rem;color:var(--sage2);}
 .ptb tr:last-child td{border-bottom:none;}
@@ -584,7 +584,7 @@ footer small{font-size:.57rem;color:rgba(255,255,255,.2);}
   <div class="stat-inner">
     <div class="st rv"><span class="st-n">30<small style="font-size:.95rem">+</small></span><div class="st-l">在籍生徒数</div></div>
     <div class="st rv d1"><span class="st-n" style="font-size:1.65rem;">9:00~22:00</span><div class="st-l">受講可能時間帯</div></div>
-    <div class="st rv d2"><span class="st-n">60<small style="font-size:.95rem">min</small></span><div class="st-l">1回のレッスン時間</div></div>
+    <div class="st rv d2"><span class="st-n" style="font-size:1.8rem;">60–120<small style="font-size:.9rem">min</small></span><div class="st-l">単発レッスンの時間</div></div>
   </div>
 </div>
 
@@ -727,32 +727,35 @@ footer small{font-size:.57rem;color:rgba(255,255,255,.2);}
     </div>
   </div>
   <div class="plan-wrap rv">
-    <p class="plan-hd">— 継続プラン（通常価格 ¥11,000 / 回）—</p>
+    <p class="plan-hd">— 継続レッスン —</p>
     <div class="plan-box">
-      <div class="plan-lb">✦ 年間プラン（1年契約・一括払い）</div>
-      <table class="ptb">
-        <thead><tr><th>回数</th><th>年間総額</th><th>1回あたり</th></tr></thead>
+      <div class="plan-lb sub">単発レッスン</div>
+      <table class="ptb two-col">
+        <thead><tr><th>時間</th><th>料金</th></tr></thead>
         <tbody>
-          <tr class="hi"><td>月1回</td><td>118,800円</td><td>9,900円</td></tr>
-          <tr class="hi"><td>月2回</td><td>224,400円</td><td>9,350円</td></tr>
-          <tr class="hi"><td>月3回</td><td>316,800円</td><td>8,800円</td></tr>
+          <tr><td>60分</td><td>11,000円</td></tr>
+          <tr><td>90分</td><td>16,500円</td></tr>
+          <tr><td>120分</td><td>22,000円</td></tr>
         </tbody>
       </table>
     </div>
     <div class="plan-box">
-      <div class="plan-lb sub">月額プラン</div>
-      <table class="ptb two-col">
-        <thead><tr><th>回数</th><th>月額</th><th>1回あたり</th></tr></thead>
+      <div class="plan-lb">✦ 年間プラン（3月申込／4月〜翌3月・各60分）</div>
+      <table class="ptb">
+        <thead><tr><th>回数</th><th>年間総額</th><th>1回あたり</th></tr></thead>
         <tbody>
-          <tr><td>月1回</td><td>10,450円</td><td>10,450円</td></tr>
-          <tr><td>月2回</td><td>19,800円</td><td>9,900円</td></tr>
-          <tr><td>月3回</td><td>28,050円</td><td>9,350円</td></tr>
+          <tr class="hi"><td>年12回</td><td>125,400円</td><td>10,450円</td></tr>
+          <tr class="hi"><td>年24回</td><td>237,600円</td><td>9,900円</td></tr>
+          <tr class="hi"><td>年36回</td><td>336,600円</td><td>9,350円</td></tr>
+          <tr class="hi"><td>年48回</td><td>422,400円</td><td>8,800円</td></tr>
         </tbody>
       </table>
     </div>
     <div class="price-notes">
       <span class="price-note">※ すべて税込。本契約後の会場費は生徒様のご負担になります。</span>
-      <span class="price-note">※ 本契約後のレッスンは1回60〜90分となります。（生徒様の集中力などを考慮し決定いたしますが、費用に変動はございません。）</span>
+      <span class="price-note">※ 年間プランの追加レッスンは、ご契約プランの1回あたり料金と同額です。</span>
+      <span class="price-note">※ コンクール・本番前など、より高い熱量で取り組みたい場合は、時間や頻度を個別にご相談いただけます。</span>
+      <span class="price-note">※ 音大受験を目的とする場合は、通常の個人レッスン料金×1.3となります。</span>
     </div>
   </div>
 </section>
